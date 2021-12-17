@@ -33,7 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/map/mapview.do">Charge Map</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Car Info</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/carInfo/main.do">CarInfo</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/main.do">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="">Community</a></li>
                         
