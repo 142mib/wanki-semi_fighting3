@@ -18,7 +18,7 @@
 						<div class="search_category">
 							<h5 class="slideopen">
 								<a id="category">차종
-								<span class="arrow" id="arrow"><img id="arr_img" src="<%=request.getContextPath()%>/aeests/img/carInfo/arrow2.png" width="15px" height="10px"></span>
+								<span class="arrow" id="arrow"><img id="arr_img" src="<%=request.getContextPath()%>/assets/img/carInfo/arrow2.png" width="15px" height="10px"></span>
 								</a>
 							</h5>
 							<div id="schCategory" class="depth" style="display:block;">
