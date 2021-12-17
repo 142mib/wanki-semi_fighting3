@@ -36,9 +36,36 @@
                         <li class="nav-item"><a class="nav-link" href="">Car Info</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/main.do">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="">Community</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Login</a></li>
+                        
                     </ul>
+                    <!-- 여기 div추가 바꿈+스타일-->
+                    <div>
+                    	<%-- <%if(loginMember==null) {%> --%>
+                   			<button id="login-btn" onclick="window.open('<%=request.getContextPath()%>/member/login.do');">Log In</button>
+                   		<%-- <%}else{ %>
+                   			Welcome! <%=loginMember.getUserName() %>
+                   		<%} %> --%>
+                   	</div>
                 </div>
             </div>
         </nav>
+        
+        
+        <style>
+       #login-btn{
+       		background-color:#288ad8; 
+       		border:none; border-radius: 10px; 
+       		font-family:"Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+       		color:white;
+       		width: 80px;
+       		height: 35px;
+       		margin-left: 30px;
+       		}
+       	#login-btn:hover{
+       		background-color:white;
+       		opacity: 0.6;
+       		color: #288ad8;
+       	}
+
+       </style>
         
