@@ -194,10 +194,10 @@ input[type="checkbox"] {
 		$("#category").click(e=>{
 			if($(".deparea_category").is(":visible")){
 				$(".deparea_category").slideUp();	
-				$("#arr_img").attr("src","<%=request.getContextPath()%>/img/arrow2.png");
+				$("#arr_img").attr("src","<%=request.getContextPath()%>/img/carInfo/arrow2.png");
 			}else{
 				$(".deparea_category").slideDown();
-				$("#arr_img").attr("src","<%=request.getContextPath()%>/img/arrow1.png");
+				$("#arr_img").attr("src","<%=request.getContextPath()%>/img/carInfo/arrow1.png");
 			}
 		});
 	});
