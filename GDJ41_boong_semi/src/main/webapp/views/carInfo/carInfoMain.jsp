@@ -180,6 +180,7 @@ input[type="checkbox"] {
 
 
 </style>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	$("#re_img").click(e=>{
 		$("input[type='checkbox']").prop('checked',false);
