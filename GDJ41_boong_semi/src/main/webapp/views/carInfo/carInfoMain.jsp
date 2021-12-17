@@ -10,7 +10,7 @@
 			<div id="search_car">
 				<div class="search_title">
 					<h4>전기친환경차</h4>
-					<span class="refresh" id="refresh">선택 초기화</span><img id="re_img" src="<%=request.getContextPath()%>/img/carInfo/refresh.png" width="15px" height="15px">
+					<span class="refresh" id="refresh">선택 초기화</span><img id="re_img" src="<%=request.getContextPath()%>/assets/img/carInfo/refresh.png" width="15px" height="15px">
 				</div>
 				<div class="search_group">
 					<fieldset>
@@ -18,7 +18,7 @@
 						<div class="search_category">
 							<h5 class="slideopen">
 								<a id="category">차종
-								<span class="arrow" id="arrow"><img id="arr_img" src="<%=request.getContextPath()%>/img/carInfo/arrow2.png" width="15px" height="10px"></span>
+								<span class="arrow" id="arrow"><img id="arr_img" src="<%=request.getContextPath()%>/aeests/img/carInfo/arrow2.png" width="15px" height="10px"></span>
 								</a>
 							</h5>
 							<div id="schCategory" class="depth" style="display:block;">
@@ -194,10 +194,10 @@ input[type="checkbox"] {
 		$("#category").click(e=>{
 			if($(".deparea_category").is(":visible")){
 				$(".deparea_category").slideUp();	
-				$("#arr_img").attr("src","<%=request.getContextPath()%>/img/carInfo/arrow2.png");
+				$("#arr_img").attr("src","<%=request.getContextPath()%>/assets/img/carInfo/arrow2.png");
 			}else{
 				$(".deparea_category").slideDown();
-				$("#arr_img").attr("src","<%=request.getContextPath()%>/img/carInfo/arrow1.png");
+				$("#arr_img").attr("src","<%=request.getContextPath()%>/assets/img/carInfo/arrow1.png");
 			}
 		});
 	});
