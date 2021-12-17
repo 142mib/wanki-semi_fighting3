@@ -35,7 +35,7 @@
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/map/mapview.do">Charge Map</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/carInfo/main.do">CarInfo</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/main.do">Shop</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Community</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/board/boardList.do">Community</a></li>
                         
                     </ul>
                     <!-- 여기 div추가 바꿈+스타일-->
