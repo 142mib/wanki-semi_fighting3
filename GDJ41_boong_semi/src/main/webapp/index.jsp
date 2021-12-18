@@ -17,7 +17,7 @@
                         <a class="btn btn-primary btn-xl" href="#about">알아보기</a>
                     </div>
                 </div>
-            </div>
+            </div><!--커밋테스트  -->
         </header>
         <!-- About-->
         <section class="page-section bg-primary" id="about">
