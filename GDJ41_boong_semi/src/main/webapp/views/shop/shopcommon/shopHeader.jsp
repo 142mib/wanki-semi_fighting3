@@ -55,6 +55,24 @@
     
     </script>
     
+    <style>
+       #login-btn{
+       		background-color:#288ad8; 
+       		border:none; border-radius: 10px; 
+       		font-family:"Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+       		color:white;
+       		width: 80px;
+       		height: 35px;
+       		margin-left: 30px;
+       		}
+       	#login-btn:hover{
+       		background-color:white;
+       		opacity: 0.6;
+       		color: #288ad8;
+       	}
+
+       </style>
+    
     	<div class="w3-overlay" onclick="w3_close()" style="cursor:pointer" id="myOverlay"></div>  
     
     	<div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none;margin-top:63px;z-index:5" id="mySidebar">
@@ -81,12 +99,20 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link" href="">Product Manage</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Charge Map</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Car Info</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/map/mapview.do"">Charge Map</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/carInfo/main.do">Car Info</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/main.do">Shop</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Community</a></li>
-                        <li class="nav-item"><a class="nav-link" href="">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/board/boardList.do">Community</a></li>
+                        
                     </ul>
+                    <!-- 여기 div추가 바꿈+스타일-->
+                    <div >
+                    	<%-- <%if(loginMember==null) {%> --%>
+                   			<button id="login-btn"  onclick="window.open('<%=request.getContextPath()%>/member/login.do');">Log In</button>
+                   		<%-- <%}else{ %>
+                   			Welcome! <%=loginMember.getUserName() %>
+                   		<%} %> --%>
+                   	</div>
                 </div>
             </div>
         </nav>
