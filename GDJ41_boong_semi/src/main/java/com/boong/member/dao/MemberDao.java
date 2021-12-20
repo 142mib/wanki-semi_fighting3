@@ -28,7 +28,7 @@ public class MemberDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		Member m=null;
-		String sql=prop.getProperty("selectMember");
+		String sql="SELECT * FROM MEMBER WHERE MEMBER_ID=? AND MEMBER_PW=?";
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
