@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%-- <%@ include file="/views/common/header.jsp" %> --%>
+<%@ include file="/views/common/header.jsp" %>
+
 <style>
-div{
-	margin-top:100px; margin-left: 30%;
+
+div#signUp{
+	margin-top:140px; margin-left: 30%; margin-bottom: 100px;
 }
 ul,li{list-style: none;}
 li{margin-bottom: 20px; text-align: left;}
@@ -13,6 +15,13 @@ li{margin-bottom: 20px; text-align: left;}
 	padding: 10px; border-radius: 8px; 
 	border: solid #288ad8 1px; 
 	background-color: #dee2e6;
+}
+#idbox{
+	width: 376px; height: 50px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid #288ad8 1px; 
+	background-color: #dee2e6;
+}
 }
 input[type=checkbox]+label{
 	margin-left:10px;
@@ -39,20 +48,29 @@ input[type=checkbox]+label{
 }
 h3{margin-left:170px; margin-bottom: 60px;}
 #logo{color:#288ad8; font-size: 40px;}
-
+#idDuplicateBtn{width: 70px; height: 50px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid 1px coral; 
+	background-color: coral;
+	pointer:cursor;}
+#idDuplicateBtn:hover{
+	background-color: pink;
+	border: solid 1px pink;
+}
 </style>
-
+<div id="blank" style="width:100%;height: 70px; background-color: darkcyan;">
+	</div>
 <section id=signup-container>
-        
+        <title>BOONG 회원가입</title>
         <form name="signUpForm" action="<%=request.getContextPath() %>/member/signupEnd.do" 
         	method="post" onsubmit="return memberSignupValidate();" >
-        <div>
+        <div id="signUp">
         	<h3><span id="logo">BOONG</span> 회원 가입</h3>
         <ul>
         	<li>
         	<span>아이디</span><br>
-        		<input type="text" class="box" placeholder="4글자이상" name="memberId" id="memberId_" >
-				<input type="button" value="중복검사" id="idDuplicateBtn">
+        		<input type="text" id="idbox" placeholder="네 글자 이상 입력" name="memberId" id="memberId_" >
+				<input type="button" value="중복확인" id="idDuplicateBtn">
 			</li>
 			<li>
 				<span>비밀번호</span><br>
@@ -112,7 +130,7 @@ h3{margin-left:170px; margin-bottom: 60px;}
         </form>
         
         <form name="idDuplicateForm">
-        	<input type="hidden" name="userId">
+        	<input type="hidden" name="memberId">
         </form>
         
     </section>
@@ -131,12 +149,10 @@ h3{margin-left:170px; margin-bottom: 60px;}
     
     
     	const memberSignupValidate=()=>{
-    		//1. userId입력값이 4자리이상인지 확인
-    		//2. password가 4글자 이상인지 확인
-    		const userId=$("#userId_").val().trim();//공백을 빼고 처리
-    		if(userId.length<4){
+    		const memberId=$("#memberId_").val().trim();
+    		if(memberId.length<4){
     			alert("아이디는 4글자 이상입력하세요!");
-    			$("#userId_").focus();
+    			$("#memberId_").focus();
     			return false;
     		}
     		const password=$("#password_").val().trim();
@@ -148,21 +164,18 @@ h3{margin-left:170px; margin-bottom: 60px;}
     		
     	}
     
-    	//아이디 중복확인하기
     	$(()=>{
     		$("#idDuplicateBtn").click(e=>{
-    			const userId=$("#userId_").val().trim();
-    			if(userId.length>=4){
+    			const memberId=$("#memberId_").val().trim();
+    			if(memberId.length>=4){
     				const url="<%=request.getContextPath()%>/member/idDuplicate.do";
     				const title="idDuplcate";
     				const style="width=300,height=200";
     				open("",title,style);
-    				//hidden form을 설정
-    				//form태그는 name값으로 직접접근이 가능하다.
 	   				console.log(idDuplicateFrm);//form태그
-	   				console.log(idDuplicateFrm.userId);//form내부 input
+	   				console.log(idDuplicateFrm.memberId);//form내부 input
 	   				//form태그 자식 input태그의 value값 설정
-	   				idDuplicateFrm.userId.value=userId;
+	   				idDuplicateFrm.memberId.value=memberId;
 	   				idDuplicateFrm.action=url;
 	   				idDuplicateFrm.method="post";
 	   				//생성한 윈도우에서 form을 실행하려면 form target속성을 이용
@@ -174,7 +187,7 @@ h3{margin-left:170px; margin-bottom: 60px;}
     				
     			}else{
     				alert("아이디는 4글자 이상 작성해야합니다.");
-    				$("#userId_").focus();
+    				$("#memberId_").focus();
     			}
     		});
     	});

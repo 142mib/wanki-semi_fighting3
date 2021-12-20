@@ -2,30 +2,34 @@
     pageEncoding="UTF-8"%>
 
 <%@ include file="/views/common/header.jsp" %>
-
+<div id="blank" style="width:100%; height: 70px; background-color: darkcyan;">
+	</div>
 <style>
-nav{
-	width: 240px;
+nav#side-bar{
+	width: 260px;
 	background-color: #288ad8;
 	border-right: 1px sold #ddd;
-	position: fixed;
+	position: absolute;
 	height: 100%;
-	padding-top: 40px;
+	padding-top: 70px;
+	padding-left:100px;
+	
 }
 h1{
 	font-size: 30px;
-	padding: 20px 30px;
+	padding: 30px 0;
 }
 .side-bar-menu{
 	display: block;
-	height: 30px;
+	height: 50px;
 	padding-bottom: 10px;
+	
 }
 .side-bar-menu:hover{
 	backgound-color: yellow;
 }
 #side-bar>div a{
-	padding: 8px 30px;
+	padding: 10px 0;
 	font-size: 20px;
 	color: white;
 	text-decoration: none;
@@ -36,119 +40,93 @@ h1{
 } */
 
 section{
-	padding: 70px 20px 20px 220px;
-	min-height: 800px;
+	padding: 100px 20px 100px 220px;
+	height: 100%;
 }
-#mypage-container{
-	border: 1px solid black;
-	padding: 0 60px;
+.mypage-container{
+	width: 80%;
+	height: 500px;
+	background-color: white;
+	border: none;
+	border-radius: 10px;
+	padding: 30px 60px;
 	margin-left: 100px;
-	margin-right: 50px;
-	margin-top: 100px;
+	margin-top: 20px;
 	display: block;
-	text-align: center; 
+	box-shadow: 5px 5px 5px 5px lightgray;
 }
 h2{padding: 0 60px; margin-left:45px;}
+ul{list-style:none; margin-top: 30px;}
+li{float:left;margin-left:10px;}
 
-/* 테이블페이지 */
-body {
-  background-color: #eefbfb;
-  font-family: sans-serif;
-  font-size: 16px;
+.box{
+	width: 200px; height: 40px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid #288ad8 1px; 
+	background-color: #dee2e6;
 }
-
-.mypage-table {
-  color: grey;
-  text-align: center;
-  padding-left: 80px;
+.menuicon{
+width: 30px; height: 30px; margin-right:10px;
 }
-
-.headings, .table {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  margin-bottom: 1em;
-  padding: 1em;
-}
-
-.heading {
-  flex-basis: 33.333%;
-  font-weight: bold;
-}
-
-.table {
-  border-radius: 2em;
-  background-color: white;
-  margin-bottom: 20px;
-  -moz-box-shadow: 0 0 3px grey;
-  -webkit-box-shadow: 0 0 3px grey;
-  box-shadow: 0 0 5px grey;
-
-}
-
-span {
-  flex-basis: 33.333%;
-}
-
-a {
-  text-decoration: none;
-  color: #4c4c4c;
-}
-
-
 </style>
 
 
 	<nav id="side-bar">
 		<h1>마이페이지</h1>
-		<div class="side-bar-menu"><span>회원이름</span><button>로그아웃</button></div>
-		<div class="side-bar-menu"><a href="#내정보">내정보 수정</a></div>
-		<div class="side-bar-menu"><a href="#주문내역">주문 내역</a></div>
-		<div class="side-bar-menu"><a href="#회원탈퇴">회원 탈퇴</a></div>
+		<div class="side-bar-menu"><span><%=loginMember.getMemberName() %> 님</span></div>
+		<div class="side-bar-menu"><a href="#내정보"><img class="menuicon" src="<%=request.getContextPath() %>/assets/img/member/avatar.png">내정보</a></div>
+		<div class="side-bar-menu"><a href="#주문내역"><img class="menuicon" src="<%=request.getContextPath() %>/assets/img/member/shopping-cart.png">주문 내역</a></div>
+		<div class="side-bar-menu"><a href="#회원탈퇴"><img class="menuicon" src="<%=request.getContextPath() %>/assets/img/member/delete.png">회원 탈퇴</a></div>
 	</nav>
 <section>
 	<div class="mypage-container">
-  <div class="mypage-table">
-    <div class="headings">
-      <span class="heading">아이디</span>
-      <span class="heading">이름</span>
-      <span class="heading">성별</span>
-      <span class="heading">전화번호</span>
-      <span class="heading">주소</span>
-      <span class="heading">보유차종</span>
-      <span class="heading">관심차종</span>
-      <span class="heading">가입일</span>
-    </div>
-
-    <div class="table">
-      <span>회원이</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-    </div>
-
-    <div class="table">
-      <span>Name</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-      <span>DD MM YY</span>
-
-    </div>
-  </div>
-</div>
-
+		<h3>내정보 보기</h3>
+		<p>정보를 확인하고 변경하세요.</p>
+ 		<ul>
+        	<li>
+        	<span>아이디</span><br>
+        		<input type="text" class="box" name="memberId" id="memberId_" >
+			</li>
+			<li>
+				<span>비밀번호</span><br>
+				<input type="password" class="box" name="memberPw" id="memberPw_" ><br>
+			</li>
+			
+			<li>
+				<span>비밀번호 확인</span><br>
+				<input type="password" class="box" id="memberPw_2" ><br>
+				<span id="pwresult"></span>
+			</li>
+			
+			<li>
+				<span>이름</span><br>
+				<input type="text" class="box" name="memberName" id="memberName" ><br>
+			</li>
+			<li>
+				<span>성별</span><br>
+				<input type="radio" name="gender" id="gender0" value="M" >
+				<label for="gender0">남</label>
+				<input type="radio" name="gender" id="gender1" value="F">
+				<label for="gender1">여</label>
+			</li>	
+			<li>
+				<span>이메일</span><br>
+				<input type="email" class="box" placeholder="abc@xyz.com" name="email" id="email"><br>
+			</li>
+			
+			<li>
+				<span>휴대폰 번호</span><br>
+				<input type="tel" class="box" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" required><br>
+			</li>
+			<li>
+				<span>주소</span><br>
+				<input type="text" class="box" placeholder="" name="address" id="address"><br>
+			</li>
+			<li>
+				<span>관심 전기차 브랜드</span><br>
+					<input type="text" name="brand" id="brand10" value="Volvo"><label for="brand10">볼보</label>
+		</ul>
+	</div>
 </section>
 
 
