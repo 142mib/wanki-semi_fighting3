@@ -1,12 +1,10 @@
 package com.boong.common;
 
-import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Properties;
 
 
 public class JDBCTemplate {
@@ -14,8 +12,8 @@ public class JDBCTemplate {
 	public static Connection getConnection() {
 		Connection conn=null;
 		String url="jdbc:oracle:thin:@localhost:1521:xe";
-		String id="SUN";
-		String pw="SUN";
+		String id="fighting3";
+		String pw="fighting3";
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn=DriverManager.getConnection(url,id,pw);
