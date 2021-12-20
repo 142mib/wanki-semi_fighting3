@@ -5,6 +5,12 @@
 
 <script src="https://kit.fontawesome.com/f88ebc8ec2.js" crossorigin="anonymous"></script>
 
+<script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board/summernote-lite.css">
+<script src="<%=request.getContextPath()%>/js/board/summernote-lite.js"></script>
+<script src="<%=request.getContextPath()%>/js/board/lang/summernote-ko-KR.js"></script>
+
 
 <style>
 	#boardWirte-head{
@@ -16,7 +22,7 @@
 		margin: 0 auto;
 	}
 	
-	#board-content{
+	#summernote{
 		display: block;
 		margin: 0 auto;
 		resize: none;
@@ -57,42 +63,75 @@
 
 <header>
 	<section>
-		<div id="blank" style="width:100%;height: 70px;background-color: brown;">
+		<div id="blank" style="width:100%;height: 70px;background-color: brown"></div>
 	</section>
 </header>
-<div id="boardWirte-head">
-	<i class="fas fa-pen">&nbsp;게시글 작성</i>	
-</div>
 
-
-<form action="">
+<form action="" method="post">
 	<section>
 		<div id="boardWrite-container">
 			<table id="boardWrite-tbl">
-				<tbody>
+				<thead>
 					<tr>
-						<td>
-							<select name="category" id="category">
-								<option>카테고리 선택</option>
-							</select>
-						</td>
-						<td>
-							<input type="text" name="boardTitle" id="boardTitle" placeholder="제목"/>
-						</td>
+						<th colspan="2"><i class="fas fa-pen">&nbsp;게시글 작성</i></th>
 					</tr>
+				</thead>
+				<tbody>
+				 	<tr>
+					<td>
+						<select name="category" id="category">
+								<option>카테고리 선택</option>
+						</select>
+					</td>
+					<td>
+						<input type="text" name="boardTitle" id="boardTitle" placeholder="제목"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<textarea id="summernote" cols="100"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<input type="file" id="upload-file" value="파일첨부" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<button id="upload">등록</button>
+					</td>
+				</tr>
 				</tbody>
 			</table>
-			<div id="boardContent-container">
-				<textarea id="board-content" cols="100" rows="20" placeholder="글 내용을 작성하세요."></textarea>
-			</div>
-		</div>
-		<div id="file-container">
-			<input type="file" id="upload-file" value="파일첨부" />
 		</div>
 	</section>
 </form>
 
-
-
-
 <%@ include file="/views/common/footer.jsp" %>
+
+<script>
+	$(document).ready(function(){
+		$('#summernote').summernote({
+			height: "500",
+			lang: "ko-KR",
+			placeholder: "글 내용을 작성하세요.",
+			disableResizeEditor: true
+		});
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

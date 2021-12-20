@@ -102,6 +102,10 @@ body{
 				});
 			}
 		});
+		
+		// 지도 확대 축소를 제어 할 수 있는 줌 컨트롤 생성
+		var zommController = new kakao.maps.ZoomControl();
+		map.addControl(zommController, kakao.maps.ControlPosition.RIGHT);
 	})
 </script>
 </body>
