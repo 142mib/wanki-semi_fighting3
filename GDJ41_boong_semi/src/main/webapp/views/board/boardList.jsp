@@ -16,12 +16,13 @@
 		margin: 0 auto;
 	}
 	
-	table td{
+ 	table td{
 		border: 1px solid black;
 	}
 	
 	#boardList-tbl{
 		margin: 0 auto;
+		width: 1000px;
 	}
 	
 	#boardList-title{
@@ -33,6 +34,10 @@
 	}
 	
 	#boardList-head{
+		text-align: center;
+	}
+	
+	#pageBar{
 		text-align: center;
 	}
 </style>
@@ -66,7 +71,7 @@
 			    <th>추천</th>
 			  </tr>
 			  <%if(list.isEmpty()) { %>
-			  	<tr>
+			  	<tr style="text-align: center;">
 			  		<td colspan="6">등록된 게시글이 없습니다.</td>
 			  	</tr>
 			  <%}else %>
