@@ -52,4 +52,5 @@
 </header>
 
 		<button id="write" onclick="location.assign('<%=request.getContextPath()%>/board/boardWrite.do')"><i class="fas fa-pen"></i>&nbsp;쓰기</button>
+		
 <%@ include file="/views/common/footer.jsp" %>
