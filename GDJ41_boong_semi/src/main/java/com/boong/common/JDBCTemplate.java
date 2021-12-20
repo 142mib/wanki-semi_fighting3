@@ -13,8 +13,10 @@ public class JDBCTemplate {
 	
 	public static Connection getConnection() {
 		Connection conn=null;
+
 		String path = JDBCTemplate.class.getResource("/driver.properties").getPath();
 		Properties prop = new Properties();
+
 		try {
 			prop.load(new FileReader(path));
 			Class.forName(prop.getProperty("driver"));
