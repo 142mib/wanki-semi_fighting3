@@ -13,12 +13,13 @@ public class JDBCTemplate {
 	
 	public static Connection getConnection() {
 		Connection conn=null;
-		String url="jdbc:oracle:thin:@localhost:1521:xe";
-		String id="SUN";
-		String pw="SUN";
+		String path = JDBCTemplate.class.getResource("/driver.properties").getPath();
+		Properties prop = new Properties();
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn=DriverManager.getConnection(url,id,pw);
+			prop.load(new FileReader(path));
+			Class.forName(prop.getProperty("driver"));
+			conn=DriverManager.getConnection(prop.getProperty("url"),
+					prop.getProperty("userId"),prop.getProperty("pw"));
 			conn.setAutoCommit(false);
 		}catch(Exception e) {
 			e.printStackTrace();
