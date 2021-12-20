@@ -35,12 +35,13 @@
 										<li><label><input type="checkbox">&nbsp;중형차</label></li>
 										<li><label><input type="checkbox">&nbsp;대형차</label></li>
 										<li><label><input type="checkbox">&nbsp;스포츠카</label></li>
-										<li class="stline"><label><input type="checkbox">&nbsp;SUV</label></li>
+										<li><label><input type="checkbox">&nbsp;SUV</label></li>
 										<li><label><input type="checkbox">&nbsp;RV</label></li>
-										<li class="stline"><label><input type="checkbox">&nbsp;경승합차</label></li>
+										<li><label><input type="checkbox">&nbsp;기타</label></li>
+										<!-- <li class="stline"><label><input type="checkbox">&nbsp;경승합차</label></li>
 										<li><label><input type="checkbox">&nbsp;승합차</label></li>
 										<li><label><input type="checkbox">&nbsp;화물차</label></li>
-										<li><label><input type="checkbox">&nbsp;기타</label></li>
+										<li><label><input type="checkbox">&nbsp;기타</label></li> -->
 									</ul>
 								</div>
 							</div>
@@ -217,12 +218,14 @@
 					</ul>
 				</div>
 			</div>
+			<div id="ad_nav_fixed">
+			</div>
 		</div>
 	</div>
 <style>
 #container {
 	height:1400px;
-	width:1400px;
+	width:100%;
 	
 }
 #search_wrap {               /* html화면 줄여도 네비게이션에 고정 */
@@ -238,10 +241,8 @@
 	position:relative;
 	/* top:100px;  */
 	margin:0 auto;
-	top:100px;
-	left:50px;
-	
-	
+	top:70px;
+	align-items:center;
 }
 #search_car {
 	width:239px; height:1100px;
@@ -253,11 +254,21 @@
 	
 }
 #model_info{
+	display:inline-block;
 	float:right;
 	position:relative;
 	width:859px;
 	height:auto;
 	border-bottom:1px solid #e5e5e5;
+}
+#ad_nav_fixed{
+	float:right;
+	position:relative;
+	width:239px;
+	height:500px;
+	background-color:black;
+	
+
 }
 #model_search_info>ul {
 	position:relative;
@@ -482,6 +493,7 @@ padding-top:5px;
 }
 .stline{
 border-top: 1px dotted #c7c7c7;
+margin:5px;
 }
 label{
 border: 1px dotted transparent;
