@@ -30,7 +30,7 @@
     </head>
         <body id="page-top">
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top " id="mainNav">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">BOONG</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -41,7 +41,8 @@
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/main.do">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="">Community</a></li>
 
-                    </ul>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/board/boardList.do">Community</a></li>
+					</ul>
                     <!-- 여기 div추가 바꿈+스타일-->
                     <div>
                     	<%if(loginMember==null) {%>
@@ -58,7 +59,6 @@
 						  </div>
 						</div>
                    		<%} %>
-                   	</div>
                 </div>
             </div>
         </nav>
