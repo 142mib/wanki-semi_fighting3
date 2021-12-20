@@ -15,14 +15,7 @@ import com.boong.member.vo.Member;
 public class MemberDao {
 	
 	private Properties prop=new Properties();
-	public MemberDao() {
-		String path=MemberDao.class.getResource("/sql/member/membersql.properties").getPath();
-		try {
-			prop.load(new FileReader(path));
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
+	public MemberDao() {}
 	
 	public Member login(Connection conn, String memberId, String memberPw) {
 		PreparedStatement pstmt=null;
