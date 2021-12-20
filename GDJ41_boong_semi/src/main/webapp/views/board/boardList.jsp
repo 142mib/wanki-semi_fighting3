@@ -16,19 +16,40 @@
 		<div id="blank" style="width:100%;height: 70px;background-color: brown;">
 		
 		</div>
-		<p>게시판</p>
-		<table id="boardList-tbl" style="border: 1px solid black">
-			<th>카테고리</th><th>제목</th><th>글쓴이</th><th>날짜</th><th>조회</th><th>추천</th>
-			<tr>
-				<td>질문/답변</td>
-				<td>제목테스트</td>
-				<td>admin</td>
-				<td>2021-12-20</td>
-				<td>10</td>
-			</tr>	
+		
+		<table>
+		<thead>
+		  <tr>
+		    <th colspan="6"><i class="fas fa-car-side">&nbsp;게시판</i></th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+		    <td colspan="6">카테고리 || 자유&nbsp;&nbsp;&nbsp;&nbsp;질문/답변&nbsp;&nbsp;&nbsp;&nbsp;정보/공유 </td>
+		  </tr>
+		  <tr>
+		    <td colspan="6"></td>
+		  </tr>
+		  <tr>
+		    <th>카테고리</th>
+		    <th>제목</th>
+		    <th>글쓴이</th>
+		    <th>날짜</th>
+		    <th>조회</th>
+		    <th>추천</th>
+		  </tr>
+		  <tr>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		  </tr>
+		</tbody>
 		</table>
-		<button id="write" onclick="location.assign('<%=request.getContextPath()%>/board/boardWrite.do')"><i class="fas fa-pen"></i>&nbsp;쓰기</button>
 	</section>
 </header>
 
+		<button id="write" onclick="location.assign('<%=request.getContextPath()%>/board/boardWrite.do')"><i class="fas fa-pen"></i>&nbsp;쓰기</button>
 <%@ include file="/views/common/footer.jsp" %>
