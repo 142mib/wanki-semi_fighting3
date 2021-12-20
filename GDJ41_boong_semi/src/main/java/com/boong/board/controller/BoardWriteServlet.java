@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class BoardListServlet
+ * Servlet implementation class BoardWriteServlet
  */
-@WebServlet("/board/boardList.do")
-public class BoardListServlet extends HttpServlet {
+@WebServlet("/board/boardWrite.do")
+public class BoardWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardListServlet() {
+    public BoardWriteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +26,8 @@ public class BoardListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// main 화면에서 게시판 목록을 보여주는 화면으로 전환하는 Servlet
-		request.getRequestDispatcher("/views/board/boardList.jsp").forward(request, response);
+		// 쓰기 버튼 클릭 시 게시글 작성 페이지로 전환 시켜주는 Servlet
+		request.getRequestDispatcher("/views/board/boardWrite.jsp").forward(request, response);
 		
 	}
 

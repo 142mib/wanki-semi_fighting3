@@ -1,22 +1,27 @@
 package com.boong.common;
 
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 
 public class JDBCTemplate {
 	
 	public static Connection getConnection() {
 		Connection conn=null;
-		String url="jdbc:oracle:thin:@localhost:1521:xe";
-		String id="fighting3";
-		String pw="fighting3";
+
+		String path = JDBCTemplate.class.getResource("/driver.properties").getPath();
+		Properties prop = new Properties();
+
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn=DriverManager.getConnection(url,id,pw);
+			prop.load(new FileReader(path));
+			Class.forName(prop.getProperty("driver"));
+			conn=DriverManager.getConnection(prop.getProperty("url"),
+					prop.getProperty("userId"),prop.getProperty("pw"));
 			conn.setAutoCommit(false);
 		}catch(Exception e) {
 			e.printStackTrace();
