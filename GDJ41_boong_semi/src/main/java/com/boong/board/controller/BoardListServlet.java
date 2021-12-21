@@ -48,7 +48,7 @@ public class BoardListServlet extends HttpServlet {
 		}
 		
 		// DB의 board테이블에서 전체 글 정보를 가져와야함
-		List<Board>	list = new BoardService().selectBoard(cPage, numPerpage);
+		List<Board>	list = new BoardService().selectBoardList(cPage, numPerpage);
 		
 		// 페이징 처리 2
 		// 테이블의 데이터 전체 개수를 가져옴

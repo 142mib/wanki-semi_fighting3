@@ -88,11 +88,13 @@
 			    		}
 			    	%>
 				    <td><%=tab %></td>
-				    <td><a href=""><%=b.getBoardTitle() %></a></td>
-				    <td><%=b.getBoardWriter() %></td>
-				    <td><%=b.getBoardDate() %></td>
-				    <td><%=b.getBoardViewCount() %></td>
-				    <td><%=b.getBoardLike() %></td>
+				    <td>
+				    	<a href="<%=request.getContextPath()%>/board/boardView.do?boardNo=<%=b.getBoardNo()%>"><%=b.getBoardTitle() %></a>
+				    </td>
+				    <td><%=b.getBoardWriter()%></td>
+				    <td><%=b.getBoardDate()%></td>
+				    <td><%=b.getBoardViewCount()%></td>
+				    <td><%=b.getBoardLike()%></td>
 				  </tr>
 			  	<%} %>
 			  <tr style="text-align: right;">

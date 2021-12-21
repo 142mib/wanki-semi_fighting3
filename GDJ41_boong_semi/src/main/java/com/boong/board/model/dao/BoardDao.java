@@ -96,6 +96,39 @@ public class BoardDao {
 		}
 		return result;
 	}
+	
+	// BOARD테이블에서 board_no가 일치하는 데이터를 가져오는 기능
+	public Board selectBoard(Connection conn, int boardNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Board b = null;
+		String sql = "select * from board where board_no=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				b = Board.builder()
+						.boardNo(rs.getInt("board_no"))
+						.boardTitle(rs.getString("board_title"))
+						.boardContent(rs.getString("board_content"))
+						.boardDate(rs.getDate("board_date"))
+						.boardViewCount(rs.getInt("board_view_count"))
+						.boardLike(rs.getInt("board_like"))
+						.boardCategory(rs.getInt("board_category"))
+						.boardOriginalFilename(rs.getString("board_original_filename"))
+						.boardRenamedFilename(rs.getString("board_renamed_filename"))
+						.boardWriter(rs.getString("board_writer"))
+						.build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return b;
+	}
 
 }
 

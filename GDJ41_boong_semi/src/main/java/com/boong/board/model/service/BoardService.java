@@ -16,7 +16,7 @@ public class BoardService {
 	BoardDao dao = new BoardDao();
 	
 	// board 테이블 전체 데이터를 가져오는 서비스
-	public List<Board> selectBoard(int cPage, int numPerpage){
+	public List<Board> selectBoardList(int cPage, int numPerpage){
 		Connection conn = getConnection();
 		List<Board> list = dao.selectBoard(conn, cPage, numPerpage);
 		close(conn);
@@ -43,4 +43,32 @@ public class BoardService {
 		close(conn);
 		return result;
 	}
+	
+	// BOARD테이블에서 board_no가 일치하는 데이터를 가져오는 서비스
+	public Board selectBoard(int boardNo) {
+		Connection conn = getConnection();
+		Board b = dao.selectBoard(conn, boardNo);
+		close(conn);
+		return b;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
