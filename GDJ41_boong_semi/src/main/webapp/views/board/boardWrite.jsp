@@ -67,7 +67,7 @@
 	</section>
 </header>
 
-<form action="" method="post">
+<form action="<%=request.getContextPath() %>/board/insertBoard.do" method="post">
 	<section>
 		<div id="boardWrite-container">
 			<table id="boardWrite-tbl">
@@ -99,7 +99,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<button id="upload">등록</button>
+						<input type="submit" id="upload" value="등록">
 					</td>
 				</tr>
 				</tbody>
@@ -111,6 +111,7 @@
 <%@ include file="/views/common/footer.jsp" %>
 
 <script>
+	// 웹 에디터 불러오는 기능
 	$(document).ready(function(){
 		$('#summernote').summernote({
 			height: "500",
