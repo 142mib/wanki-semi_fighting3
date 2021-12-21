@@ -51,4 +51,28 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
+function w3_open() {
+    	  
+    	  document.getElementById("main").style.marginLeft = "0%";
+    	  document.getElementById("mySidebar").style.width = "20%";
+    	  document.getElementById("mySidebar").style.display = "block";
+    	  document.getElementById("mySidebar").style.backgroundColor = "rgba(255,255,255,0.7)";
+    	  document.getElementById("openNav").style.display = 'inline-block';    	  
+    	  document.getElementById("openNav").style.color = 'transparent';    	  
+    	  document.getElementById("myOverlay").style.display = "block";
+    	  
+    	 
+    	}
+    	
+    	
+    	  
+    	function w3_close() {
+    	  document.getElementById("main").style.marginLeft = "0%";
+    	  document.getElementById("mySidebar").style.display = "none";
+    	  document.getElementById("openNav").style.display = "inline-block";
+    	  document.getElementById("myOverlay").style.display = "none";
+    	  document.getElementById("openNav").style.color = 'rgba(0, 0, 0, 0.55)'; 
+    	 
+    	}
+
 
