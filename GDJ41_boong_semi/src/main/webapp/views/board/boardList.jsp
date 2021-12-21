@@ -77,9 +77,18 @@
 			  	</tr>
 			  <%}else %>
 			  	<%for(Board b : list) { %>
-				  <tr>
-				    <td><%=b.getBoardCategory() %></td>
-				    <td><%=b.getBoardTitle() %></td>
+				  <tr style="text-align: center;">
+			    	<%
+			    		String tab = "";
+		    			switch(b.getBoardCategory()) {
+				    		case 1 : tab = "질문/답변"; break;
+				    		case 2 : tab = "정보/팁"; break;
+				    		case 3 : tab = "사요/팔아요"; break;
+				    		case 4 : tab = "자유"; break;
+			    		}
+			    	%>
+				    <td><%=tab %></td>
+				    <td><a href=""><%=b.getBoardTitle() %></a></td>
 				    <td><%=b.getBoardWriter() %></td>
 				    <td><%=b.getBoardDate() %></td>
 				    <td><%=b.getBoardViewCount() %></td>

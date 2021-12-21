@@ -3,6 +3,12 @@
 
 <%@ include file="/views/common/header.jsp" %>
 
+<%@ page import="com.boong.member.vo.Member" %>
+
+<%
+	Member m = (Member)session.getAttribute("loginMember");
+%>
+
 <script src="https://kit.fontawesome.com/f88ebc8ec2.js" crossorigin="anonymous"></script>
 
 <script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
@@ -67,7 +73,7 @@
 	</section>
 </header>
 
-<form action="<%=request.getContextPath() %>/board/insertBoard.do" method="post">
+<form action="<%=request.getContextPath() %>/board/boardWriteEnd.do" method="post" enctype="multipart/form-data">
 	<section>
 		<div id="boardWrite-container">
 			<table id="boardWrite-tbl">
@@ -81,6 +87,10 @@
 					<td>
 						<select name="category" id="category">
 								<option>카테고리 선택</option>
+								<option value="1">질문/답변</option>
+								<option value="2">정보/공유</option>
+								<option value="3">구매/판매</option>
+								<option value="4">자유</option>
 						</select>
 					</td>
 					<td>
@@ -89,21 +99,25 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<textarea id="summernote" cols="100"></textarea>
+						<textarea name="boardContent" id="boardContent" cols="100"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="file" id="upload-file" value="파일첨부" />
+						<input type="file" name="upfile" id="upload-file" value="파일 첨부" multiple />
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="submit" id="upload" value="등록">
+						<input type="submit" id="board-upload" value="등록">
 					</td>
 				</tr>
 				</tbody>
 			</table>
+			<div id="hidden">
+				<input type="hidden" name="boardWriter" value="<%=m.getMemberId() %>" />
+			</div>
+			
 		</div>
 	</section>
 </form>
@@ -113,7 +127,7 @@
 <script>
 	// 웹 에디터 불러오는 기능
 	$(document).ready(function(){
-		$('#summernote').summernote({
+		$('#boardContent').summernote({
 			height: "500",
 			lang: "ko-KR",
 			placeholder: "글 내용을 작성하세요.",

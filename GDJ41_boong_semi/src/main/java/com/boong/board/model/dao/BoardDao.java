@@ -72,5 +72,46 @@ public class BoardDao {
 		}
 		return totalData;
 	}
+	
+	// BOARD테이블에 게시글 insert하는 메소드
+	public int insertBoard(Connection conn, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "insert into board values(BOARD_SEQ.NEXTVAL, ?, ?, SYSDATE, ?, ?, ?, ?, ?, ?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, b.getBoardTitle());
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setInt(3, b.getBoardViewCount());
+			pstmt.setInt(4, b.getBoardLike());
+			pstmt.setInt(5, b.getBoardCategory());
+			pstmt.setString(6, b.getBoardOriginalFilename());
+			pstmt.setString(7, b.getBoardRenamedFilename());
+			pstmt.setString(8, b.getBoardWriter());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
