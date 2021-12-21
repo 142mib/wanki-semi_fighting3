@@ -11294,7 +11294,7 @@ body {
 }
 
 .text-white-75 {
-  color: rgba(255, 255, 255, 0.75) !important;
+  color: rgba(255, 255, 255, 0.75) ;
 }
 
 .btn-xl {
@@ -11515,5 +11515,11 @@ header.masthead h1, header.masthead .h1 {
        	width: 80px;
        	height: 32px;
        	margin-left: 30px;
+    }
+    
+    @media (min-width: 992px){
+	#mainNav.navbar-shrink .dropdown #after-login {
+    	color: #212529;
+	}	
     }
 

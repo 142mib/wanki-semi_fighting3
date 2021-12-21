@@ -62,9 +62,13 @@
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/carInfo/main.do">Car Info</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/main.do">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/board/boardList.do">Community</a></li>
-                        
+                     
                     </ul>
                     <!-- 여기 div추가 바꿈+스타일-->
+                    
+                   
+                    
+                    
                     <div>
                     	<%if(loginMember==null) {%>
                     	<div>
