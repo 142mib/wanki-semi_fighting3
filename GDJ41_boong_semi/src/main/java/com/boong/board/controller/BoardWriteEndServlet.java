@@ -43,7 +43,7 @@ public class BoardWriteEndServlet extends HttpServlet {
 		}
 		
 		String path = getServletContext().getRealPath("/assets/img/board/upload");
-		System.out.println(path);
+//		System.out.println(path);
 		MultipartRequest mr = new MultipartRequest(request, path, (1024 * 1024 * 10), "utf-8", new BoardFileRenamed());
 		
 		// 사용자가 입력한 내용 받아서 Board 객체를 만듦

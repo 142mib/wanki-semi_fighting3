@@ -168,6 +168,23 @@ public class BoardDao {
 		}
 		return result;
 	}
+	
+	// 조회수 올리는 기능
+	public int updateBoardReadCount(Connection conn,int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql="UPDATE BOARD SET BOARD_VIEW_COUNT=BOARD_VIEW_COUNT+1 WHERE BOARD_NO=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			result=pstmt.executeUpdate();			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }
 

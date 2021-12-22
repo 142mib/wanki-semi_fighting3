@@ -13,9 +13,8 @@
 
 <script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board/summernote-lite.css">
-<script src="<%=request.getContextPath()%>/js/board/summernote-lite.js"></script>
-<script src="<%=request.getContextPath()%>/js/board/lang/summernote-ko-KR.js"></script>
+<!-- smartEditor -->
+<script type="text/javascript" src="<%=request.getContextPath() %>/editor/board/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 
 <style>
@@ -73,7 +72,7 @@
 	</section>
 </header>
 
-<form action="<%=request.getContextPath() %>/board/boardWriteEnd.do" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+<form id="frm" action="<%=request.getContextPath() %>/board/boardWriteEnd.do" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 	<section>
 		<div id="boardWrite-container">
 			<table id="boardWrite-tbl">
@@ -99,7 +98,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<textarea name="boardContent" id="boardContent" cols="100"></textarea>
+						<textarea name="boardContent" id="boardContent" cols="100" placeholder="내용을 입력해주세요."></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -109,7 +108,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="submit" id="board-upload" value="등록">
+						<input type="button" id="board-upload" value="등록">
 					</td>
 				</tr>
 				</tbody>
@@ -125,15 +124,21 @@
 <%@ include file="/views/common/footer.jsp" %>
 
 <script>
-	// 웹 에디터 불러오는 기능
-	$(document).ready(function(){
-		$('#boardContent').summernote({
-			height: "500",
-			lang: "ko-KR",
-			placeholder: "글 내용을 작성하세요.",
-			disableResizeEditor: true
-		});
+	// 웹 에디터(smartEditor) 불러오는 기능
+	var oEditors = [];
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef: oEditors,
+		elPlaceHolder: "boardContent",
+		sSkinURI: "<%=request.getContextPath()%>/editor/board/SmartEditor2Skin.html",
+		fCreator: "createSEditor2"
 	});
+	
+	// 저장버튼 클릭시 form을 submit
+	$("#board-upload").click(function(){
+		oEditors.getById["boardContent"].exec("UPDATE_CONTENTS_FIELD", []);
+		$("#frm").submit();
+	})
+
 </script>
 
 

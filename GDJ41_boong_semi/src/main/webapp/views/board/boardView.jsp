@@ -53,8 +53,8 @@
     <div class="row">
         <div class="col-lg-8"><%=b.getBoardWriter() %></div>
        	<input type="hidden" name="board-writer" value="<%=b.getBoardWriter() %>"/>
-        <div class="col-lg-2" style="text-align: right;">추천 수&nbsp;<%=b.getBoardViewCount() %></div>
-        <div class="col-lg-2" style="text-align: right;">조회 수&nbsp;<%=b.getBoardLike() %></div>
+        <div class="col-lg-2" style="text-align: right;">추천 수&nbsp;<%=b.getBoardLike() %></div>
+        <div class="col-lg-2" style="text-align: right;">조회 수&nbsp;<%=b.getBoardViewCount() %></div>
     </div>
     <div class="row">
         <div class="col-xs-12" style="min-height: 500px;">
@@ -64,7 +64,7 @@
     </div>
     <div class="row">
 		<div class="col-xs-12" style="text-align: center;">
-			<button onclick="">추천하기</button>
+			<button onclick="boardLike();">추천하기</button>
 		</div>
     </div>
     <!-- 로그인한 아이디와 작성자 아이디가 같을 경우에만 수정/삭제 버튼 출력 -->
@@ -90,6 +90,18 @@
 			location.assign("<%=request.getContextPath()%>/board/boardDelete.do?boardNo=<%=b.getBoardNo()%>");
 		}else{
 			location.assign("<%=request.getContextPath()%>/board/boardView.do");
+		}
+	}
+	
+	const boardLike=()=>{
+		if(<%=m.getMemberId().equals(b.getBoardWriter())%>){
+			alert("자신의 게시글은 추천 할 수 없습니다.");
+		}else{
+			if(confrim("해당 게시글을 추천하시겠습니까?")){
+				location.assign("<%=request.getContextPath()%>/board/boardLike.do?boardNo=<%=b.getBoardNo()%>");
+			}else{
+				location.assign("");
+			}
 		}
 	}
 </script>

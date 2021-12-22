@@ -45,9 +45,17 @@ public class BoardService {
 	}
 	
 	// BOARD테이블에서 board_no가 일치하는 데이터를 가져오는 서비스
-	public Board selectBoard(int boardNo) {
+	public Board selectBoard(int boardNo, boolean isRead) {
 		Connection conn = getConnection();
 		Board b = dao.selectBoard(conn, boardNo);
+		if(b != null && !isRead) {
+			int result = dao.updateBoardReadCount(conn, boardNo);
+			if(result > 0) {
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+		}
 		close(conn);
 		return b;
 	}
