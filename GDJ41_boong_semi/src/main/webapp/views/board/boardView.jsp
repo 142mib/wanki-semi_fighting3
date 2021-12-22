@@ -8,6 +8,8 @@
 	Member m = (Member)session.getAttribute("loginMember");
 %>
 
+<script src="https://kit.fontawesome.com/f88ebc8ec2.js" crossorigin="anonymous"></script>
+
 <%@ include file="/views/common/header.jsp" %>
 
 <style>
@@ -23,11 +25,13 @@
 </header>
 
  
+<form action="<%=request.getContextPath()%>/board/boardUpdate.do" method="post">
 <section>
 <div class="container" style="margin-top: 30px;">
     <div class="row">
-        <div class="col-lg-2"><i class="far fa-clipboard">게시판</i></div>
+        <div class="col-lg-2"><i class="far fa-comment-alt">&nbsp;게시판</i></div>
         <div class="col-lg-2">
+        	<input type="hidden" name="board-category" value="<%=b.getBoardCategory()%>"/>
         	<%
         		String category = "";
         		switch(b.getBoardCategory()) {
@@ -41,35 +45,40 @@
        	</div>
     </div>
     <div class="row">
-        <div name="board-title" class="col-lg-10" style="background-color: lightgray;"><%=b.getBoardTitle()%></div>
-        <div name="board-date" class="col-lg-2" style="text-align: right; background-color: lightgray;"><%=b.getBoardDate()%></div>
+    	<input type="hidden" name="board-No" value="<%=b.getBoardNo()%>"/>
+        <div class="col-lg-10" style="background-color: lightgray;"><%=b.getBoardTitle()%></div>
+        <input type="hidden" name="board-title" value="<%=b.getBoardTitle()%>">
+        <div class="col-lg-2" style="text-align: right; background-color: lightgray;"><%=b.getBoardDate()%></div>
     </div>
     <div class="row">
         <div class="col-lg-8"><%=b.getBoardWriter() %></div>
+       	<input type="hidden" name="board-writer" value="<%=b.getBoardWriter() %>"/>
         <div class="col-lg-2" style="text-align: right;">추천 수&nbsp;<%=b.getBoardViewCount() %></div>
         <div class="col-lg-2" style="text-align: right;">조회 수&nbsp;<%=b.getBoardLike() %></div>
     </div>
     <div class="row">
-        <div name="board-content" class="col-xs-12" style="min-height: 500px;">
+        <div class="col-xs-12" style="min-height: 500px;">
         	<%=b.getBoardContent() %>
+        	<input type="hidden" name="board-content" value="<%=b.getBoardContent() %>"/>
        	</div>
     </div>
     <div class="row">
 		<div class="col-xs-12" style="text-align: center;">
-			<button>추천!</button>
+			<button onclick="">추천하기</button>
 		</div>
     </div>
-    <!-- 로그인한 아이디와 작성자 아이디가 같을 경우에만 수정 / 삭제 버튼 출력 -->> 
+    <!-- 로그인한 아이디와 작성자 아이디가 같을 경우에만 수정/삭제 버튼 출력 -->
     <%if(m.getMemberId().equals(b.getBoardWriter())) {%>
 	    <div class="row">
 	        <div class="col-xs-12" style="text-align: right;">
 	        	<input type="submit" value="수정"/>
-	        	<button>삭제</button>
+	        	<button onclick="">삭제</button>
 	        </div>
 	    </div>
 	<%} %>
 </div>
 </section>
+</form>
 
     
 <%@ include file="/views/common/footer.jsp" %>

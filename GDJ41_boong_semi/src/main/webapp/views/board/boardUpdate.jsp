@@ -1,22 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ include file="/views/common/header.jsp" %>
-
-<%@ page import="com.boong.member.vo.Member" %>
-
-<%
-	Member m = (Member)session.getAttribute("loginMember");
-%>
-
-<script src="https://kit.fontawesome.com/f88ebc8ec2.js" crossorigin="anonymous"></script>
-
-<script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
-
+    
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board/summernote-lite.css">
 <script src="<%=request.getContextPath()%>/js/board/summernote-lite.js"></script>
 <script src="<%=request.getContextPath()%>/js/board/lang/summernote-ko-KR.js"></script>
 
+<script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+
+<%@ page import="com.boong.board.model.vo.Board" %>
+
+<%
+	Board updateBoard = (Board)request.getAttribute("updateBoard");
+%>
 
 <style>
 	#boardWirte-head{
@@ -67,19 +62,21 @@
 	}
 </style>
 
+<%@ include file="/views/common/header.jsp" %>
 <header>
 	<section>
 		<div id="blank" style="width:100%;height: 70px;background-color: brown"></div>
 	</section>
 </header>
 
-<form action="<%=request.getContextPath() %>/board/boardWriteEnd.do" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+
+<form action="<%=request.getContextPath() %>/board/boardUpdateEnd.do" method="post" enctype="multipart/form-data">
 	<section>
 		<div id="boardWrite-container">
 			<table id="boardWrite-tbl">
 				<thead>
 					<tr>
-						<th colspan="2"><i class="fas fa-pen">&nbsp;게시글 작성</i></th>
+						<th colspan="2"><i class="fas fa-pen">&nbsp;게시글 수정</i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -87,35 +84,37 @@
 					<td>
 						<select name="category" id="category">
 								<option>카테고리 선택</option>
-								<option value="1">질문/답변</option>
-								<option value="2">정보/공유</option>
-								<option value="3">구매/판매</option>
-								<option value="4">자유</option>
+								<option value="1" <%=updateBoard.getBoardCategory() == 1 ? "selected" : ""%>>질문/답변</option>
+								<option value="2" <%=updateBoard.getBoardCategory() == 2 ? "selected" : ""%>>정보/공유</option>
+								<option value="3" <%=updateBoard.getBoardCategory() == 3 ? "selected" : ""%>>구매/판매</option>
+								<option value="4" <%=updateBoard.getBoardCategory() == 4 ? "selected" : ""%>>자유</option>
 						</select>
 					</td>
 					<td>
-						<input type="text" name="boardTitle" id="boardTitle" placeholder="제목"/>
+						<input type="text" name="boardTitle" id="boardTitle" value="<%=updateBoard.getBoardTitle()%>"/>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<textarea name="boardContent" id="boardContent" cols="100"></textarea>
+						<textarea name="boardContent" id="boardContent" cols="100">
+							<%=updateBoard.getBoardContent() %>
+						</textarea>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="file" name="upfile" id="upload-file" value="파일 첨부" multiple />
+						<input type="file" name="upfile" id="upload-file" value="파일 첨부" multiple/>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="submit" id="board-upload" value="등록">
+						<input type="submit" id="board-upload" value="수정">
 					</td>
 				</tr>
 				</tbody>
 			</table>
 			<div id="hidden">
-				<input type="hidden" name="boardWriter" value="<%=m.getMemberId() %>" />
+				<input name="boardNo" type="hidden" value="<%=updateBoard.getBoardNo()%>"/>
 			</div>
 			
 		</div>
@@ -135,18 +134,3 @@
 		});
 	});
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

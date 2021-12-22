@@ -15,16 +15,16 @@ import com.boong.common.BoardFileRenamed;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
- * Servlet implementation class BoardInsertServlet
+ * Servlet implementation class BoardUpdateEndServlet
  */
-@WebServlet("/board/boardWriteEnd.do")
-public class BoardWriteEndServlet extends HttpServlet {
+@WebServlet("/board/boardUpdateEnd.do")
+public class BoardUpdateEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardWriteEndServlet() {
+    public BoardUpdateEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,6 +33,8 @@ public class BoardWriteEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 사용자가 입력한 수정값을 받아 디비에 수정값으로 update하는 기능
+		// 게시글 데이터 중에 board_no가 같은애를 찾아서 update
 		
 		// 파일 업로드처리
 		if(!ServletFileUpload.isMultipartContent(request)) {
@@ -42,35 +44,30 @@ public class BoardWriteEndServlet extends HttpServlet {
 			return;
 		}
 		
-		String path = getServletContext().getRealPath("/assets/img/board/upload");
-		System.out.println(path);
+		String path = getServletContext().getRealPath("/upload/board");
 		MultipartRequest mr = new MultipartRequest(request, path, (1024 * 1024 * 10), "utf-8", new BoardFileRenamed());
 		
-		// 사용자가 입력한 내용 받아서 Board 객체를 만듦
 		Board b = Board.builder()
+				.boardNo(Integer.parseInt(mr.getParameter("boardNo")))
+				.boardCategory(Integer.parseInt(mr.getParameter("category")))
 				.boardTitle(mr.getParameter("boardTitle"))
 				.boardContent(mr.getParameter("boardContent"))
-				.boardWriter(mr.getParameter("boardWriter"))
-				.boardCategory(Integer.parseInt(mr.getParameter("category")))
-				.boardOriginalFilename(mr.getOriginalFileName("upfile"))
-				.boardRenamedFilename(mr.getFilesystemName("upfile"))
 				.build();
 		
-		int result = new BoardService().insertBoard(b);
+		int result = new BoardService().updateBoard(b);
 		
 		String msg = "";
 		String loc = "";
 		if(result > 0) {
-			msg = "게시글 등록 완료";
-			loc = "/board/boardList.do";
+			msg = "게시글 수정 완료";
+			loc = "/board/boardView.do";
 		}else {
-			msg = "게시물 등록 실패";
-			loc = "/board/boardWrite.do";
+			msg = "게시물 수정 실패";
+			loc = "/board/boardUpdate.do";
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
-		
 	}
 
 	/**

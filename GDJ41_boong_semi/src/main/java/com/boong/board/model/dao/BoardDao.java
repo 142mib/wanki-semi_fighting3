@@ -129,6 +129,28 @@ public class BoardDao {
 		}
 		return b;
 	}
+	
+	// BOARD테이블에서 board_ni가 일치하는 데이터의 값을 수정하는 기능
+	public int updateBoard(Connection conn, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "update BOARD set BOARD_TITLE=?, BOARD_CONTETN=?, BOARD_CATEGORY=?, BOARD_ORIGINAL_FILENAME=?, BOARD_RENAMED_FILENAME=? where BOARD_NO=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, b.getBoardTitle());
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setInt(3, b.getBoardCategory());
+			pstmt.setString(4, b.getBoardOriginalFilename());
+			pstmt.setString(5, b.getBoardRenamedFilename());
+			pstmt.setInt(6, b.getBoardNo());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }
 
