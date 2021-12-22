@@ -64,7 +64,7 @@
     </div>
     <div class="row">
 		<div class="col-xs-12" style="text-align: center;">
-			<button onclick="boardLike();">추천하기</button>
+			<button type="button" onclick="boardLike();">추천하기</button>
 		</div>
     </div>
     <!-- 로그인한 아이디와 작성자 아이디가 같을 경우에만 수정/삭제 버튼 출력 -->
@@ -89,18 +89,19 @@
 		if(confirm("정말로 삭제 하시겠습니까?")){
 			location.assign("<%=request.getContextPath()%>/board/boardDelete.do?boardNo=<%=b.getBoardNo()%>");
 		}else{
-			location.assign("<%=request.getContextPath()%>/board/boardView.do");
+			location.reload();
 		}
 	}
 	
 	const boardLike=()=>{
 		if(<%=m.getMemberId().equals(b.getBoardWriter())%>){
 			alert("자신의 게시글은 추천 할 수 없습니다.");
+			location.reload();
 		}else{
-			if(confrim("해당 게시글을 추천하시겠습니까?")){
-				location.assign("<%=request.getContextPath()%>/board/boardLike.do?boardNo=<%=b.getBoardNo()%>");
+			if(confirm("해당 게시글을 추천하시겠습니까?")){
+				location.assign("<%=request.getContextPath()%>/board/boardLike.do?boardNo=<%=b.getBoardNo()%>&boardWriter=<%=b.getBoardWriter()%>");
 			}else{
-				location.assign("");
+				location.assign("<%=request.getContextPath()%>/board/boardView.do");
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 package com.boong.board.model.dao;
 
+import static com.boong.common.JDBCTemplate.close;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.boong.board.model.vo.Board;
-
-import static com.boong.common.JDBCTemplate.close;
+import com.boong.board.model.vo.BoardLike;
 
 public class BoardDao {
 	
@@ -172,12 +173,47 @@ public class BoardDao {
 	// 조회수 올리는 기능
 	public int updateBoardReadCount(Connection conn,int boardNo) {
 		PreparedStatement pstmt=null;
-		int result=0;
+		int result= 0 ;
 		String sql="UPDATE BOARD SET BOARD_VIEW_COUNT=BOARD_VIEW_COUNT+1 WHERE BOARD_NO=?";
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, boardNo);
 			result=pstmt.executeUpdate();			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	// 추천수 올리는 기능
+	public int updateBoardLike(Connection conn, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "update BOARD set BOARD_LIKE=BOARD_LIKE+1  where BOARD_NO=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b.getBoardNo());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	// BOARD_LIKE 테이블에 게시글번호와 추천 누른 유저 아이디 저장
+	public int insertBoardLikeMember(Connection conn, BoardLike bl) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "insert into BOARD_LIKE values(?, ?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bl.getBoardLikeRef());
+			pstmt.setString(2, bl.getBoardLikeMember());
+			result = pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {

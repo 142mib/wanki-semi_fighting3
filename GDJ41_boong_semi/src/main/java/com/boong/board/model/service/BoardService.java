@@ -1,15 +1,16 @@
 package com.boong.board.model.service;
 
+import static com.boong.common.JDBCTemplate.close;
+import static com.boong.common.JDBCTemplate.commit;
+import static com.boong.common.JDBCTemplate.getConnection;
+import static com.boong.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.List;
 
 import com.boong.board.model.dao.BoardDao;
 import com.boong.board.model.vo.Board;
-
-import static com.boong.common.JDBCTemplate.getConnection;
-import static com.boong.common.JDBCTemplate.close;
-import static com.boong.common.JDBCTemplate.commit;
-import static com.boong.common.JDBCTemplate.rollback;
+import com.boong.board.model.vo.BoardLike;
 
 public class BoardService {
 
@@ -67,8 +68,9 @@ public class BoardService {
 		if(result > 0) {
 			commit(conn);
 		}else {
-			close(conn);
+			rollback(conn);
 		}
+		close(conn);
 		return result;
 	}
 	
@@ -81,6 +83,33 @@ public class BoardService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
+		return result;
+	}
+	
+	// 게시글 추천수 올려주는 서비스
+	public int updateBoardLike(Board b) {
+		Connection conn = getConnection();
+		int result = dao.updateBoardLike(conn, b);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	// BOARD_LIKE 테이블에 게시글번호와 추천 누른 유저 아이디 저장
+	public int insertBoardLikeMember(BoardLike bl) {
+		Connection conn = getConnection();
+		int result = dao.insertBoardLikeMember(conn, bl);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
 		return result;
 	}
 }
