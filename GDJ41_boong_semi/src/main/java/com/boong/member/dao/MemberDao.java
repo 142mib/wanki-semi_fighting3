@@ -36,7 +36,7 @@ public class MemberDao {
 						.email(rs.getString("EMAIL"))
 						.phone(rs.getString("PHONE"))
 						.address(rs.getString("ADDRESS"))
-						.carPrefer(rs.getString("CAR"))
+						.car(rs.getString("CAR"))
 						.enrollDate(rs.getDate("ENROLLDATE"))
 						.build();
 			}
@@ -53,7 +53,7 @@ public class MemberDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		Member m=null;
-		String sql=prop.getProperty("selectId");
+		String sql="SELECT * FROM MEMBER WHERE MEMBER_ID=?";
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setString(1,memberId);
@@ -66,7 +66,7 @@ public class MemberDao {
 						.email(rs.getString("EMAIL"))
 						.phone(rs.getString("PHONE"))
 						.address(rs.getString("ADDRESS"))
-						.carPrefer(rs.getString("CAR"))
+						.car(rs.getString("CAR"))
 						.enrollDate(rs.getDate("ENROLLDATE"))
 						.build();
 			}
@@ -78,5 +78,32 @@ public class MemberDao {
 		}
 		return m;
 	}
+	
+	public int insertMember(Connection conn, Member m) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql="INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?,?,SYSDATE)";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, m.getMemberId());
+			pstmt.setString(2, m.getMemberPw());
+			pstmt.setString(3, m.getMemberName());
+			pstmt.setString(4, m.getGender());
+			pstmt.setString(5, m.getEmail());
+			pstmt.setString(6, m.getPhone());
+			pstmt.setString(7, m.getAddress());
+			pstmt.setString(8, m.getCar());
+			
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
 	
 }

@@ -45,15 +45,20 @@
                     <div>
                     	<%if(loginMember==null) {%>
                     	<div>
-                   			<button id="login-btn" onclick="window.open('<%=request.getContextPath()%>/member/login.do');">Log In</button>
+                   			<button id="login-btn" onclick="location.assign('<%=request.getContextPath()%>/member/login.do');">Log In</button>
                    		</div>
                    		<%}else{ %>
            				<div class="dropdown">
 						 <a class="dropbtn"><img id="mypage-icon" src="<%=request.getContextPath()%>/assets/usericon.png"></a>
                    			<p id="after-login" class="text-white-75 mb-4"><%=loginMember.getMemberName() %> 님 ▼</p>
 						  <div class="dropdown-content">
-							<a class="dropdown-item" href="#">My Page </a>  
+						  	<%if(loginMember.getMemberId().equals("admin")) {%>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>  
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
+							<%}else{ %>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
+							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
+						  	<%} %>
 						  </div>
 						</div>
                    		<%} %>
@@ -61,7 +66,6 @@
             </div>
             </div>
         </nav>
-        
         
         
         

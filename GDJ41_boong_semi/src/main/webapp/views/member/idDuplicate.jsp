@@ -11,13 +11,18 @@
 <title>아이디 중복 확인</title>
 </head>
 <body>
+	<header>
+		<h3>아이디 중복 확인</h3>
+		<hr>
+	</header>
+	<section>
 		<div id="checkId-container">
 	<%if(m==null){ %>
-			[<span><%=request.getParameter("memberId") %></span>]는 사용가능합니다.	
+			<span><strong><%=request.getParameter("memberId") %></strong></span>는 사용가능합니다.	
 			<br><br>
-			<button type="button" id="btn">닫기</button>
+			<button type="button" id="btn">사용하기</button>
 	<%}else{ %>
-			[<span id="duplicated"><%=m.getMemberId() %></span>]는 사용중입니다.
+			<span id="duplicated"><strong><%=m.getMemberId() %></strong></span>는 사용중입니다.
 			<br><br>
 			<!-- 아이디 재입력창 구성 -->
 			<form action="<%=request.getContextPath() %>/member/idDuplicate.do" method="post">
@@ -26,13 +31,28 @@
 			</form>
 	<%} %>
 	</div>
+	</section>
+	
 	<script>
 		const el=document.querySelector("#btn").addEventListener("click",e=>{
-			const userId='<%=request.getParameter("memberId")%>';
-			opener.enrollMemberFrm.userId.value=userId;
-			opener.enrollMemberFrm.password.focus();
+			const memberId='<%=request.getParameter("memberId")%>';
+			opener.signUpForm.memberId.value=memberId;
+			opener.signUpForm.memberPw.focus();
 			close();
 		});
 	</script>
 </body>
+
+<style>
+header{
+	height: 50px;
+	color:#288ad8;
+}
+section{
+	margin-top: 30px;
+	text-align:center;
+}
+span{color:blue; text-style:bold;}
+</style>
+
 </html>

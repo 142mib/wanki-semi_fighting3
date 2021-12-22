@@ -17,6 +17,7 @@
 <head>
 <meta charset="UTF-8">
 <title>BOONG 로그인</title>
+<link rel="icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/electric-car.png" />
 </head>
 <style>
 body{
@@ -40,15 +41,17 @@ div.login-container{
 	
 }
 tr{
-	height: 40px;
+	height: 50px;
 }
 td.login-input>input{
-	width: 446px;
+	width: 435px;
 	height: 45px;
 	border-radius: 8px;
 	border: solid #288ad8 1px;
 	background-color: #dee2e6;
+	padding-left: 10px;
 }
+
 .login-button{
 	width: 450px;
 	height: 45px;
@@ -89,11 +92,13 @@ table, h2{
 }
 .text1{font-size:14px; color:gray;}
 .text2{font-size:14px; font-style:bold; vertical-align:bottom;}
+.text3{float:right; font-size:14px; font-weight:bolder; color:#288ad8;}
 </style>
 <body>
 		<div class="login-container">
-			<a id="x-btn" onclick="closeTab();"><img src="<%=request.getContextPath() %>/assets/img/member/icon_close.png"></a>
-			<form id="loginForm" action="<%=request.getContextPath() %>/member/loginend.do" method="post">
+			<a id="x-btn" onclick="history.back()"><img src="<%=request.getContextPath() %>/assets/img/member/icon_close.png"></a>
+			<form id="loginForm" action="<%=request.getContextPath() %>/member/loginend.do" method="post"
+			>
 				
 			<h2 class="login">BOONG</h2>
 			<table>
@@ -111,6 +116,9 @@ table, h2{
 					<td>
 						<input type="checkbox" name="saveId" id="saveId" <%=saveId!=null?"checked":"" %>>
 						<label for="saveId" class="text1">아이디 저장하기</label>&nbsp&nbsp&nbsp
+						<!-- <a id="findId" class="text3" href="#">비밀번호 찾기</a> 
+						<span class="text3"> &nbsp|&nbsp </span> 
+						<a id="findPw" class="text3" href="#">아이디 찾기</a> -->
 					<td>
 				</tr>
 				<tr>
@@ -131,12 +139,15 @@ table, h2{
 			</form>
 		</div>
 		
-<script>
-	function closeTab(){
-		window.close();
-	}
-</script>
+		<script>
+		$(()=>{
+			$("#findId").click(e=>{
+				window.open("<%=request.getContextPath() %>/member/findId.do",,"width=300,height=300");
+				
+			})
+		})
 		
+		</script>
 		
 </body>
 </html>

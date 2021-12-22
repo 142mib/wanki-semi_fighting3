@@ -2,6 +2,8 @@ package com.boong.member.service;
 
 import static com.boong.common.JDBCTemplate.close;
 import static com.boong.common.JDBCTemplate.getConnection;
+import static com.boong.common.JDBCTemplate.commit;
+import static com.boong.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 
@@ -25,4 +27,15 @@ public class MemberService {
 		close(conn);
 		return m;
 	}
+	
+	public int insertMember(Member m) {
+		Connection conn=getConnection();
+		int result=dao.insertMember(conn,m);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		
+		return result;	
+	}
+	
 }
