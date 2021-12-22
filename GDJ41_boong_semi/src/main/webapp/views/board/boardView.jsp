@@ -25,8 +25,8 @@
 </header>
 
  
-<form action="<%=request.getContextPath()%>/board/boardUpdate.do" method="post">
 <section>
+<form action="<%=request.getContextPath()%>/board/boardUpdate.do" method="post">
 <div class="container" style="margin-top: 30px;">
     <div class="row">
         <div class="col-lg-2"><i class="far fa-comment-alt">&nbsp;게시판</i></div>
@@ -70,15 +70,28 @@
     <!-- 로그인한 아이디와 작성자 아이디가 같을 경우에만 수정/삭제 버튼 출력 -->
     <%if(m.getMemberId().equals(b.getBoardWriter())) {%>
 	    <div class="row">
-	        <div class="col-xs-12" style="text-align: right;">
+	        <div class="col-lg-11" style="text-align: right;">
 	        	<input type="submit" value="수정"/>
-	        	<button onclick="">삭제</button>
+	        </div>
+	        <div class="col-lg-1" style="text-align: left;" >
+	        	<button type="button" onclick="deleteConfirm();">삭제</button>
 	        </div>
 	    </div>
 	<%} %>
 </div>
-</section>
 </form>
+</section>
 
-    
 <%@ include file="/views/common/footer.jsp" %>
+
+<script>
+	const deleteConfirm=()=>{
+		if(confirm("정말로 삭제 하시겠습니까?")){
+			location.assign("<%=request.getContextPath()%>/board/boardDelete.do?boardNo=<%=b.getBoardNo()%>");
+		}else{
+			location.assign("<%=request.getContextPath()%>/board/boardView.do");
+		}
+	}
+</script>
+
+

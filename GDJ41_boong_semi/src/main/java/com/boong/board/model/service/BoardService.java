@@ -62,7 +62,18 @@ public class BoardService {
 			close(conn);
 		}
 		return result;
-			
+	}
+	
+	// BOARD 테이블에 board_no가 일치하는 데이터를 찾아 삭제하는 서비스
+	public int deleteBoard(Board b) {
+		Connection conn = getConnection();
+		int result = dao.deleteBoard(conn, b);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
 	}
 }
 

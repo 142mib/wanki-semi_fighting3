@@ -151,6 +151,23 @@ public class BoardDao {
 		}
 		return result;
 	}
+	
+	// BOARD테이블에서 board_no가 일치하는 데이터 를 삭제한느 기능
+	public int deleteBoard(Connection conn, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "delete from BOARD where board_no=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b.getBoardNo());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }
 
