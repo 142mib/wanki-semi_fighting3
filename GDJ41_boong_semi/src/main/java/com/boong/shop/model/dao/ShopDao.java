@@ -28,14 +28,25 @@ public class ShopDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Product> result=new ArrayList();
-		String sql="SELECT * FROM (SELECT ROWNUM AS RNUM, P.* FROM (SELECT * FROM SHOP_PRODUCT ORDER BY SHOP_PRODUCT_DATE DESC) B ) WHERE RNUM BETWEEN ? AND ?";
+		String sql="SELECT * FROM (SELECT ROWNUM AS RNUM, P.* FROM (SELECT * FROM SHOP_PRODUCT ORDER BY SHOP_PRODUCT_DATE DESC) P ) WHERE RNUM BETWEEN ? AND ?";
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, (cPage-1)*numPerpage+1);
 			pstmt.setInt(2, cPage*numPerpage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				//추가해야함
+				Product p=Product.builder()
+						.shopProductId(rs.getInt("shop_product_id"))
+						.shopProductName(rs.getString("shop_product_name"))
+						.shopProductPrice(rs.getInt("shop_product_price"))
+						.shopProductContent(rs.getString("shop_product_content"))
+						.shopProductStock(rs.getInt("shop_product_stock"))
+						.shopProductDate(rs.getDate("shop_product_date"))
+						.shopProductSales(rs.getInt("shop_product_sales"))
+						.shopProductImage(rs.getString("shop_product_image"))
+						.shopProductImageRename(rs.getString("shop_product_imagerename"))
+						.build();
+				result.add(p);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -100,12 +111,16 @@ public class ShopDao {
 		String sql="INSERT INTO SHOP_PRODUCT VALUES(DEFAULT,?,?,?,?,DEFAULT,DEFAULT,?,?)";
 		try {
 			pstmt=conn.prepareStatement(sql);
-			/*
-			 * pstmt.setString(1, b.getBoardTitle()); pstmt.setString(2,
-			 * b.getBoardWriter()); pstmt.setString(3, b.getBoardContent());
-			 * pstmt.setString(4, b.getBoardOriginalFilename()); pstmt.setString(5,
-			 * b.getBoardRenamedFilename());
-			 */
+			//default
+			pstmt.setString(1, p.getShopProductName());
+			pstmt.setInt(2, p.getShopProductPrice());
+			pstmt.setString(3, p.getShopProductContent());
+			pstmt.setInt(4, p.getShopProductStock());
+			//default
+			//default
+			pstmt.setString(5, p.getShopProductImage());
+			pstmt.setString(6, p.getShopProductImageRename());
+			
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

@@ -16,13 +16,13 @@ import com.boong.shop.model.vo.Product;
  * Servlet implementation class ShopProjectManage
  */
 @WebServlet("/shop/productManage.do")
-public class ShopProjectManage extends HttpServlet {
+public class ShopProjectManageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShopProjectManage() {
+    public ShopProjectManageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
