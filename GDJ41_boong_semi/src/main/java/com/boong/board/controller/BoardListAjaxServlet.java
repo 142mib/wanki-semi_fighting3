@@ -34,7 +34,7 @@ public class BoardListAjaxServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int tabNo = Integer.parseInt(request.getParameter("tabNo"));
-//		System.out.println(tabNo);
+		System.out.println(tabNo);
 		
 		// 페이징 처리 //
 		int cPage; // 현재페이지
