@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.boong.board.model.vo.Board;
 import com.boong.shop.model.vo.Product;
 import com.boong.shop.model.vo.ProductComment;
 
@@ -182,6 +181,27 @@ public class ShopDao {
 			close(rs);
 			close(pstmt);
 		}return list;
+	}
+
+	public int updateProduct(Connection conn, Product p) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql="UPDATE SHOP_PRODUCT SET SHOP_PRODUCT_NAME=?,SHOP_PRODUCT_PRICE=?,SHOP_PRODUCT_CONTENT=?,SHOP_PRODUCT_STOCK=?,SHOP_PRODUCT_IMAGE=?,SHOP_PRODUCT_IMAGERENAME=? WHERE SHOP_PRODUCT_ID=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, p.getShopProductName());
+			pstmt.setInt(2, p.getShopProductPrice());
+			pstmt.setString(3, p.getShopProductContent());
+			pstmt.setInt(4, p.getShopProductStock());
+			pstmt.setString(5, p.getShopProductImage());
+			pstmt.setString(6, p.getShopProductImageRename());
+			pstmt.setInt(7, p.getShopProductId());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
 	}
 	
 	

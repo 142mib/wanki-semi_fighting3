@@ -41,7 +41,7 @@ List<Product> list=(List)request.getAttribute("productList");
 				<th>상품명</th>
 				<th>가격</th>
 				<th>재고</th>
-				<th>판매량</th>
+				<th>판매수</th>
 				<th>등록일</th>
 				<th>수정</th>
 				<th>삭제</th>
@@ -60,7 +60,7 @@ List<Product> list=(List)request.getAttribute("productList");
 				<tr>
 					<td><%=p.getShopProductId() %></td>
 					<td>
-						<a href="<%=request.getContextPath()%>/shop/productView.do?shopProductId=<%=p.getShopProductId()%>">
+						<a href="<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>">
 							<%=p.getShopProductName() %>
 						</a>
 					</td>
@@ -69,10 +69,10 @@ List<Product> list=(List)request.getAttribute("productList");
 					<td><%=p.getShopProductSales() %></td>
 					<td><%=p.getShopProductDate()  %></td>
 					<td>
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productUpdate.do?shopProductId=<%=p.getShopProductId()%>)">수정</button>					
+						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productUpdate.do?shopProductId=<%=p.getShopProductId()%>')">수정</button>					
 					</td>
 					<td>
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productDelete.do?shopProductId=<%=p.getShopProductId()%>)">삭제</button>					
+						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productDelete.do?shopProductId=<%=p.getShopProductId()%>')">삭제</button>					
 					</td>
 					
 				</tr>

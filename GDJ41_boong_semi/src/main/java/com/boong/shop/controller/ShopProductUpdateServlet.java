@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.boong.shop.model.service.ShopService;
+import com.boong.shop.model.vo.Product;
+
 /**
  * Servlet implementation class ShopProductUpdate
  */
@@ -26,8 +29,15 @@ public class ShopProductUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int shopProductId=Integer.parseInt(request.getParameter( "shopProductId" )) ;
+		Product p=new ShopService().selectProduct(shopProductId);
+		
+		request.setAttribute("product", p);
+		
+		request.getRequestDispatcher("/views/shop/productUpdate.jsp")
+		.forward(request, response);
+		
+		
 	}
 
 	/**
