@@ -85,16 +85,17 @@ public class ShopDao {
 			pstmt.setInt(1, shopProductId);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				/*
-				 * b=Board.builder() .boardNo(rs.getInt("board_no"))
-				 * .boardTitle(rs.getString("board_title"))
-				 * .boardWriter(rs.getString("board_writer"))
-				 * .boardContent(rs.getString("board_content"))
-				 * .boardOriginalFilename(rs.getString("board_original_filename"))
-				 * .boardRenamedFilename(rs.getString("board_renamed_filename"))
-				 * .boardDate(rs.getDate("board_date"))
-				 * .boardReadCount(rs.getInt("board_readcount")) .build();
-				 *///추가해야함
+				p=Product.builder()
+						.shopProductId(rs.getInt("shop_product_id"))
+						.shopProductName(rs.getString("shop_product_name"))
+						.shopProductPrice(rs.getInt("shop_product_price"))
+						.shopProductContent(rs.getString("shop_product_content"))
+						.shopProductStock(rs.getInt("shop_product_stock"))
+						.shopProductDate(rs.getDate("shop_product_date"))
+						.shopProductSales(rs.getInt("shop_product_sales"))
+						.shopProductImage(rs.getString("shop_product_image"))
+						.shopProductImageRename(rs.getString("shop_product_imagerename"))
+						.build();
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

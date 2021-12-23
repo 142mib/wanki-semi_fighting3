@@ -5,158 +5,45 @@
 <%
 List<Product> list=(List)request.getAttribute("productList");
 %>     
-    
+
+
+<style>
+	div#pageBar{margin-top:10px; text-align:center; background-color:rgba(1,138,216,1);}
+	div#pageBar span{color: white;}
+
+</style>
     
 <!-- Portfolio-->
 	<section>
-		
+		<div style="height: 63px; background-color: rgb(1,138,216);">
 		
 		</div>
         <div id="portfolio">
             <div class="container-fluid p-0">
                 <div class="row g-0">
                     
+                    <% for(Product p : list){ %>
                     
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
+                        <a class="portfolio-box" style="cursor: pointer;" onclick="location.assign('<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>');" title="자세히보기"  >
+                            <img class="img-fluid" src="<%=request.getContextPath()%>/upload/shop/<%=p.getShopProductImageRename() %>" alt="..." />
                             <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
+                                <div class="project-name"><%=p.getShopProductName() %></div>
+                                <div class="project-category text-white-50"><%=p.getShopProductPrice()%>원</div>
+                                
                             </div>
                         </a>
                     </div>
                     
+                    <% } %>
                     
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/2.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/2.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/3.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/3.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/4.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/4.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/5.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/5.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/6.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/6.jpg" alt="..." />
-                            <div class="portfolio-box-caption p-3">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="<%=request.getContextPath()%>/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="<%=request.getContextPath()%>/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
+                    
                 </div>
             </div>
         </div>
+        <div id="pageBar">
+			<%=request.getAttribute("pageBar") %>
+		</div>
 	</section>
 
 
