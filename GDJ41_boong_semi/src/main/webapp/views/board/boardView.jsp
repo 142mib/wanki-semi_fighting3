@@ -80,6 +80,16 @@
 	<%} %>
 </div>
 </form>
+
+	<!-- 댓글 부분 -->		
+		<div class="container">
+		    <div class="row">
+		        <div class="col-sm-12"></div>
+		        <div class="col-sm-12"></div>
+		        <div class="col-sm-12"></div>
+		    </div>
+		</div>
+
 </section>
 
 <%@ include file="/views/common/footer.jsp" %>
