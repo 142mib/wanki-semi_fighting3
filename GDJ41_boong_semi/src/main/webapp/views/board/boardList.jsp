@@ -6,6 +6,7 @@
 <%
 	List<Board> list = (List)request.getAttribute("boardList");
 	Member m = (Member)session.getAttribute("loginMember");
+	List<Board> cbl = (List)request.getAttribute("categoryboardList");
 %>
 
 <%@ include file="/views/common/header.jsp" %>
@@ -41,6 +42,29 @@
 	#pageBar{
 		text-align: center;
 	}
+	
+	#board-head{
+		width: 1000px;
+		margin: 0 auto;
+		text-align: left;
+		font-size: 35px;
+		margin-top: 20px;
+	}
+	#board-category-btn{
+		width: 1000px;
+		margin: 0 auto;
+		text-align: left;
+	}
+	
+	.col-sm-2{
+		border: 1px solid black;
+	}
+	
+	#boardList-head{
+		width: 1000px;
+		text-align: center;
+		margin: 0 auto;
+	}
 </style>
 
 <header>
@@ -49,35 +73,36 @@
 		
 		</div>
 		
+			  <div id="board-head" class="col-lg-1">
+			    <i class="fas fa-car-side">&nbsp;게시판</i>
+			  </div>
+			  <br>
+			  <div id="board-category-btn" class="col-lg-5">
+			    <button id="category-all" value="0"><i class="fas fa-home">&nbsp;전체 게시글</i></button>
+			    <button id="category-qa" value="1">질문/답변</button>
+			    <button id="category-tip" value="2">정보/공유</button>
+			    <button id="category-buysell" value="3">구매/판매</button>
+			    <button id="category-free" value="4">자유</button>
+		      </div>
+		      <br>
+				<div id="boardList-head" class="row">
+					<div class="col-sm-2">카테고리</div>
+					<div class="col-sm-2">제목</div>
+					<div class="col-sm-2">글쓴이</div>
+					<div class="col-sm-2">날짜</div>
+					<div class="col-sm-2">조회수</div>
+					<div class="col-sm-2">추천</div>
+				</div>
+		     
 		<table id="boardList-tbl">
-			<thead>
-			  <tr>
-			    <th colspan="6" id="boardList-title"><i class="fas fa-car-side">&nbsp;게시판</i></th>
-			  </tr>
-			</thead>
-			<tbody>
-			  <tr id="boardList-category">
-			    <td><i class="fas fa-home">&nbsp;전체 게시글</i></td>
-			    <td>질문/답변</td>
-			    <td>정보/공유</td>
-			    <td>구매/판매</td>
-			    <td colspan="2">자유</td>
-			  </tr>
-			  <tr id="boardList-head">
-			    <th>카테고리</th>
-			    <th>제목</th>
-			    <th>글쓴이</th>
-			    <th>날짜</th>
-			    <th>조회</th>
-			    <th>추천</th>
-			  </tr>
+			 <tbody id="boardList-body">
 			  <%if(list.isEmpty()) { %>
 			  	<tr style="text-align: center;">
 			  		<td colspan="6">등록된 게시글이 없습니다.</td>
 			  	</tr>
 			  <%}else %>
 			  	<%for(Board b : list) { %>
-				  <tr style="text-align: center;">
+				  <tr id="trtr" style="text-align: center;">
 			    	<%
 			    		String tab = "";
 		    			switch(b.getBoardCategory()) {
@@ -88,7 +113,7 @@
 			    		}
 			    	%>
 				    <td><%=tab %></td>
-				    <td>
+				    <td id="board-list">
 				    	<a href="<%=request.getContextPath()%>/board/boardView.do?boardNo=<%=b.getBoardNo()%>"><%=b.getBoardTitle() %></a>
 				    </td>
 				    <td><%=b.getBoardWriter()%></td>
@@ -97,6 +122,9 @@
 				    <td><%=b.getBoardLike()%></td>
 				  </tr>
 			  	<%} %>
+			</tbody>
+			
+			<tfoot>
 			  <tr style="text-align: right;">
 			  	<td colspan="6">
 			  		<%if(m != null) { %>
@@ -110,9 +138,45 @@
 			  <tr id="pageBar">
 			  	<td colspan="6"><%=request.getAttribute("pageBar") %></td>
 			  </tr>
-			</tbody>
+		  	</tfoot>
 		</table>
 	</section>
 </header>
 
 <%@ include file="/views/common/footer.jsp" %>
+
+<script>
+	$("#board-category-btn button").click(e=>{
+		var tabNo = $(e.target).val();
+		$.ajax({
+			url: "<%=request.getContextPath()%>/board/boardListAjax.do",
+			type: "post",
+			data: {"tabNo":tabNo},
+			success:function(data){
+				$("tbody").empty();
+				let tbody = $("<tbody>");
+				for(let i = 0; i < data.length; i++){
+					let tr = $("<tr>");
+					let tab = $("<td>");
+					switch(data[i]["boardCategory"]){
+			    		case 1 : tab.html("질문/답변"); break;
+			    		case 2 : tab.html("정보/팁"); break;
+			    		case 3 : tab.html("사요/팔아요"); break;
+			    		case 4 : tab.html("자유"); break;
+					}
+					let a = $("<a>").attr({
+						'href': '<%=request.getContextPath()%>/board/boardView.do?boardNo=' + data[i]["boardNo"]
+					});
+					let title = $("<td>").html(data[i]["boardTitle"]);
+					a.append(title);
+					let writer = $("<td>").html(data[i]["boardWriter"]);
+					let date = $("<td>").html(data[i]["boardDate"]);
+					let viewCount = $("<td>").html(data[i]["boardViewCount"]);
+					let like = $("<td>").html(data[i]["boardLike"]);
+					tbody.append(tr).append(tab).append(a).append(writer).append(date).append(viewCount).append(like);
+				}
+				$("#boardList-head").after().html(tbody);
+			}
+		})
+	})
+</script>

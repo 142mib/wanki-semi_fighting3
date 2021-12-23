@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.boong.board.model.vo.Board;
 import com.boong.board.model.vo.BoardLike;
@@ -220,6 +221,64 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	// 카테고리 별 글 개수를 알려주는 기능
+	public int getCategoryCount(Connection conn, Board b) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int totalData = 0;
+		String sql = "select count(*) from board where BOARD_CATEGORY=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b.getBoardCategory());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				totalData = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return totalData;
+	}
+	
+	// 카테고리 별 글의 데이터를 가져오는 기능
+	public List<Board> selectBoardCategoryList(Connection conn, int cPage, int numPerpage, Board b) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Board> list = new ArrayList();
+		String sql = "select * from(select rownum as rnum, b.* from(select * from(select * from board where board_category=?)board order by board_date desc) b) where rnum between ? and ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b.getBoardCategory());
+			pstmt.setInt(2, (cPage-1) * numPerpage + 1);
+			pstmt.setInt(3, numPerpage);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Board tab = Board.builder()
+						.boardNo(rs.getInt("board_no"))
+						.boardTitle(rs.getString("board_title"))
+						.boardContent(rs.getString("board_content"))
+						.boardDate(rs.getDate("board_date"))
+						.boardViewCount(rs.getInt("board_view_count"))
+						.boardLike(rs.getInt("board_like"))
+						.boardCategory(rs.getInt("board_category"))
+						.boardOriginalFilename(rs.getString("board_original_filename"))
+						.boardRenamedFilename(rs.getString("board_renamed_filename"))
+						.boardWriter(rs.getString("board_writer"))
+						.build();
+				list.add(tab);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
 	}
 
 }

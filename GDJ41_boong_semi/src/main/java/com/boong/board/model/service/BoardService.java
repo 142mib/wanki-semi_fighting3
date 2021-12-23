@@ -7,6 +7,7 @@ import static com.boong.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import com.boong.board.model.dao.BoardDao;
 import com.boong.board.model.vo.Board;
@@ -24,7 +25,7 @@ public class BoardService {
 		return list;
 	}
 	
-	// BOARD테이블 데이터 개수가 몇개인지 확인하는 서비스
+	// BOARD테이블 전체 데이터 개수가 몇개인지 확인하는 서비스
 	public int selectBoardCount() {
 		Connection conn = getConnection();
 		int totalData = dao.selectBoardCount(conn);
@@ -111,6 +112,20 @@ public class BoardService {
 		}
 		close(conn);
 		return result;
+	}
+	
+	public int getCategoryCount(Board b) {
+		Connection conn = getConnection();
+		int result = dao.getCategoryCount(conn, b);
+		close(conn);
+		return result;
+	}
+	
+	public List<Board> selectBoardCategoryList(int cPage, int numPerpage, Board b){
+		Connection conn = getConnection();
+		List<Board> list = dao.selectBoardCategoryList(conn, cPage, numPerpage, b);
+		close(conn);
+		return list;
 	}
 }
 
