@@ -9,7 +9,7 @@ List<Product> list=(List)request.getAttribute("productList");
 <%@ include file="/views/common/header.jsp"%>
 
 <style>
-	section#pm-container{width:600px; margin:0 auto;padding-top:10px; text-align:center;}
+	section#pm-container{width:800px; margin:0 auto;padding-top:10px; text-align:center;}
 	section#pm-container h2{margin:10px 0;}
 	section#pm-container .enroll-btn{margin:5px; }
 	section#pm-container .enroll-btn-container{width:100%; text-align: right;}

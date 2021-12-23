@@ -28,7 +28,7 @@ public class ShopDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Product> result=new ArrayList();
-		String sql="SELECT * FROM (SELECT ROWNUM AS RNUM, P.* FROM (SELECT * FROM SHOP_PRODUCT ORDER BY SHOP_PRODUCT_DATE DESC) P ) WHERE RNUM BETWEEN ? AND ?";
+		String sql="SELECT * FROM (SELECT ROWNUM AS RNUM, P.* FROM (SELECT * FROM SHOP_PRODUCT ORDER BY SHOP_PRODUCT_DATE ASC) P ) WHERE RNUM BETWEEN ? AND ?";
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, (cPage-1)*numPerpage+1);
@@ -48,6 +48,7 @@ public class ShopDao {
 						.build();
 				result.add(p);
 			}
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
