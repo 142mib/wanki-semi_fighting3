@@ -82,13 +82,23 @@
 </form>
 
 	<!-- 댓글 부분 -->		
-		<div class="container">
-		    <div class="row">
-		        <div class="col-sm-12"></div>
-		        <div class="col-sm-12"></div>
-		        <div class="col-sm-12"></div>
-		    </div>
+	<div class="commentWrap">
+		<div class="row board-comment-container">
+			<div class="board-comment-count col-sm-12">댓글 몇개~</div>
+			<div id="board-commnet" class="board-comment col-sm-12">댓글 들어갈부분~</div>
+			<div class="board-write col-sm-12" style="border: 1px solid black;">
+				댓글쓰기<br>
+				<form action="<%=request.getContextPath()%>/board/boardCommentWrite.do" method="post">
+					<input type="hidden" name="boardRef" value="<%=b.getBoardNo()%>"/>
+					<input type="hidden" name="boardCommentWriter" value="<%=m.getMemberId()%>"/>
+					<input type="hidden" name="boardCommentRef" value="0"/>
+					<input type="hidden" name="boardCommentLevel" value="1"/>
+					<textarea name="boardCommentContent" rows="3" cols="60"></textarea>
+					<button type="submit" name="insert-btn">등록</button>
+				</form>
+			</div>
 		</div>
+	</div>
 
 </section>
 
@@ -115,6 +125,21 @@
 			}
 		}
 	}
+	
+	function commentList(){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/board/boardCommentListAjax.do"
+			type: "post"
+			data: {"boardNo":<%=b.getBoardNo()%>}
+			success: function(data){
+		})
+	}
+	
+	
+	$(document).ready(()=>{
+		commentList();
+	})
+	
 </script>
 
 

@@ -7,10 +7,10 @@ import static com.boong.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
-import java.util.Map;
 
 import com.boong.board.model.dao.BoardDao;
 import com.boong.board.model.vo.Board;
+import com.boong.board.model.vo.BoardComment;
 import com.boong.board.model.vo.BoardLike;
 
 public class BoardService {
@@ -126,6 +126,26 @@ public class BoardService {
 		List<Board> list = dao.selectBoardCategoryList(conn, cPage, numPerpage, b);
 		close(conn);
 		return list;
+	}
+	
+	// 게시글 댓글 전체 목록을 가져오는 서비스
+	public List<BoardComment> selectCommentList(int boardNo){
+		Connection conn = getConnection();
+		List<BoardComment> list = dao.selectCommentList(conn, boardNo);
+		close(conn);
+		return list;
+	}
+	
+	// 게시글 댓글 등록 서비스
+	public int insertBoardComment(BoardComment bc) {
+		Connection conn = getConnection();
+		int result = dao.insertBoardComment(conn, bc);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
 	}
 }
 

@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.boong.board.model.vo.Board;
+import com.boong.board.model.vo.BoardComment;
 import com.boong.board.model.vo.BoardLike;
 
 public class BoardDao {
@@ -281,6 +281,58 @@ public class BoardDao {
 		return list;
 	}
 
+	
+	// 게시글 댓글 전체 목록을 가져오는 서비스
+	public List<BoardComment> selectCommentList(Connection conn, int boardNo){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<BoardComment> list = new ArrayList();
+		String sql = "select * from BOARD_COMMENT where BOARD_REF=? start with BOARD_COMMENT_LEVEL=1 connect by prior BOARD_COMMENT_NO=BOARD_COMMENT_REF";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BoardComment bc = BoardComment.builder()
+						.boardCommetNo(rs.getInt("board_commnet_no"))
+						.boardRef(rs.getInt("board_ref"))
+						.boardCommentWriter(rs.getString("board_comment_writer"))
+						.boardCommentContent(rs.getString("board_comment_content"))
+						.boardCommentDate(rs.getDate("board_comment_date"))
+						.boardCommentLevel(rs.getInt("board_commnet_level"))
+						.boardCommentRef(rs.getInt("board_commnet_ref"))
+						.build();
+				list.add(bc);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	// 게시글 등록 서비스
+	public int insertBoardComment(Connection conn, BoardComment bc) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "insert into BOARD_COMMENT values(board_comment_seq.nextval, ?, ?, ?, sysdate, ?, ?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bc.getBoardRef());
+			pstmt.setString(2, bc.getBoardCommentWriter());
+			pstmt.setString(3, bc.getBoardCommentContent());
+			pstmt.setInt(4, bc.getBoardCommentLevel());
+			pstmt.setInt(5, bc.getBoardCommentRef());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
 
 
