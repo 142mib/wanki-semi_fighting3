@@ -9,11 +9,15 @@
 
 <style>
 	#sv-container{width:80%;  height:500px; text-align: center; margin: 0 10% 0 10%; display: flex;border: 1px solid red;}	
-	#sv-container .img-container{width:50%;  text-align: center; border-right: 1px solid; padding-top:50px; display:flex; flex-direction: column; align-items: center;}
+	#sv-container .img-container{width:50%;  text-align: center; border-right: 1px solid; padding-top:40px; display:flex; flex-direction: column; align-items: center;}
 	#sv-container .img-container .img-magnifier-container{width:90%; height:auto; position: relative;  }
 	#sv-container .img-container #myimage{ width:100%; height:auto;}
 	#sv-container .content-container{width:50%; padding-left :8%;  text-align: center; padding-top:30px; display:flex; }
 	#sv-container .content-container .content-table-container{ border:1px solid red; width:90%}
+	.slbActive{
+	  width: unset;
+	  width: auto;
+	}
 		
 	.img-magnifier-glass {
 	  position: absolute;
@@ -45,9 +49,24 @@
 		</div>
 		
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 <script>
-
-
+$(document).on("pageload",function(){
+	  window.location.reload(true);
+	});
 
 
 function magnify(imgID, zoom) {
@@ -117,7 +136,7 @@ function magnify(imgID, zoom) {
 <script>
 /* Initiate Magnify Function
 with the id of the image, and the strength of the magnifier glass:*/
-magnify("myimage", 1.5);
+magnify("myimage", 1.8);
 </script>
 
 

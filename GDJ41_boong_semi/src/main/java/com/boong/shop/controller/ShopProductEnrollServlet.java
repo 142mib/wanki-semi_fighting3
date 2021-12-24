@@ -27,7 +27,7 @@ public class ShopProductEnrollServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/views/shop/productEnroll.jsp")
+		request.getRequestDispatcher("/views/shop/ProductEnroll.jsp")
 		.forward(request, response);
 		
 		
