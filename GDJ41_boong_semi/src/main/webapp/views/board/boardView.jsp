@@ -16,6 +16,27 @@
 	div{
 		border: 1px solid black;
 	}
+	
+	.commentWrap{
+		widows: 1000px;
+		margin: 0 auto;
+	}
+	
+	.board-comment-count{
+		widows: 1000px;
+		margin: 0 auto;
+	}
+	
+	.comment-container{
+		widows: 1000px;
+		margin: 0 auto;
+	}
+	
+	#boardCommentContent{
+		widows: 1000px;
+		margin: 0 auto;
+		text-align: center;
+	}
 </style>
 
 <header>
@@ -80,12 +101,12 @@
 	<%} %>
 </div>
 </form>
-
+<br>
 	<!-- 댓글 부분 -->		
 	<div class="commentWrap">
 		<div class="row board-comment-container">
 			<div class="board-comment-count col-sm-12">댓글 몇개~</div>
-			<div id="board-commnet" class="board-comment col-sm-12">댓글 들어갈부분~</div>
+			<div id="board-comment" class="comment-container col-sm-12"></div>
 			<div class="board-write col-sm-12" style="border: 1px solid black;">
 				댓글쓰기<br>
 				<form action="<%=request.getContextPath()%>/board/boardCommentWrite.do" method="post">
@@ -93,7 +114,7 @@
 					<input type="hidden" name="boardCommentWriter" value="<%=m.getMemberId()%>"/>
 					<input type="hidden" name="boardCommentRef" value="0"/>
 					<input type="hidden" name="boardCommentLevel" value="1"/>
-					<textarea name="boardCommentContent" rows="3" cols="60"></textarea>
+					<textarea id="boardCommentContent" name="boardCommentContent" rows="3" cols="60"></textarea>
 					<button type="submit" name="insert-btn">등록</button>
 				</form>
 			</div>
@@ -111,7 +132,7 @@
 		}else{
 			location.reload();
 		}
-	}
+	};
 	
 	const boardLike=()=>{
 		if(<%=m.getMemberId().equals(b.getBoardWriter())%>){
@@ -124,21 +145,37 @@
 				location.assign("<%=request.getContextPath()%>/board/boardView.do");
 			}
 		}
-	}
-	
-	function commentList(){
-		$.ajax({
-			url: "<%=request.getContextPath()%>/board/boardCommentListAjax.do"
-			type: "post"
-			data: {"boardNo":<%=b.getBoardNo()%>}
-			success: function(data){
-		})
-	}
-	
+	};
 	
 	$(document).ready(()=>{
 		commentList();
-	})
+	});
+	
+	function commentList(){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/board/boardCommentListAjax.do",
+			type: "post",
+			data: {"boardNo":<%=b.getBoardNo()%>},
+			success: function(data){
+				/* console.log(data); */
+				let rowDiv = $("<div>").attr({class: 'row'});
+				for(let i = 0; i < data.length; i++){
+					/* let iconDiv = $("<div>").attr({class: 'col-sm-1'}); */
+					let idDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentWriter"]);
+					let dateDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentDate"]);
+					let btnDiv = $("<div>").attr({class: 'col-sm-7'});
+					let replyBtn = $("<button>");
+					btnDiv.append(replyBtn);
+					let contentDiv = $("<div>").attr({class: 'col-sm-12'}).html(data[i]["boardCommentContent"]);
+					rowDiv.append(idDiv).append(dateDiv).append(btnDiv).append(contentDiv);					
+				}
+				$("#board-comment").append(rowDiv);
+			}
+		})
+	};
+	
+	
+
 	
 </script>
 

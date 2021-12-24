@@ -42,12 +42,16 @@ public class BoardCommentWriteServlet extends HttpServlet {
 		int result = new BoardService().insertBoardComment(bc);
 		
 		String msg = "";
+		String loc = "";
 		if(result > 0) {
 			msg = "댓글 등록 완료";
+			loc = "/board/boardView.do?boardNo=" + bc.getBoardRef();
 		}else {
 			msg = "댓글 등록 실패";
+			loc = "/board/boardView.do?boardNo=" + bc.getBoardRef();
 		}
 		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
 		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}

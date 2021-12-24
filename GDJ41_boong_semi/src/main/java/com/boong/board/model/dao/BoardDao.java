@@ -294,13 +294,13 @@ public class BoardDao {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				BoardComment bc = BoardComment.builder()
-						.boardCommetNo(rs.getInt("board_commnet_no"))
+						.boardCommetNo(rs.getInt("board_comment_no"))
 						.boardRef(rs.getInt("board_ref"))
 						.boardCommentWriter(rs.getString("board_comment_writer"))
 						.boardCommentContent(rs.getString("board_comment_content"))
 						.boardCommentDate(rs.getDate("board_comment_date"))
-						.boardCommentLevel(rs.getInt("board_commnet_level"))
-						.boardCommentRef(rs.getInt("board_commnet_ref"))
+						.boardCommentLevel(rs.getInt("board_comment_level"))
+						.boardCommentRef(rs.getInt("board_comment_ref"))
 						.build();
 				list.add(bc);
 			}

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.boong.board.model.service.BoardService;
 import com.boong.board.model.vo.BoardComment;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class BoardCommentList
@@ -34,10 +35,13 @@ public class BoardCommentListServlet extends HttpServlet {
 		// 댓글 리스트 불러오는 기능
 		
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-		System.out.println(boardNo);
+//		System.out.println(boardNo);
 		
 		
 		List<BoardComment> list = new BoardService().selectCommentList(boardNo);
+		
+		response.setContentType("application/json;charset=utf-8");
+		new Gson().toJson(list, response.getWriter());
 	}
 
 	/**
