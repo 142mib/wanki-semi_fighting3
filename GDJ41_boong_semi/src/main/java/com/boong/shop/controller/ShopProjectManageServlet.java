@@ -41,7 +41,7 @@ public class ShopProjectManageServlet extends HttpServlet {
 		try {
 			numPerpage=Integer.parseInt(request.getParameter("numPerpage"));
 		}catch(NumberFormatException e) {
-			numPerpage=10;
+			numPerpage=15;
 		}
 		
 		List<Product> list=new ShopService().selectProductList(cPage,numPerpage);
