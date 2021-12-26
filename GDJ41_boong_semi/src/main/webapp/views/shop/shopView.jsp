@@ -24,6 +24,7 @@
     table#tbl-comment tr td{border-bottom:1px solid #ddd;; border-top:1px solid #ddd;; padding:5px; text-align:left;}
     table#tbl-comment tr td:first-of-type{padding: 5px 30px 5px 130px;}
     table#tbl-comment tr td:last-of-type {text-align:right; width: 200px;}
+    #btn-insert{transform: translate(10%,-35%); width:60px;}
     table#tbl-comment button.btn-reply{display:none;}
     table#tbl-comment button.btn-delete{display:none;}
     table#tbl-comment tr:hover {background:lightgray;}
@@ -37,7 +38,7 @@
     table#tbl-comment tr.level2 sub.comment-date {color:#ff9c8a; font-size:10px}
     /*답글관련*/
     table#tbl-comment textarea{margin: 4px 0 0 0;}
-    table#tbl-comment button.btn-insert2{width:60px; height:23px; color:white; background:#3300ff; position:relative; top:-5px; left:10px;}
+    table#tbl-comment button.btn-insert2{width:60px; height:26px;  position:relative; top:-5px; left:10px;}
 	
 	#comment-container{ width:80%; text-align: center;justify-content: center; display: flex;margin: 10px 10% 0 10%;}
 	.sv-table-tdleft{text-align: left;}
@@ -45,7 +46,7 @@
 	.sv-table-tdcenter{text-align: center;}
 	.comment-id{transform: translateX(-10px); display:flex; flex-direction: column;justify-content: space-evenly;}
 	
-	.onelinecomment,.content-container2{padding-left: 2%; text-align: left;border-bottom: 1px solid #ddd; }
+	.onelinecomment,.content-container2{padding-left: 2%; text-align: left;border-bottom: 1px solid #ddd; style:padding-top:20px;}
 		
 	.img-magnifier-glass {
 	  position: absolute;
@@ -125,8 +126,11 @@
 		
 	</div>
 	
-	<div class="content-container2" style="padding-top:20px;">
+	<div class="content-container2" >
 	<h4>상품 설명</h4>
+	</div>
+	<div class="content-container2">
+	<p><%=p.getShopProductContent() %></p>
 	</div>
 	
 	
@@ -148,7 +152,7 @@
 					<input type="hidden" name="writer" value="<%=loginMember!=null?loginMember.getMemberId():""%>">
 					<input type="hidden" name="productRef" value="<%=p.getShopProductId()%>">
 					<input type="hidden" name="productCommentRef" value="0">
-					<button style="transform: translate(10%,-35%)" type="submit" id="btn-insert">등록</button>
+					<button  type="submit" id="btn-insert">등록</button>
 			</form>
 		</div>
 		<%}else{ %>	
