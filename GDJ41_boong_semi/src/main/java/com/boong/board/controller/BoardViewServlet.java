@@ -38,7 +38,7 @@ public class BoardViewServlet extends HttpServlet {
 		
 		// 조회수 처리(cookie 사용)
 		Cookie[] cookies=request.getCookies();
-		System.out.println(cookies);
+//		System.out.println(cookies);
 		String boardRead="";//이전 게시글 번호들을 저장하는 변수
 		boolean isRead=false;//읽었으면 true, 안읽었으면 false
 		//게시물 읽은 것에 대해 cookie에 boardRead키값으로 읽은 게시물 번호를 저장!

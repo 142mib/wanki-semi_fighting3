@@ -136,7 +136,7 @@ public class BoardDao {
 	public int updateBoard(Connection conn, Board b) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = "update BOARD set BOARD_TITLE=?, BOARD_CONTETN=?, BOARD_CATEGORY=?, BOARD_ORIGINAL_FILENAME=?, BOARD_RENAMED_FILENAME=? where BOARD_NO=?";
+		String sql = "update BOARD set BOARD_TITLE=?, BOARD_CONTENT=?, BOARD_CATEGORY=?, BOARD_ORIGINAL_FILENAME=?, BOARD_RENAMED_FILENAME=? where BOARD_NO=?";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, b.getBoardTitle());

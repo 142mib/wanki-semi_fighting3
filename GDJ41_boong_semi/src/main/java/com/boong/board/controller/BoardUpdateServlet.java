@@ -33,6 +33,7 @@ public class BoardUpdateServlet extends HttpServlet {
 				.boardNo(Integer.parseInt(request.getParameter("board-No")))
 				.boardCategory(Integer.parseInt(request.getParameter("board-category")))
 				.boardTitle(request.getParameter("board-title"))
+				.boardWriter(request.getParameter("board-writer"))
 				.boardContent(request.getParameter("board-content"))
 				.build();
 		

@@ -93,6 +93,7 @@
 	    	<div class="row">
 		        <div class="col-lg-11" style="text-align: right;">
 		        	<input type="hidden" name="board-No" value="<%=b.getBoardNo()%>"/>
+		        	<input type="hidden" name="board-category" value="<%=b.getBoardCategory()%>"/>
 		        	<input type="hidden" name="board-title" value="<%=b.getBoardTitle()%>">
 		        	<input type="hidden" name="board-writer" value="<%=b.getBoardWriter() %>"/>
 		        	<input type="hidden" name="board-content" value="<%=b.getBoardContent() %>"/>	
