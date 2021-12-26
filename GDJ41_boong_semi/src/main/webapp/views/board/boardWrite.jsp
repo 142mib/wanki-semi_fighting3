@@ -18,6 +18,15 @@
 
 
 <style>
+
+	#boardWrite-container{
+		margin-top: 30px;
+	}
+
+	.a{
+		margin: 0 auto;
+		width: 1000px;
+	}
 	#boardWirte-head{
 		margin: 0 auto;
 		text-align: center;
@@ -27,14 +36,8 @@
 		margin: 0 auto;
 	}
 	
-	#summernote{
-		display: block;
-		margin: 0 auto;
-		resize: none;
-		border-radius: 5px;
-	}
-	
-	#upload-file{
+	#content{
+		width: 1020px;
 		margin: 0 auto;
 	}
 	
@@ -51,18 +54,15 @@
 		border-radius: 5px;
 	}
 	
-	#car-icon{
-		margin-left: 450px;
-		margin-top: 50px;
-		margin-bottom: 50px;
-		font-size: 30px;
-	}
-	
 	#file-container{
 		margin: 0 auto;
 	}
 	
 	.fa-pen{
+	}
+	
+	#boardWrite-wrap{
+		background-color: #f3f3f3;
 	}
 </style>
 
@@ -75,44 +75,34 @@
 <form id="frm" action="<%=request.getContextPath() %>/board/boardWriteEnd.do" method="post" enctype="multipart/form-data" accept-charset="utf-8">
 	<section>
 		<div id="boardWrite-container">
-			<table id="boardWrite-tbl">
-				<thead>
-					<tr>
-						<th colspan="2"><i class="fas fa-pen">&nbsp;게시글 작성</i></th>
-					</tr>
-				</thead>
-				<tbody>
+			<div class="a" style="font-size: 30px;"><i class="fas fa-pen">&nbsp;게시글 작성</i></div>
+			<div id="boardWrite-wrap" >
+			<table id="boardWrite-tbl" style="margin-top:30px">
 				 	<tr>
-					<td>
-						<select name="category" id="category">
+						<td>
+							<select name="category" id="category">
 								<option>카테고리 선택</option>
 								<option value="1">질문/답변</option>
 								<option value="2">정보/공유</option>
 								<option value="3">구매/판매</option>
 								<option value="4">자유</option>
-						</select>
-					</td>
+							</select>
+						</td>
 					<td>
 						<input type="text" name="boardTitle" id="boardTitle" placeholder="제목"/>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="2">
-						<textarea name="boardContent" id="boardContent" cols="100" placeholder="내용을 입력해주세요."></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="file" name="upfile" id="upload-file" value="파일 첨부" multiple />
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="button" id="board-upload" value="등록">
-					</td>
-				</tr>
-				</tbody>
 			</table>
+			<br>
+			<div id="content">
+				<textarea name="boardContent" id="boardContent" cols="100" rows="25" placeholder="회원간 따듯한 글, 댓글 활동을 부탁드립니다."></textarea>
+			</div>
+			<div style="margin:0 auto; width:1030px; text-align: right;">
+				<!-- <input type="file" name="upfile" id="upload-file" value="파일 첨부" multiple /> -->
+				<input type="button" id="board-upload" value="등록">
+			</div>
+			</div>
+			
 			<div id="hidden">
 				<input type="hidden" name="boardWriter" value="<%=m.getMemberId() %>" />
 			</div>
@@ -125,7 +115,7 @@
 
 <script>
 	// 웹 에디터(smartEditor) 불러오는 기능
-	var oEditors = [];
+	<%-- var oEditors = [];
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef: oEditors,
 		elPlaceHolder: "boardContent",
@@ -137,7 +127,7 @@
 	$("#board-upload").click(function(){
 		oEditors.getById["boardContent"].exec("UPDATE_CONTENTS_FIELD", []);
 		$("#frm").submit();
-	})
+	}) --%>
 
 </script>
 

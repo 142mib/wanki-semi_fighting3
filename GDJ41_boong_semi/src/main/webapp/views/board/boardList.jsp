@@ -59,12 +59,18 @@
 	#footer-write{
 		text-align: rigth;
 	}
+	
+	.margin{
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
 </style>
 
 <header>
-	<section>
 		<div id="blank" style="width:100%;height: 70px;background-color: brown;"></div>
+</header>
 		
+	<section>
 			  <div id="board-head" class="col-lg-1">
 			  	<i class="fas fa-car-side">&nbsp;게시판</i>
 			  </div>
@@ -102,14 +108,14 @@
 			    	%>
 			    	<div id="wrap">
 					    <div id="boardList-body-container" class="row">
-					        <div class="col-sm-2"><%=tab %></div>
-					        <div class="col-sm-5">
+					        <div class="col-sm-2 margin"><%=tab %></div>
+					        <div class="col-sm-5 margin">
 					        	<a href="<%=request.getContextPath()%>/board/boardView.do?boardNo=<%=b.getBoardNo()%>"><%=b.getBoardTitle() %></a>
 					        </div>
-					        <div class="col-sm-1"><%=b.getBoardWriter()%></div>
-					        <div class="col-sm-2"><%=b.getBoardDate() %></div>
-					        <div class="col-sm-1"><%=b.getBoardViewCount()%></div>
-					        <div class="col-sm-1"><%=b.getBoardLike()%></div>
+					        <div class="col-sm-1 margin"><%=b.getBoardWriter()%></div>
+					        <div class="col-sm-2 margin"><%=b.getBoardDate() %></div>
+					        <div class="col-sm-1 margin"><%=b.getBoardViewCount()%></div>
+					        <div class="col-sm-1 margin"><%=b.getBoardLike()%></div>
 					    </div>
 					</div>
 				    <%} %>		     
@@ -119,7 +125,7 @@
 					  		<%if(m != null) { %>
 					  		<button id="write" onclick="location.assign('<%=request.getContextPath()%>/board/boardWrite.do')"><i class="fas fa-pen"></i>&nbsp;쓰기</button>
 					  		<%}else { %>
-					  			
+					  			<div></div>
 					  		<%} %>
 				  		</div>
 			  		</div>
@@ -129,7 +135,6 @@
 			  	<div class="col-sm-12"><%=request.getAttribute("pageBar") %></div>
 			  </div>
 	</section>
-</header>
 
 <%@ include file="/views/common/footer.jsp" %>
 
@@ -148,7 +153,7 @@
 				});
 				for(let i = 0; i < data.length; i++){
 					let categoryDiv = $("<div>").attr({
-						'class': 'col-sm-2'
+						'class': 'col-sm-2 margin'
 					})
 					switch(data[i]["boardCategory"]){
 			    		case 1 : categoryDiv.html("질문/답변"); break;
@@ -161,19 +166,19 @@
 					});
 					a.append().html(data[i]["boardTitle"])
 					let titleDiv = $("<div>").append(a).attr({
-						'class': 'col-sm-5'
+						'class': 'col-sm-5 margin'
 					});
 					let writerDiv = $("<div>").html(data[i]["boardWriter"]).attr({
-						'class': 'col-sm-1'
+						'class': 'col-sm-1 margin'
 					});
 					let dateDiv = $("<div>").html(data[i]["boardDate"]).attr({
-						'class': 'col-sm-2'
+						'class': 'col-sm-2 margin'
 					});
 					let viewDiv = $("<div>").html(data[i]["boardViewCount"]).attr({
-						'class': 'col-sm-1'
+						'class': 'col-sm-1 margin'
 					});
 					let likeDiv = $("<div>").html(data[i]["boardLike"]).attr({
-						'class': 'col-sm-1'
+						'class': 'col-sm-1 margin'
 					});
 					containerDiv.append(categoryDiv).append(titleDiv).append(writerDiv).append(dateDiv).append(viewDiv).append(likeDiv);
 				}

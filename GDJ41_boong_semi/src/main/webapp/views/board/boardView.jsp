@@ -47,7 +47,7 @@
 
  
 <section>
-<form action="<%=request.getContextPath()%>/board/boardUpdate.do" method="post">
+
 <div class="container" style="margin-top: 30px;">
     <div class="row">
         <div class="col-lg-2"><i class="far fa-comment-alt">&nbsp;게시판</i></div>
@@ -66,21 +66,18 @@
        	</div>
     </div>
     <div class="row">
-    	<input type="hidden" name="board-No" value="<%=b.getBoardNo()%>"/>
         <div class="col-lg-10" style="background-color: lightgray;"><%=b.getBoardTitle()%></div>
-        <input type="hidden" name="board-title" value="<%=b.getBoardTitle()%>">
         <div class="col-lg-2" style="text-align: right; background-color: lightgray;"><%=b.getBoardDate()%></div>
     </div>
     <div class="row">
         <div class="col-lg-8"><%=b.getBoardWriter() %></div>
-       	<input type="hidden" name="board-writer" value="<%=b.getBoardWriter() %>"/>
+       	
         <div class="col-lg-2" style="text-align: right;">추천 수&nbsp;<%=b.getBoardLike() %></div>
         <div class="col-lg-2" style="text-align: right;">조회 수&nbsp;<%=b.getBoardViewCount() %></div>
     </div>
     <div class="row">
         <div class="col-xs-12" style="min-height: 500px;">
         	<%=b.getBoardContent() %>
-        	<input type="hidden" name="board-content" value="<%=b.getBoardContent() %>"/>
        	</div>
     </div>
     <div class="row">
@@ -88,38 +85,79 @@
 			<button type="button" onclick="boardLike();">추천하기</button>
 		</div>
     </div>
+    
     <!-- 로그인한 아이디와 작성자 아이디가 같을 경우에만 수정/삭제 버튼 출력 -->
-    <%if(m.getMemberId().equals(b.getBoardWriter())) {%>
-	    <div class="row">
-	        <div class="col-lg-11" style="text-align: right;">
-	        	<input type="submit" value="수정"/>
+    <!-- 로그인도 했고 내가 글 작성자면 -->
+    <%if(m != null && m.getMemberId().equals(b.getBoardWriter())) { %>
+    	<form action="<%=request.getContextPath()%>/board/boardUpdate.do" method="post">
+	    	<div class="row">
+		        <div class="col-lg-11" style="text-align: right;">
+		        	<input type="hidden" name="board-No" value="<%=b.getBoardNo()%>"/>
+		        	<input type="hidden" name="board-title" value="<%=b.getBoardTitle()%>">
+		        	<input type="hidden" name="board-writer" value="<%=b.getBoardWriter() %>"/>
+		        	<input type="hidden" name="board-content" value="<%=b.getBoardContent() %>"/>	
+		        	<input type="submit" value="수정"/>
+		        </div>
 	        </div>
-	        <div class="col-lg-1" style="text-align: left;" >
-	        	<button type="button" onclick="deleteConfirm();">삭제</button>
-	        </div>
-	    </div>
-	<%} %>
-</div>
-</form>
-<br>
-	<!-- 댓글 부분 -->		
-	<div class="commentWrap">
-		<div class="row board-comment-container">
-			<div class="board-comment-count col-sm-12">댓글 몇개~</div>
-			<div id="board-comment" class="comment-container col-sm-12"></div>
-			<div class="board-write col-sm-12" style="border: 1px solid black;">
-				댓글쓰기<br>
-				<form action="<%=request.getContextPath()%>/board/boardCommentWrite.do" method="post">
-					<input type="hidden" name="boardRef" value="<%=b.getBoardNo()%>"/>
-					<input type="hidden" name="boardCommentWriter" value="<%=m.getMemberId()%>"/>
-					<input type="hidden" name="boardCommentRef" value="0"/>
-					<input type="hidden" name="boardCommentLevel" value="1"/>
-					<textarea id="boardCommentContent" name="boardCommentContent" rows="3" cols="60"></textarea>
-					<button type="submit" name="insert-btn">등록</button>
-				</form>
+       </form>
+		        <div class="col-lg-1" style="text-align: left;" >
+		        	<button type="button" onclick="deleteConfirm();">삭제</button>
+		        </div>
+		    </div>
+		
+		<div class="commentWrap">
+			<div class="row board-comment-container">
+				<div class="board-comment-count col-sm-12">댓글 몇개~</div>
+				<div id="board-comment" class="comment-container col-sm-12"></div>
+				<div class="board-write col-sm-12" style="border: 1px solid black;">
+					<form action="<%=request.getContextPath()%>/board/boardCommentWrite.do" method="post">
+						댓글쓰기<br>
+						<input type="hidden" name="boardRef" value="<%=b.getBoardNo()%>"/>
+						<input type="hidden" name="boardCommentWriter" value="<%=m.getMemberId()%>"/>
+						<input type="hidden" name="boardCommentRef" value="0"/>
+						<input type="hidden" name="boardCommentLevel" value="1"/>
+						<textarea id="boardCommentContent" name="boardCommentContent" rows="3" cols="60"></textarea>
+						<button type="submit" name="insert-btn">등록</button>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
+    <%}else if(m != null && !m.getMemberId().equals(b.getBoardWriter())) { %>
+		<div></div>
+		<div class="commentWrap">
+			<div class="row board-comment-container">
+				<div class="board-comment-count col-sm-12">댓글 몇개~</div>
+				<div id="board-comment" class="comment-container col-sm-12"></div>
+				<div class="board-write col-sm-12" style="border: 1px solid black;">
+					<form action="<%=request.getContextPath()%>/board/boardCommentWrite.do" method="post">
+						댓글쓰기<br>
+						<input type="hidden" name="boardRef" value="<%=b.getBoardNo()%>"/>
+						<input type="hidden" name="boardCommentWriter" value="<%=m.getMemberId()%>"/>
+						<input type="hidden" name="boardCommentRef" value="0"/>
+						<input type="hidden" name="boardCommentLevel" value="1"/>
+						<textarea id="boardCommentContent" name="boardCommentContent" rows="3" cols="60"></textarea>
+						<button type="submit" name="insert-btn">등록</button>
+					</form>
+				</div>
+			</div>
+		</div>
+    <%} %>
+    
+    <!-- 로그인을 안했으면 -->
+	<%if(m == null) { %>
+		<div></div>
+		<div class="commentWrap">
+			<div class="row board-comment-container">
+				<div class="board-comment-count col-sm-12">댓글 몇개~</div>
+				<div id="board-comment" class="comment-container col-sm-12"></div>
+				<div class="board-write col-sm-12" style="border: 1px solid black;">
+						댓글쓰기<br>
+						<textarea id="disabled-comment" name="" rows="3" cols="60" placeholder="로그인 후 사용하실 수 있습니다." disabled></textarea>
+						<button type="submit" name="disabled">등록</button>
+				</div>
+			</div>
+		</div>
+	<%} %>
 
 </section>
 
@@ -149,9 +187,33 @@
 	
 	$(document).ready(()=>{
 		commentList();
+		commentListCount();
 	});
 	
 	function commentList(){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/board/boardCommentListAjax.do",
+			type: "post",
+			data: {"boardNo":<%=b.getBoardNo()%>},
+			success: function(data){
+				/* console.log(data); */
+				let rowDiv = $("<div>").attr({class: 'row'});
+				for(let i = 0; i < data.length; i++){
+					/* let iconDiv = $("<div>").attr({class: 'col-sm-1'}); */
+					let idDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentWriter"]);
+					let dateDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentDate"]);
+					let btnDiv = $("<div>").attr({class: 'col-sm-7'});
+					let replyBtn = $("<button>");
+					btnDiv.append(replyBtn);
+					let contentDiv = $("<div>").attr({class: 'col-sm-12'}).html(data[i]["boardCommentContent"]);
+					rowDiv.append(idDiv).append(dateDiv).append(btnDiv).append(contentDiv);					
+				}
+				$("#board-comment").append(rowDiv);
+			}
+		})
+	};
+	
+	function commentListCount(){
 		$.ajax({
 			url: "<%=request.getContextPath()%>/board/boardCommentListAjax.do",
 			type: "post",

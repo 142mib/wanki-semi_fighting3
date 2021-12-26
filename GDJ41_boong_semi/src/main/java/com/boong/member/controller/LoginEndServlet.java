@@ -34,9 +34,9 @@ public class LoginEndServlet extends HttpServlet {
 		
 		String memberId=request.getParameter("memberId");
 		String memberPw=request.getParameter("memberPw");
-		System.out.println(memberId+"  "+memberPw);
+//		System.out.println(memberId+"  "+memberPw);
 		Member m=new MemberService().login(memberId,memberPw);
-		System.out.println(m);
+//		System.out.println(m);
 		
 		if(m!=null) {
 			HttpSession session=request.getSession();
