@@ -1,7 +1,6 @@
 package com.boong.shop.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,20 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.boong.shop.model.service.ShopService;
-import com.boong.shop.model.vo.Product;
 import com.boong.shop.model.vo.ProductComment;
 
 /**
- * Servlet implementation class ShopViewServlet
+ * Servlet implementation class ShopProductCommentServlet
  */
-@WebServlet("/shop/shopView.do")
-public class ShopViewServlet extends HttpServlet {
+@WebServlet("/shop/insertProductComment.do")
+public class ShopProductCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShopViewServlet() {
+    public ShopProductCommentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,30 +30,37 @@ public class ShopViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int shopProductId=Integer.parseInt(request.getParameter( "shopProductId" )) ;
-		Product p=new ShopService().selectProduct(shopProductId);
-		List<ProductComment> list=new ShopService().selectProductCommentList(shopProductId);
-		request.setAttribute("product", p);
-		request.setAttribute("comments", list);
+		ProductComment pc=ProductComment.builder()
+				.shopCommentContent(request.getParameter("content"))
+				.memberId(request.getParameter("writer"))
+				.shopProductId(Integer.parseInt(request.getParameter("productRef")))
+				.shopCommentRef(Integer.parseInt(request.getParameter("productCommentRef")))
+				.shopCommentLevel(Integer.parseInt(request.getParameter("level")))
+				.build();
 		
-		String view="";
-		if(p==null) {
-			view="/views/common/msg.jsp";
-			request.setAttribute("msg","이 게시물이 존재하지 않습니다.");
-			request.setAttribute("loc", "/shop/shopView.do?shopProductId="+shopProductId);
+		int result=new ShopService().insertBoardComment(pc);
+		String msg="";
+		String loc="/shop/shopView.do?shopProductId="+pc.getShopProductId();
+		if(result>0) {
+			msg="댓글등록성공";
+		}else {
+			msg="댓글등록 실패";
 		}
-		else {
-			view="/views/shop/shopView.jsp";
-			
-			
-		}
-		request.getRequestDispatcher(view)
-		.forward(request, response);
+		request.setAttribute("msg",msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/views/common/msg.jsp")
+		.forward(request,response);
 		
-		
-		
-		
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
 
 	/**

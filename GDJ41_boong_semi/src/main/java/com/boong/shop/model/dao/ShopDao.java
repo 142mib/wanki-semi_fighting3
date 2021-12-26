@@ -137,13 +137,13 @@ public class ShopDao {
 		String sql="INSERT INTO SHOP_COMMENT VALUES(DEFAULT,?,DEFAULT,?,?,?,?)";
 		try {
 			pstmt=conn.prepareStatement(sql);
-			/*
-			 * pstmt.setInt(1, bc.getLevel()); pstmt.setString(2,
-			 * bc.getBoardCommentWriter()); pstmt.setString(3, bc.getBoardCommentContent());
-			 * pstmt.setInt(4, bc.getBoardRef()); //pstmt.setInt(5,
-			 * bc.getBoardCommentRef()==0?null:bc.getBoardCommentRef()); pstmt.setString(5,
-			 * bc.getBoardCommentRef()==0?null: String.valueOf(bc.getBoardCommentRef()));
-			 *///추가해야함
+			pstmt.setString(1, pc.getShopCommentContent());
+			pstmt.setInt(2, pc.getShopCommentLevel());
+			pstmt.setInt(3, pc.getShopCommentRef());
+			pstmt.setString(4, pc.getMemberId());
+			pstmt.setInt(5,pc.getShopProductId());
+			
+			
 			result=pstmt.executeUpdate();
 			
 		}catch(SQLException e) {
@@ -158,21 +158,24 @@ public class ShopDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<ProductComment> list=new ArrayList();
-		String sql="SELECT * FROM PRODUCT_COMMENT WHERE SHOP_COMMENT_REF=? START WITH SHOP_COMMENT_LEVEL=1 CONNECT BY PRIOR SHOP_COMMENT_ID=SHOP_COMMENT_REF";
+		String sql="SELECT * FROM SHOP_COMMENT WHERE SHOP_PRODUCT_ID=? START WITH SHOP_COMMENT_LEVEL=1 CONNECT BY PRIOR SHOP_COMMENT_ID=SHOP_COMMENT_REF";
 		try {
 			pstmt=conn.prepareStatement(sql);
 			pstmt.setInt(1, shopProductId);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				/*
-				 * BoardComment bc=BoardComment.builder()
-				 * .boardCommentNo(rs.getInt("board_comment_no"))
-				 * .boardCommentContent(rs.getString("board_comment_content"))
-				 * .boardCommentWriter(rs.getString("board_comment_writer"))
-				 * .boardRef(rs.getInt("board_ref")) .level(rs.getInt("board_comment_level"))
-				 * .boardCommentDate(rs.getDate("board_comment_date"))
-				 * .boardCommentRef(rs.getInt("board_comment_ref")) .build(); list.add(bc);
-				 */
+				ProductComment pc=ProductComment.builder()
+							.shopCommentId(rs.getInt("shop_comment_id"))
+							.shopCommentContent(rs.getString("shop_comment_content"))
+							.shopCommentDate(rs.getDate("shop_comment_date"))
+							.shopCommentLevel(rs.getInt("shop_comment_level"))
+							.shopCommentRef(rs.getInt("shop_comment_ref"))
+							.memberId(rs.getString("member_id"))
+							.shopProductId(rs.getInt("shop_product_id"))
+							.build();
+				
+				list.add(pc);
+				
 			}
 			
 		}catch(SQLException e) {

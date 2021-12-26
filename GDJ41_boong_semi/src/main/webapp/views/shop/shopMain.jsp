@@ -5,6 +5,13 @@
 <%
 List<Product> list=(List)request.getAttribute("productList");
 %>     
+<!-- <script >
+  $(document).on("pageload",function(){
+window.location.reload(true);
+});  
+
+
+</script> -->
 
 
 <style>
@@ -25,7 +32,7 @@ List<Product> list=(List)request.getAttribute("productList");
                     <% for(Product p : list){ %>
                     
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" style="cursor: pointer;" onclick="location.assign('<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>');" title="자세히보기"  >
+                        <a class="portfolio-box2" style="cursor: pointer;" onclick="location.assign('<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>');" title="자세히보기"  >
                             <img class="img-fluid" src="<%=request.getContextPath()%>/upload/shop/<%=p.getShopProductImageRename() %>" alt="..." />
                             <div class="portfolio-box-caption">
                                 <div class="project-name"><%=p.getShopProductName() %></div>
