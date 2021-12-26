@@ -27,6 +27,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="<%=request.getContextPath()%>/css/main/styles.css" rel="stylesheet" />
         <script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+    	<script src="https://kit.fontawesome.com/1c5892d936.js" crossorigin="anonymous"></script>
     </head>
         <body id="page-top">
         <!-- Navigation-->

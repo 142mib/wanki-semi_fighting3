@@ -10,20 +10,20 @@
 <div style="height: 63px; background-color: rgba(1,138,216,1)"></div>
 
 <style>
-	section>div{width:80%; text-align: center;border: 1px solid red;margin: 0 10% 0 10%;}
+	section>div{width:80%; text-align: center;margin: 0 10% 0 10%;}
 	#sv-container{width:80%;  height:400px; text-align: center; margin: 0 10% 0 10%; display: flex; }	
-	#sv-container .img-container{width:50%;  text-align: center; border-right: 2px solid rgba(70, 70, 70,0.5); padding-top:0px; display:flex; flex-direction: column; align-items: center;}
+	#sv-container .img-container{width:50%;  text-align: center; border-right: 2px solid #ddd;; padding-top:0px; display:flex; flex-direction: column; align-items: center;}
 	#sv-container .img-container .img-magnifier-container{width:90%; height:auto; position: relative;  }
 	#sv-container .img-container #myimage{ width:100%; height:auto;}
 	#sv-container .content-container{width:50%; padding-left :4%;  align-items: flex-start; padding-top:30px; display:flex; flex-direction: column }
-	#sv-container .content-container .content-table-container{ border:1px solid red; width:90%}
-	.content-container2 { width:80%; text-align: center; border: 1px solid red;margin: 0 10% 0 10%;}
+	#sv-container .content-container .content-table-container{  width:90%}
+	.content-container2 { width:80%; text-align: center; margin: 0 10% 0 10%;}
 	/*댓글테이블*/
-	#reply-container{width:80%;  text-align: center; margin: 0 10% 0 10%; display: flex;border: 1px solid red; }
-    table#tbl-comment{width:100%;  margin:0 auto; border-collapse:collapse; clear:both; border:1px solid red;} 
-    table#tbl-comment tr td{border-bottom:1px solid; border-top:1px solid; padding:5px; text-align:left;}
-    table#tbl-comment tr td:first-of-type{padding: 5px 5px 5px 50px;}
-    table#tbl-comment tr td:last-of-type {text-align:right; width: 100px;}
+	#reply-container{width:80%;  text-align: center; margin: 0 10% 0 10%; display: flex;}
+    table#tbl-comment{width:100%;  margin:0 auto; border-collapse:collapse; clear:both; } 
+    table#tbl-comment tr td{border-bottom:1px solid #ddd;; border-top:1px solid #ddd;; padding:5px; text-align:left;}
+    table#tbl-comment tr td:first-of-type{padding: 5px 30px 5px 130px;}
+    table#tbl-comment tr td:last-of-type {text-align:right; width: 200px;}
     table#tbl-comment button.btn-reply{display:none;}
     table#tbl-comment button.btn-delete{display:none;}
     table#tbl-comment tr:hover {background:lightgray;}
@@ -32,19 +32,20 @@
     table#tbl-comment tr.level2 {color:gray; font-size: 14px;}
     table#tbl-comment sub.comment-writer {color:navy; font-size:14px}
     table#tbl-comment sub.comment-date {color:tomato; font-size:10px}
-    table#tbl-comment tr.level2 td:first-of-type{padding-left:100px;}
+    table#tbl-comment tr.level2 td:first-of-type{padding-left:150px;}
     table#tbl-comment tr.level2 sub.comment-writer {color:#8e8eff; font-size:14px}
     table#tbl-comment tr.level2 sub.comment-date {color:#ff9c8a; font-size:10px}
     /*답글관련*/
     table#tbl-comment textarea{margin: 4px 0 0 0;}
     table#tbl-comment button.btn-insert2{width:60px; height:23px; color:white; background:#3300ff; position:relative; top:-5px; left:10px;}
 	
-	#comment-container{ width:80%; text-align: center;display: flex; border: 1px solid red;margin: 0 10% 0 10%;justify-content: center;}
+	#comment-container{ width:80%; text-align: center;justify-content: center; display: flex;margin: 10px 10% 0 10%;}
 	.sv-table-tdleft{text-align: left;}
 	.sv-table-tdright{text-align: right;}
 	.sv-table-tdcenter{text-align: center;}
+	.comment-id{transform: translateX(-10px); display:flex; flex-direction: column;justify-content: space-evenly;}
 	
-	
+	.onelinecomment,.content-container2{padding-left: 2%; text-align: left;border-bottom: 1px solid #ddd; }
 		
 	.img-magnifier-glass {
 	  position: absolute;
@@ -57,11 +58,16 @@
 	}
 	table.shop-table {
 	  border-collapse: collapse;
-	  width: 100%;
+	  width: 100%;	  
+	}
+	table.shop-table th{
+		
 	}
 	
-	table.shop-table tr {
-	  border-bottom: 1px solid #ddd;
+	
+	table.shop-table tbody {
+	  /* border-bottom: 1px solid #ddd; */
+	 
 	}
 	
 </style>
@@ -71,7 +77,7 @@
 <section >
 	<div id="sv-container">
 	<div class="img-container">
-		<p>이미지에 마우스를 가져가보세요:</p>
+		<p style="font-weight: bold; color: grey;">이미지에 마우스를 가져가 보세요:</p>
 		<div class="img-magnifier-container">
 		<img id="myimage" src="<%= request.getContextPath() %>/upload/shop/<%= p.getShopProductImageRename() %>">
 		</div>
@@ -80,63 +86,69 @@
 	<div class="content-container">
 		
 		<div class="content-table-container">
+			
 			<table class="shop-table">
 			  <tr>
-			    <th class="sv-table-tdleft" rowspan="2" colspan="2"><h2>상품명</h2></th>  			  	
+			    <th class="sv-table-tdleft" rowspan="1" colspan="2"><h3 style="font-weight: bold;"><%=p.getShopProductName() %></h3></th>  			  	
+			  </tr>
+			  
+			  <tr style="border-bottom: 1px solid #ddd;">
+			    <td></td>
+			    <td class="sv-table-tdright"  ><%=p.getShopProductPrice() %>원</td>			    
 			  </tr>
 			  <tr>
-			  </tr>
-			  <tr>
-			    <td class="sv-table-tdleft"></td>
-			    <td class="sv-table-tdright">가격</td>			    
-			  </tr>
-			  <tr>
-			    <td class="sv-table-tdleft">택배배송</td>
-			    <td class="sv-table-tdright">택배비</td>
+			    <td class="sv-table-tdleft" >택배배송</td>
+			    <td class="sv-table-tdright">3000원</td>
 			    
 			  </tr>
-			  <tr>
-			    <td class="sv-table-tdleft">갯수</td>
-			    <td class="sv-table-tdright">input</td>			    
+			  
+			  <tr style="border-bottom: 1px solid #ddd;">
+			    <td class="sv-table-tdleft">수량</td>
+			    <td class="sv-table-tdright"><input onchange="incre();" name="orderNumber" type="number" value="1" min="1" style="width: 45px" ></td>			    
+			  </tr>
+			  <tr style="font-weight: bold; border-bottom: 1px solid #ddd; ">
+			    <td class="sv-table-tdleft" style="padding:5px 0 5px 0;">총상품금액</td>
+			    
+			    <td class="sv-table-tdright" style="padding:5px 0 5px 0;"><span class="totalMoney"></span>원</td>			   
 			  </tr>
 			  <tr>
-			    <td class="sv-table-tdleft">총상품금액</td>
-			    <td class="sv-table-tdright">~원</td>			   
+			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;" ><button>장바구니추가</button> </td>			   			    
 			  </tr>
 			  <tr>
-			    <td class="sv-table-tdcenter" colspan="2" >장바구니추가</td>			   			    
-			  </tr>
-			  <tr>
-			    <td class="sv-table-tdcenter" colspan="2">구매하기</td>			   		    
+			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;"><button>구매하기</button></td>			   		    
 			  </tr>
 			</table>
+			
 		
 		</div>
 		</div>
 		
 	</div>
 	
-	<div class="content-container2">
-	<h2>상품 설명</h2>
+	<div class="content-container2" style="padding-top:20px;">
+	<h4>상품 설명</h4>
 	</div>
 	
 	
 	
 	<!-- 댓글입력창 -->
-	<div>
-	<h2>상품평</h2>
+	<div class="onelinecomment" style="padding-top:20px;">
+	<h4>한줄 상품평</h4>
 	</div>
 	<div id="comment-container">		
 		<%if(loginMember!=null){ %>
+		<div class="comment-id" >
+		<h5 style="color: grey;"><%=loginMember.getMemberId() %></h5>
+		</div>
 		<div class="comment-editor">			
 			<form action="<%=request.getContextPath()%>/shop/insertProductComment.do" 
 				method="post">
-					<textarea name="content" cols="55" rows="3"></textarea>
+					<textarea name="content" cols="55" rows="3" style="border: 1px solid grey;"></textarea>
 					<input type="hidden" name="level" value="1">
 					<input type="hidden" name="writer" value="<%=loginMember!=null?loginMember.getMemberId():""%>">
 					<input type="hidden" name="productRef" value="<%=p.getShopProductId()%>">
 					<input type="hidden" name="productCommentRef" value="0">
-					<button type="submit" id="btn-insert">등록</button>
+					<button style="transform: translate(10%,-35%)" type="submit" id="btn-insert">등록</button>
 			</form>
 		</div>
 		<%}else{ %>	
@@ -173,6 +185,7 @@
 			<%}else{%>
 				<tr class="level2">
 					<td>
+						<i class="fas fa-comments" ></i>
 						<sub><%=pc.getMemberId() %></sub>
 						<sub><%=pc.getShopCommentDate() %></sub>
 						<%=pc.getShopCommentContent() %>
@@ -200,14 +213,25 @@
 	
 	
 <script>
+let totalMoney=$("input[name=orderNumber]").val()*<%=p.getShopProductPrice() %>+3000;
+$(".totalMoney").text(totalMoney);
+
+
+	let incre=()=>{
+		let totalMoney=$("input[name=orderNumber]").val()*<%=p.getShopProductPrice() %>+3000;
+		$(".totalMoney").text(totalMoney);
+	}
+
+	
+
 //onload
 $(()=>{
-	$(".comment-editor textarea[name=content]").focus(e=>{
+	<%-- $(".comment-editor textarea[name=content]").focus(e=>{
 		if(<%=loginMember==null%>){
 			alert("로그인 후 이용이 가능합니다.");
 			
 		}
-	})
+	}) --%>
 	//$(".btn-reply").one("click",e=>{
 	$(".btn-reply").click(e=>{
 		const test=$("#tbl-comment").find("form");
