@@ -77,33 +77,34 @@
 		<div id="boardWrite-container">
 			<div class="a" style="font-size: 30px;"><i class="fas fa-pen">&nbsp;게시글 작성</i></div>
 			<div id="boardWrite-wrap" >
-			<table id="boardWrite-tbl" style="margin-top:30px">
-				 	<tr>
+				<table id="boardWrite-tbl" style="margin-top:30px">
+					 	<tr>
+							<td>
+								<select name="category" id="category">
+									<option>카테고리 선택</option>
+									<option value="1">질문/답변</option>
+									<option value="2">정보/공유</option>
+									<option value="3">구매/판매</option>
+									<option value="4">자유</option>
+								</select>
+							</td>
 						<td>
-							<select name="category" id="category">
-								<option>카테고리 선택</option>
-								<option value="1">질문/답변</option>
-								<option value="2">정보/공유</option>
-								<option value="3">구매/판매</option>
-								<option value="4">자유</option>
-							</select>
+							<input type="text" name="boardTitle" id="boardTitle" placeholder="제목"/>
 						</td>
-					<td>
-						<input type="text" name="boardTitle" id="boardTitle" placeholder="제목"/>
-					</td>
-				</tr>
-			</table>
-			<br>
-			<div id="content">
-				<textarea name="boardContent" id="boardContent" cols="100" rows="25" placeholder="회원간 따듯한 글, 댓글 활동을 부탁드립니다."></textarea>
-			</div>
-			<div style="margin:0 auto; width:1030px; text-align: right;">
-				<!-- <input type="file" name="upfile" id="upload-file" value="파일 첨부" multiple /> -->
-				<input type="button" id="board-upload" value="등록">
-			</div>
+					</tr>
+				</table>
+				<br>
+				<div id="content">
+					<textarea name="boardContent" id="boardContent" cols="100" rows="25" placeholder="회원간 따듯한 글, 댓글 활동을 부탁드립니다." style="resize: none;"></textarea>
+				</div>
+				<div style="margin:0 auto; width:1030px; text-align: right;">
+					<!-- <input type="file" name="upfile" id="upload-file" value="파일 첨부" multiple /> -->
+					<input type="submit" id="board-upload" value="등록">
+				</div>
 			</div>
 			
 			<div id="hidden">
+				<!-- 로그인한 계정의 아이디를 작성자로 넣음 -->
 				<input type="hidden" name="boardWriter" value="<%=m.getMemberId() %>" />
 			</div>
 			
@@ -114,20 +115,6 @@
 <%@ include file="/views/common/footer.jsp" %>
 
 <script>
-	// 웹 에디터(smartEditor) 불러오는 기능
-	<%-- var oEditors = [];
-	nhn.husky.EZCreator.createInIFrame({
-		oAppRef: oEditors,
-		elPlaceHolder: "boardContent",
-		sSkinURI: "<%=request.getContextPath()%>/editor/board/SmartEditor2Skin.html",
-		fCreator: "createSEditor2"
-	});
-	
-	// 저장버튼 클릭시 form을 submit
-	$("#board-upload").click(function(){
-		oEditors.getById["boardContent"].exec("UPDATE_CONTENTS_FIELD", []);
-		$("#frm").submit();
-	}) --%>
 
 </script>
 
