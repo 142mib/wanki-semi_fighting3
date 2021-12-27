@@ -5,8 +5,8 @@
 List<Product> list=(List)request.getAttribute("productList");
 %>    
     
-    
-<%@ include file="/views/common/header.jsp"%>
+    <%@ include file="/views/common/header.jsp"%>
+
 
 <style>
 	section#pm-container{width:900px; margin:0 auto;padding-top:10px; text-align:center;}
