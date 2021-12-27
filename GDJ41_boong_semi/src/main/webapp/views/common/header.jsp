@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.boong.member.vo.Member"%>
+<%@ page import="com.boong.member.model.vo.Member"%>
 <%
 	Member loginMember=(Member)session.getAttribute("loginMember");
 %>
@@ -27,6 +27,7 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="<%=request.getContextPath()%>/css/main/styles.css" rel="stylesheet" />
         <script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
+    	<script src="https://kit.fontawesome.com/1c5892d936.js" crossorigin="anonymous"></script>
     </head>
         <body id="page-top">
         <!-- Navigation-->
@@ -45,22 +46,28 @@
                     <div>
                     	<%if(loginMember==null) {%>
                     	<div>
-                   			<button id="login-btn" onclick="window.open('<%=request.getContextPath()%>/member/login.do');">Log In</button>
+                   			<button id="login-btn" onclick="location.assign('<%=request.getContextPath()%>/member/login.do');">Log In</button>
                    		</div>
                    		<%}else{ %>
            				<div class="dropdown">
 						 <a class="dropbtn"><img id="mypage-icon" src="<%=request.getContextPath()%>/assets/usericon.png"></a>
                    			<p id="after-login" class="text-white-75 mb-4"><%=loginMember.getMemberName() %> 님 ▼</p>
 						  <div class="dropdown-content">
-							<a class="dropdown-item" href="#">My Page </a>  
+						  	<%if(loginMember.getMemberId().equals("admin")) {%>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
+							<%}else{ %>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
+							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
+						  	<%} %>
 						  </div>
 						</div>
                    		<%} %>
                 </div>
             </div>
+            </div>
         </nav>
-        
         
         
         
@@ -89,6 +96,7 @@
 	  padding: 12px 16px;
 	  text-decoration: none;
 	  display: block;
+	  cursor:pointer;
 	}
 	.dropdown-content a:hover {background-color: #ddd;}	
 	.dropdown:hover .dropdown-content {display: block;}     

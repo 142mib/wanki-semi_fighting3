@@ -4,13 +4,14 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.boong.member.service.MemberService;
-import com.boong.member.vo.Member;
+import com.boong.member.model.service.MemberService;
+import com.boong.member.model.vo.Member;
 
 /**
  * Servlet implementation class LoginEndServlet
@@ -36,7 +37,23 @@ public class LoginEndServlet extends HttpServlet {
 		String memberPw=request.getParameter("memberPw");
 //		System.out.println(memberId+"  "+memberPw);
 		Member m=new MemberService().login(memberId,memberPw);
+<<<<<<< HEAD
 //		System.out.println(m);
+=======
+	
+		String saveId=request.getParameter("saveId");
+		if(saveId!=null) {
+			Cookie c=new Cookie("saveId",memberId);
+			c.setMaxAge(24*60*60*7);
+			response.addCookie(c);
+		}else {
+			Cookie c=new Cookie("saveId",memberId);
+			c.setMaxAge(0);
+			response.addCookie(c);
+		}
+		
+		
+>>>>>>> branch 'master' of https://github.com/zziaho/semi_fighting3.git
 		
 		if(m!=null) {
 			HttpSession session=request.getSession();

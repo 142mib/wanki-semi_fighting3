@@ -1,4 +1,4 @@
-package com.boong.member.vo;
+package com.boong.member.model.vo;
 
 import java.sql.Date;
 
@@ -18,7 +18,7 @@ public class Member {
 	private String email;
 	private String phone;
 	private String address;
-	private String carPrefer;
+	private String car;
 	private Date enrollDate;
 
 }
