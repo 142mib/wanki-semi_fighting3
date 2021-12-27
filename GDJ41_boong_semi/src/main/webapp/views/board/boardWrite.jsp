@@ -3,7 +3,7 @@
 
 <%@ include file="/views/common/header.jsp" %>
 
-<%@ page import="com.boong.member.vo.Member" %>
+<%@ page import="com.boong.member.model.vo.Member " %>
 
 <%
 	Member m = (Member)session.getAttribute("loginMember");
