@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.boong.member.vo.Member"%>
+<%@ page import="com.boong.member.model.vo.Member"%>
 <%
 	Member loginMember=(Member)session.getAttribute("loginMember");
 %>
@@ -54,7 +54,8 @@
                    			<p id="after-login" class="text-white-75 mb-4"><%=loginMember.getMemberName() %> 님 ▼</p>
 						  <div class="dropdown-content">
 						  	<%if(loginMember.getMemberId().equals("admin")) {%>
-							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>  
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
 							<%}else{ %>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  

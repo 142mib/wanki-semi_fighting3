@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.boong.member.service.MemberService;
-import com.boong.member.vo.Member;
+import com.boong.member.model.service.MemberService;
+import com.boong.member.model.vo.Member;
 
 /**
  * Servlet implementation class SignupEndServlet
@@ -35,8 +35,10 @@ public class SignupEndServlet extends HttpServlet {
 		String memberName=request.getParameter("memberName");
 		String gender=request.getParameter("gender");
 		String phone=request.getParameter("phone");
-		String email=request.getParameter("email");
-		String address=request.getParameter("address");
+		String email=request.getParameter("email_id")+"@"+request.getParameter("email_domain");
+		System.out.println(email);
+		String address=request.getParameter("address1")+" "+request.getParameter("address2");
+		System.out.println(address);
 		String car=request.getParameter("car");
 		System.out.println(gender);
 		Member m=Member.builder()

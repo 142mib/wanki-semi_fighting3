@@ -44,8 +44,8 @@ h3{margin-left:160px; margin-bottom: 60px;}
 #logo{color:#288ad8; font-size: 40px;}
 #idDuplicateBtn{width: 70px; height: 50px; 
 	padding: 10px; border-radius: 8px; 
-	border: 1px solid pink;
-	background-color: pink;
+	border: none;
+	background: linear-gradient(#80FFDB, #5390D9);
 	pointer:cursor;
 	font-size: 13px;}
 #idDuplicateBtn:hover{
@@ -58,11 +58,20 @@ h3{margin-left:160px; margin-bottom: 60px;}
 	color: gray; font-size: 14px; font-style: italic;
 }
 .star{color:tomato;}
-.box2{width: 150px; height: 50px; 
+.box2{width: 160px; height: 50px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid #288ad8 1px; 
+	background-color: #dee2e6;}
+.box3{width: 130px; height: 50px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid #288ad8 1px; 
+	background-color: #dee2e6;}
+.box4{width: 315px; height: 50px; 
 	padding: 10px; border-radius: 8px; 
 	border: solid #288ad8 1px; 
 	background-color: #dee2e6;}
 .spantitle{font-weight:bold;}
+.id_check_success{width:50px;}
 </style>
 
 <div id="blank" style="width:100%;height: 70px; background-color: darkcyan;"></div>
@@ -75,8 +84,10 @@ h3{margin-left:160px; margin-bottom: 60px;}
 	        <ul id="signup-ul">
 	        	<li>
 	        	<span class="spantitle">아이디<span class="star">*</span></span><br>
-	        		<input type="text" placeholder="네 글자 이상 입력" name="memberId" id="memberId_" >
+	        		<input type="text" placeholder="네 글자 이상 입력" name="memberId" id="memberId_" autofocus required>
 					<input type="button" value="중복확인" id="idDuplicateBtn">
+					<img src="<%=request.getContextPath()%>/assets/img/member/check.png" style="display:none; width:40px; height:40px;"><br>
+					<span id=idresult></span>
 				</li>
 				<li>
 					<span class="spantitle">비밀번호<span class="star">*</span></span><br>
@@ -104,10 +115,10 @@ h3{margin-left:160px; margin-bottom: 60px;}
 				</li>	
 				<li>
 					<span class="spantitle">이메일<span class="star">*</span></span><br>
-					<input type="email" class="box2" placeholder="" name="email_id" id="email_id">
+					<input type="text" class="box2" placeholder="" name="email_id" id="email_id">
 					<span>@</span>
-					<input type="email" class="box2" placeholder="선택하세요" name="email_domain" id="email_domain">
-					<select class="box2" id="select">
+					<input type="text" class="box3" placeholder="" name="email_domain" id="email_domain">
+					<select class="box3" id="select" style="font-size:13px;">
 			            <option value="" disabled selected>E-Mail 선택</option>
 			            <option value="naver.com" id="naver.com">naver.com</option>
 			            <option value="hanmail.net" id="hanmail.net">hanmail.net</option>
@@ -122,12 +133,31 @@ h3{margin-left:160px; margin-bottom: 60px;}
 					<input type="tel" class="box" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" required><br>
 				</li>
 				<li>
-					<span class="spantitle">주소<span class="star">*</span></span><br>
-					<input type="text" class="box" placeholder="주소를 입력하세요" name="address" id="address"><br>
+					<span class="spantitle">주소<span class="star">*</span></span><br>					
+					<select class="box3" id="address" name="address1">
+			            <option value="" disabled selected>시/도 선택</option>
+			            <option value="서울특별시">서울특별시</option>
+			            <option value="인천광역시">인천광역시</option>
+			            <option value="대전광역시">대전광역시</option>
+			            <option value="광주광역시">광주광역시</option>
+			            <option value="대구광역시">대구광역시</option>
+			            <option value="울산광역시">울산광역시</option>
+			            <option value="부산광역시">부산광역시</option>
+			            <option value="경기도">경기도</option>
+			            <option value="강원도">강원도</option>
+			            <option value="충청북도">충청북도</option>
+			            <option value="충청남도">충청남도</option>
+			            <option value="전라북도">전라북도</option>
+			            <option value="전라남도">전라남도</option>
+			            <option value="경상북도">경상북도</option>
+			            <option value="경상남도">경상남도</option>
+			            <option value="제주도">제주도</option>
+			        </select>
+					<input type="text" class="box4" placeholder="나머지 주소를 입력하세요" name="address2" id="address"><br>
 				</li>
 				<li>
 					<span class="spantitle">보유 전기차</span><br>
-						<input type="text" class="box" placeholder="차종을 입력하세요(선택)" name="car" id="car"><br>
+						<input type="text" class="box" placeholder="차종을 입력하세요" name="car" id="car"><br>
 				<li>
 					<input id="signup-btn" type="submit" value="회원가입" >
 					<input id="cancle-btn" type="reset" value="취소" >
@@ -145,7 +175,7 @@ h3{margin-left:160px; margin-bottom: 60px;}
     <script>
     	$(()=>{
     		$("#memberPw_2").keyup(e=>{
-    			if($(e.target).val().trim().length>3){
+    			if($(e.target).val().trim().length>5){
     				if($(e.target).val()==$("#memberPw_").val()){
     					$("#pwresult").text("비밀번호가 일치합니다.").css({"color":"green"});
     				}else{
@@ -163,42 +193,45 @@ h3{margin-left:160px; margin-bottom: 60px;}
     			$("#memberId_").focus();
     			return false;
     		}
-    		const password=$("#password_").val().trim();
-    		if(password.length<6){
-    			alert("패스워드는 6글자 이상 입력하세요!");
+    		const memberPw=$("#memberPw_").val().trim();
+    		if(memberPw.length<6){
+    			alert("비밀번호는 6글자 이상 입력하세요!");
     			$("#memberPw_").focus();
     			return false;
     		}
     		
     	}
     
-    	$(()=>{
-    		$("#idDuplicateBtn").click(e=>{
-    			const memberId=$("#memberId_").val().trim();
-    			if(memberId.length>=4){
-    				const url="<%=request.getContextPath()%>/member/idDuplicate.do";
-    				const title="idDuplcate";
-    				const style="width=300,height=300";
-    				open("",title,style);
-	   				console.log(idDuplicateForm);//form태그
-	   				console.log(idDuplicateForm.memberId);//form내부 input
-	   				//form태그 자식 input태그의 value값 설정
-	   				idDuplicateForm.memberId.value=memberId;
-	   				idDuplicateForm.action=url;
-	   				idDuplicateForm.method="post";
-	   				//생성한 윈도우에서 form을 실행하려면 form target속성을 이용
-	   				idDuplicateForm.target=title;
-	   				
-	   				idDuplicateForm.submit();//form전송
-	   				
-	   				
-    				
-    			}else{
-    				alert("아이디는 4글자 이상 작성해야합니다.");
-    				$("#memberId_").focus();
+    	$("#idDuplicateBtn").click(e=>{
+    		
+    		let memberId=$("#memberId_").val().trim();
+    		if(memberId.length>=4){
+    		
+    		$.ajax({
+    			url:"<%=request.getContextPath()%>/member/idDuplicate.do",
+    			type: "post",
+    			data: {"memberId" : memberId},
+    			dataType: "json",
+    			success: function(result){
+    				if(result==0){
+    					$("#idresult").text("이미 존재하는 아이디입니다.").css({"color":"red"});
+    					
+    				}else{
+    					$("#idresult").text("사용할 수 있는 아이디입니다.").css({"color":"green"});
+    				}
+    			},
+    			error : function(){
+    				alert("서버요청 실패");
     			}
-    		});
+    			
+    		})
+    		}else{
+    			alert("아이디는 4글자 이상 작성해야합니다.");
+    			$("#memberId_").focus();
+    		}
+    		
     	});
+    	
     	
     	$(function() {
             $('#select').change(function() {
@@ -213,6 +246,6 @@ h3{margin-left:160px; margin-bottom: 60px;}
         });
     	
     </script>
-    
+     
 
 <%@ include file="/views/common/footer.jsp"%>
