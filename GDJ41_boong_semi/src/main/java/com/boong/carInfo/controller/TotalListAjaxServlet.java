@@ -61,24 +61,24 @@ public class TotalListAjaxServlet extends HttpServlet {
 		String pageBar="";
 		
 		if(pageNo==1) {
-			pageBar="<span class='paging'>[이전]</span>";
+			pageBar="<span class='paging'><</span>";
 		}else {
-			pageBar+="<a onclick='paging(event);'"+"'>[이전]</a>";
+			pageBar+="<a onclick='paging(event);'"+"'><</a>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
-				pageBar+="<span class='paging'>"+pageNo+"</span>";
+				pageBar+="<span id='currentPage' class='paging'>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a onclick='paging(event);'>"+pageNo+"</a>";
+				pageBar+="<a id='searchPaging' onclick='paging(event);'>"+pageNo+"</a>";
 			}
 			pageNo++;                    
 		}
 		
 		if(pageNo>totalPage) {
-			pageBar+="<span class='paging'>[다음]</span>";
+			pageBar+="<span class='paging'>></span>";
 		}else {
-			pageBar+="<a onclick='paging(event);'>[다음]</a>";
+			pageBar+="<a onclick='paging(event);'>></a>";
 		}
 		List list = new ArrayList();
 		list.add(result);
