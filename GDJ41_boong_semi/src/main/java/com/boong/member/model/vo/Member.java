@@ -1,4 +1,4 @@
-package com.boong.member.vo;
+package com.boong.member.model.vo;
 
 import java.sql.Date;
 

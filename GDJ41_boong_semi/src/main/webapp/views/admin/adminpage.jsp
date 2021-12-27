@@ -1,42 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.List, com.boong.member.model.vo.Member" %>
 <%@ include file="/views/common/header.jsp" %>
-<div id="blank" style="width:100%; height: 70px; background-color: darkcyan;"></div>
+<%
+	List<Member> mList=(List)request.getAttribute("mList");	
+	String searchType=request.getParameter("searchType");
+	String keyword=request.getParameter("searchKeyword");
+%>
+
+<div id="blank" style="width:100%; height: 70px; background-color: #6868ac;"></div>
+
 <style>
-nav#side-bar{
-	width: 260px;
-	background-color: #dcdcde;
-	border-right: 1px solid #ddd;
-	position: absolute;
-	height: 100%;
-	padding-top: 60px;
-	padding-left:100px;
-	
-}
-h1{
-	font-size: 30px;
-	padding-top: 20px;
-	padding-bottom: 40px;
-}
-.side-bar-menu{
-	display: block;
-	height: 50px;
-	padding-bottom: 10px;
-	
-}
-.side-bar-menu:hover{
-	backgound-color: yellow;
-}
-#side-bar>div a{
-	padding: 10px 0;
-	font-size: 16px;
-	color: white;
-	text-decoration: none;
-}
-/* #side-bar>div a:hover{
-	backgound-color: yellow;
-	color: navy;
-} */
+/* 검색창에 대한 스타일 */
+#searchType{width:100px; height:40px; border:solid #6868ac 2px; border-radius:30px;font-size:14px;}
+div#search-container {margin:0 0 10px 0; padding:3px;}
+div#search-memberId{display:inline-block;}
+div#search-memberName{display:none;}
+div#search-gender{display:none;}
+div#numPerpage-container{float:right;}
+form#numperPageFrm{display:inline;}
+.search-box{width:200px; height:40px; border:solid #6868ac 2px; border-radius:30px; font-size:14px; padding-left:10px;}
+.search-btn{width:35px; height:35px; color:white; background:#6868ac; border-radius:50px; border:none;}
 
 section{
 	padding: 100px 20px 100px 220px;
@@ -44,47 +28,186 @@ section{
 	background-color: #dcdcde;
 }
 .mypage-container{
-	width: 80%;
+	width: 75%;
 	height: 600px;
 	background-color: white;
 	border: none;
 	border-radius: 10px;
 	padding: 30px 60px;
-	margin-left: 100px;
-	margin-top: 20px;
+	margin-left: 280px;
+	margin-top: 50px;
+	margin-bottom:70px;
 	display: block;
 	box-shadow: 5px 5px 5px 5px lightgray;
 }
-h2{padding: 0 60px; margin-left:45px;}
-ul{list-style:none; margin-top: 30px;}
+h2{color:#6868ac;}
 
-.menuicon{
-	width: 30px; height: 30px; margin-right:10px;
+.box{
+	width: 300px; height: 40px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid #288ad8 1px; 
+	background-color: #dee2e6;
+	margin-bottom: 20px;
+}
 
+
+/* 테이블 style */
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: #6868ac;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #6868ac;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #6868ac;
+}
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+div#pageBar{ text-align:center;}
+#pageBar>a,#pageBar>span {padding-right : 20px;}
 </style>
 
-
-	<nav id="side-bar">
-		<h1>관리자</h1>
-		<div class="side-bar-menu"><a href="#내정보"><img class="menuicon" src="<%=request.getContextPath() %>/assets/img/member/avatar.png">회원 정보</a></div>
-		<div class="side-bar-menu"><a href="#비밀번호 변경"><img class="menuicon" src="<%=request.getContextPath() %>/assets/img/member/avatar.png">게시판 관리??</a></div>
-		<div class="side-bar-menu"><a href="#주문내역"><img class="menuicon" src="<%=request.getContextPath() %>/assets/img/member/shopping-cart.png">주문 관리??</a></div>
-		<div class="side-bar-menu"><a href="#회원탈퇴"><img class="menuicon" src="<%=request.getContextPath() %>/assets/img/member/delete.png">등등등</a></div>
-	</nav>
-<section>
+<body>
+<%@ include file="/views/admin/adminsidenav.jsp"%>
+	
 	<div class="mypage-container">
-		<h3>관리 페이지</h3>
-		<p>안녕하세요, <%=loginMember.getMemberName() %> 님!</p>
+		<h2>회원 관리</h2>
 		<hr>
-		<div id="mypage-content1">
-		<table>
-			
-			
-			
-		</table>
+		<div id="search-container">
+        	<select id="searchType">
+        		<option value="memberId" <%=searchType!=null && searchType.equals("memberId")?"selected":"" %>>아이디</option>
+        		<option value="memberName" <%=searchType!=null && searchType.equals("memberName")?"selected":"" %>>회원이름</option>
+        		<option value="gender" <%=searchType!=null && searchType.equals("gender")?"selected":"" %>>성별</option>
+        	</select>
+        	<div id="search-memberId">
+        		<form action="<%=request.getContextPath()%>/admin/searchmember.do">
+        			<input type="hidden" name="searchType" value="member_Id" >
+        			<input type="text" name="searchKeyword" size="25" 
+        			placeholder="검색할 아이디를 입력하세요" class="search-box"
+        			value="<%=searchType!=null && searchType.equals("memberId")?keyword:"" %>"> 
+        					<!-- 검색창에 검색한게 남아있게 value -->
+        			<button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+        		</form>
+        	</div>
+        	<div id="search-memberName">
+        		<form action="<%=request.getContextPath()%>/admin/searchmember.do">
+        			<input type="hidden" name="searchType" value="member_Name">
+        			<input type="text" name="searchKeyword" size="25" 
+        			placeholder="검색할 이름을 입력하세요" class="search-box"
+        			value="<%=searchType!=null && searchType.equals("memberName")?keyword:"" %>">
+        			<button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+        		</form>
+        	</div>
+        	<div id="search-gender">
+        		<form action="<%=request.getContextPath()%>/admin/searchmember.do">
+        			<input type="hidden" name="searchType" value="gender">
+        			<label><input type="radio" name="searchKeyword" value="M"
+        					<%=searchType!=null && searchType.equals("gender") && keyword.equals("M")?"checked":"" %>>남</label>
+        			<label><input type="radio" name="searchKeyword" value="F"
+        					<%=searchType!=null && searchType.equals("gender") && keyword.equals("F")?"checked":"" %>>여</label>
+        			<button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+        		</form>
+        	</div>
+        </div>
+        
+		<div><br>
+			<table class="styled-table">
+				
+				<thead>
+					<tr>
+					<th>아이디</th>
+					<th>이름</th>
+					<th>성별</th>
+					<th>이메일</th>
+					<th>휴대폰 번호</th>
+					<th>주소</th>
+					<th>보유 차량</th>
+					<th>등록일</th>
+					<th>회원 관리</th>
+				</tr>
+				</thead>
+				<tbody>
+				<%if(mList.isEmpty()) {%>
+	            	<tr>
+	            		<td colspan="9">조회된 데이터가 없습니다.</td>
+	            	</tr>
+	            <%}else{ %>
+		       	    <%for(Member m: mList) {%>
+		       	    	<tr>
+			       	    	<td><%=m.getMemberId() %></td>
+			       	    	<td><%=m.getMemberName() %></td>
+			       	    	<td><%=m.getGender() %></td>
+			       	    	<td><%=m.getEmail()%></td>
+			       	    	<td><%=m.getPhone() %></td>
+			       	    	<td><%=m.getAddress() %></td>
+			       	    	<td><%=m.getCar() %></td>
+			       	    	<td><%=m.getEnrollDate() %></td>
+			       	    	<td><input type="button" value="회원 관리" onclick=""></td>
+		       	    	</tr>
+		       	    <%}
+		       	   } %>
+				</tbody>
+			</table>
+		</div>
+		<div id="pageBar">
+        	<%=request.getAttribute("pageBar") %>
+        </div>
 	</div>
 </section>
-
+	
+	<script>
+	
+	$(()=>{
+		$("#searchType").change(e=>{
+			const value=$(e.target).val();
+			//console.log(value);
+			//console.log($("#seach-container>div[id^=seach]"));
+			
+			//$("#search-container>div[id^=search]").css("display","none");
+			
+			//아니면 하나하나 가져와도 됨
+			const memberId=$("#search-memberId");
+			const memberName=$("#search-memberName");
+			const gender=$("#search-gender");
+			memberId.css("display","none");
+			memberName.css("display","none");
+			gender.css("display","none");
+			
+			
+			$("div#search-"+value).css("display","inline-block");
+			
+		})
+	})
+	
+	//onload됐을 때
+	$(()=>{
+		$("#searchType").change(); //페이지 로드 후 바로 select태그에 Change이벤트 발생시킴
+	})
+	
+	$("#first-menu").addClass("active");
+	
+	</script>
 
 
 <%@ include file="/views/common/footer.jsp"%>

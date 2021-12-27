@@ -4,26 +4,24 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.boong.member.model.service.MemberService;
 import com.boong.member.model.vo.Member;
 
 /**
- * Servlet implementation class LoginEndServlet
+ * Servlet implementation class DeleteEndServlet
  */
-@WebServlet("/member/loginend.do")
-public class LoginEndServlet extends HttpServlet {
+@WebServlet("/member/deleteend.do")
+public class DeleteEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginEndServlet() {
+    public DeleteEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,36 +33,35 @@ public class LoginEndServlet extends HttpServlet {
 		
 		String memberId=request.getParameter("memberId");
 		String memberPw=request.getParameter("memberPw");
-		System.out.println(memberId+"  "+memberPw);
-		Member m=new MemberService().login(memberId,memberPw);
-	
-		String saveId=request.getParameter("saveId");
-		if(saveId!=null) {
-			Cookie c=new Cookie("saveId",memberId);
-			c.setMaxAge(24*60*60*7);
-			response.addCookie(c);
-		}else {
-			Cookie c=new Cookie("saveId",memberId);
-			c.setMaxAge(0);
-			response.addCookie(c);
-		}
+		System.out.println(memberId);
+		System.out.println(memberPw);
 		
-		
-		
+		Member m=new MemberService().login(memberId, memberPw);
+		String msg="";
+		String loc="";
 		if(m!=null) {
-			HttpSession session=request.getSession();
-			session.setAttribute("loginMember", m);
-			response.sendRedirect(request.getContextPath());
+			int result=new MemberService().deleteMember(memberId);
+			
+			if(result>0) {
+				msg="그동안 BOONG을 이용해 주셔서 감사합니다!";
+				loc="/";
+			}else {
+				msg="회원탈퇴 실패, 다시 시도하세요";
+				loc="/member/delete.do";
+			}
 			
 		}else {
-			request.setAttribute("msg", "로그인 실패 다시 시도하세요.");
-			request.setAttribute("loc","/member/login.do");
-			request.getRequestDispatcher("/views/common/msg.jsp").forward(request,response);
-		}
+			msg="비밀번호가 일치하지 않습니다.";
+			loc="/member/delete.do";
+		}		
 		
+		//request에 데이터 세팅하기
+		request.setAttribute("msg",msg);
+		request.setAttribute("loc", loc);
+		
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -1,28 +1,23 @@
 package com.boong.member.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.boong.member.model.service.MemberService;
-import com.boong.member.model.vo.Member;
-
 /**
- * Servlet implementation class IdDuplicateServlet
+ * Servlet implementation class ChangePwServlet
  */
-@WebServlet("/member/idDuplicate.do")
-public class IdDuplicateServlet extends HttpServlet {
+@WebServlet("/member/changepw.do")
+public class ChangePwServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdDuplicateServlet() {
+    public ChangePwServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,17 +27,8 @@ public class IdDuplicateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String memberId=request.getParameter("memberId");
+		request.getRequestDispatcher("/views/member/changepw.jsp").forward(request, response);
 		
-		PrintWriter out=response.getWriter();
-		int result=new MemberService().checkIdDuplicate(memberId);
-		
-		out.write(result+"");
-		
-		
-		//request.setAttribute("member",m);
-		
-		//request.getRequestDispatcher("/views/member/idDuplicate.jsp").forward(request, response);
 	}
 
 	/**

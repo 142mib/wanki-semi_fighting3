@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,16 +13,16 @@ import com.boong.member.model.service.MemberService;
 import com.boong.member.model.vo.Member;
 
 /**
- * Servlet implementation class LoginEndServlet
+ * Servlet implementation class ChangePwEndServlet
  */
-@WebServlet("/member/loginend.do")
-public class LoginEndServlet extends HttpServlet {
+@WebServlet("/member/changepwend.do")
+public class ChangePwEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginEndServlet() {
+    public ChangePwEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,33 +34,31 @@ public class LoginEndServlet extends HttpServlet {
 		
 		String memberId=request.getParameter("memberId");
 		String memberPw=request.getParameter("memberPw");
-		System.out.println(memberId+"  "+memberPw);
+		
 		Member m=new MemberService().login(memberId,memberPw);
-	
-		String saveId=request.getParameter("saveId");
-		if(saveId!=null) {
-			Cookie c=new Cookie("saveId",memberId);
-			c.setMaxAge(24*60*60*7);
-			response.addCookie(c);
-		}else {
-			Cookie c=new Cookie("saveId",memberId);
-			c.setMaxAge(0);
-			response.addCookie(c);
-		}
 		
-		
-		
+		String msg="";
+		String loc="";
 		if(m!=null) {
-			HttpSession session=request.getSession();
-			session.setAttribute("loginMember", m);
-			response.sendRedirect(request.getContextPath());
+			String newMemberPw=request.getParameter("newMemberPw");
+			int result=new MemberService().changePassword(memberId,newMemberPw);
+			
+			if(result>0) {
+				msg="비밀번호 변경 완료! 재로그인을 위해 메인으로 돌아갑니다.";
+				HttpSession session=request.getSession(false);
+				if(session!=null) session.invalidate();
+			}else {
+				msg="비밀번호 변경 실패, 다시 시도해주세요";
+				loc="/member/changepw.do";
+			}
 			
 		}else {
-			request.setAttribute("msg", "로그인 실패 다시 시도하세요.");
-			request.setAttribute("loc","/member/login.do");
-			request.getRequestDispatcher("/views/common/msg.jsp").forward(request,response);
+			msg="비밀번호가 일치하지 않습니다.";
+			loc="/member/changepw.do";
 		}
-		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}
 

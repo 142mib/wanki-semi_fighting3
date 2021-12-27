@@ -24,7 +24,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 text-center">
-                        <h2 class="text-white mt-0">"Welcome To Future About Car"</h2>
+                        <h2 class="text-white mt-0">"Welcome To the Future of Electric Cars"</h2>
                         <hr class="divider divider-light" />
                         <p class="text-white-75 mb-4">급격히 증가하는 전기차에 대한 수요와 인프라에 대해 무분별한 정보들을 사용자가 쉽게 이용할 수 있도록 서비스를 제공합니다.</p>
 
@@ -43,28 +43,28 @@
                         <div class="mt-5">
                             <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
                             <h3 class="h4 mb-2">Charge Map</h3>
-                            <p class="text-muted mb-0">전기차 충전소의 위치와 정보를 제공합니다.</p>
+                            <p class="text-muted mb-0">전기차 충전소의 위치와<br>관련 정보 제공합니다.</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 text-center">
                         <div class="mt-5">
                             <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Car Infomation</h3>
-                            <p class="text-muted mb-0">전기차에 대한 정보를 제공합니다.</p>
+                            <h3 class="h4 mb-2">Information</h3>
+                            <p class="text-muted mb-0">여러 전기차에 대한<br>유용한 정보를 확인해 보세요!</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 text-center">
                         <div class="mt-5">
                             <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Shopping</h3>
-                            <p class="text-muted mb-0">차량관련 용품을 쉽게 구매할 수 있도록 제공합니다.</p>
+                            <h3 class="h4 mb-2">Shop</h3>
+                            <p class="text-muted mb-0">BOONG이 엄선한<br>다양한 제품을 편리하게 구매해 보세요.</p>
                         </div>
                     </div>               
                     <div class="col-lg-3 col-md-6 text-center">
                         <div class="mt-5">
                             <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
                             <h3 class="h4 mb-2">Community</h3>
-                            <p class="text-muted mb-0">유저간 활발한 정보공유를 위해 커뮤니티 게시판을 제공합니다.</p>
+                            <p class="text-muted mb-0">게시판을 통해<br> 유저간 꿀팁을 공유해 보세요!</p>
                         </div>
                     </div>
                 </div>

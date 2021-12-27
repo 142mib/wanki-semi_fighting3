@@ -13,16 +13,16 @@ import com.boong.member.model.service.MemberService;
 import com.boong.member.model.vo.Member;
 
 /**
- * Servlet implementation class IdDuplicateServlet
+ * Servlet implementation class FindIdEndServlet
  */
-@WebServlet("/member/idDuplicate.do")
-public class IdDuplicateServlet extends HttpServlet {
+@WebServlet("/member/findidend.do")
+public class FindIdEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IdDuplicateServlet() {
+    public FindIdEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +31,15 @@ public class IdDuplicateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String memberName=request.getParameter("memberName");
+		String email=request.getParameter("email_id")+"@"+request.getParameter("email_domain");
 		
-		String memberId=request.getParameter("memberId");
-		
-		PrintWriter out=response.getWriter();
-		int result=new MemberService().checkIdDuplicate(memberId);
-		
-		out.write(result+"");
+		Member m=new MemberService().findId(memberName,email);
+	
+		request.setAttribute("member", m);
+		request.getRequestDispatcher("/views/member/idresult.jsp").forward(request, response);
 		
 		
-		//request.setAttribute("member",m);
-		
-		//request.getRequestDispatcher("/views/member/idDuplicate.jsp").forward(request, response);
 	}
 
 	/**
