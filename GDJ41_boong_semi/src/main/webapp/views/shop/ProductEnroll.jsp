@@ -62,7 +62,7 @@
 				<tr>
 					<th>재고</th>
 					<td>
-						<input type="number"  name="productStock" step="1" min="1" required>
+						<input type="number"  name="productStock" step="1" min="0" required>
 					</td>
 				</tr>			
 				<tr>

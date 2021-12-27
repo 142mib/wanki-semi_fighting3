@@ -11,7 +11,7 @@
 
 <style>
 	section>div{width:80%; text-align: center;margin: 0 10% 0 10%;}
-	#sv-container{width:80%;  height:400px; text-align: center; margin: 0 10% 0 10%; display: flex; }	
+	#sv-container{width:80%;  height:400px; text-align: center; margin: 0 10% 20px 10%; display: flex; }	
 	#sv-container .img-container{width:50%;  text-align: center; border-right: 2px solid #ddd;; padding-top:0px; display:flex; flex-direction: column; align-items: center;}
 	#sv-container .img-container .img-magnifier-container{width:90%; height:auto; position: relative;  }
 	#sv-container .img-container #myimage{ width:100%; height:auto;}

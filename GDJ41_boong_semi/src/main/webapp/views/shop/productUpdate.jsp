@@ -46,7 +46,7 @@
 	<div style="height: 63px; background-color: rgba(1,138,216,1)"></div>
 	<div style="height:10px;"></div>
 	<div id='product-container'>
-		<h2>상품 등록</h2>
+		<h2>상품 수정</h2>
 		<form action='<%=request.getContextPath()%>/shop/productUpdateEnd.do'
 		method="post" enctype="multipart/form-data" >
 			<table id='tbl-product'>				
