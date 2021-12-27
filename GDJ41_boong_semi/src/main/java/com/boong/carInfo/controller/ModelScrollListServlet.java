@@ -11,18 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.boong.carInfo.model.service.CarInfoService;
 import com.boong.carInfo.model.vo.CarInfo;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class CarInfoMainServlet
+ * Servlet implementation class ModelScrollListServlet
  */
-@WebServlet("/carInfo/main.do")
-public class CarInfoMainServlet extends HttpServlet {
+@WebServlet("/model/scrollList.do")
+public class ModelScrollListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CarInfoMainServlet() {
+    public ModelScrollListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,9 +33,13 @@ public class CarInfoMainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String val=request.getParameter("val");
+		System.out.println(val);
+		response.setContentType("application/json;charset=utf-8");
+		List<CarInfo> list = new CarInfoService().searchModelClass(val);
+		System.out.println(list);
+		new Gson().toJson(list,response.getWriter());
 		
-
-		request.getRequestDispatcher("/views/carInfo/carInfoMain.jsp").forward(request, response);
 	}
 
 	/**

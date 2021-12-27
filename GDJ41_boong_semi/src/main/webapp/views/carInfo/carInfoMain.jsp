@@ -29,19 +29,15 @@
 							<div id="schCategory" class="depth" style="display:block;">
 								<div class="deparea_category">
 									<ul class="deplist">
-										<li><label><input type="checkbox">&nbsp;경차</label></li>
-										<li><label><input type="checkbox">&nbsp;소형차</label></li>
-										<li><label><input type="checkbox">&nbsp;준중형차</label></li>
-										<li><label><input type="checkbox">&nbsp;중형차</label></li>
-										<li><label><input type="checkbox">&nbsp;대형차</label></li>
-										<li><label><input type="checkbox">&nbsp;스포츠카</label></li>
-										<li><label><input type="checkbox">&nbsp;SUV</label></li>
-										<li><label><input type="checkbox">&nbsp;RV</label></li>
-										<li><label><input type="checkbox">&nbsp;기타</label></li>
-										<!-- <li class="stline"><label><input type="checkbox">&nbsp;경승합차</label></li>
-										<li><label><input type="checkbox">&nbsp;승합차</label></li>
-										<li><label><input type="checkbox">&nbsp;화물차</label></li>
-										<li><label><input type="checkbox">&nbsp;기타</label></li> -->
+										<li class="list"><label><input name="box" type="checkbox" value="경차" onclick="NoMultiChk(this)">&nbsp;경차</label></li>
+										<li class="list"><label><input name="box" type="checkbox" value="소형" onclick="NoMultiChk(this)">&nbsp;소형차</label></li>
+										<li class="list"><label><input name="box" type="checkbox" value="준중형" onclick="NoMultiChk(this)">&nbsp;준중형차</label></li>
+										<li class="list"><label><input name="box" type="checkbox" value="중형" onclick="NoMultiChk(this)">&nbsp;중형차</label></li>
+										<li class="list"><label><input name="box" type="checkbox" value="준대형" onclick="NoMultiChk(this)">&nbsp;준대형차</label></li>
+										<li class="list"><label><input name="box" type="checkbox" value="대형" onclick="NoMultiChk(this)">&nbsp;대형</label></li>
+										<li class="list"><label><input name="box" type="checkbox" value="SUV" onclick="NoMultiChk(this)">&nbsp;SUV</label></li>
+										<li class="list"><label><input name="box" type="checkbox" value="RV" onclick="NoMultiChk(this)">&nbsp;RV</label></li>
+										<li class="list"><label><input name="box" type="checkbox" value="기타" onclick="NoMultiChk(this)">&nbsp;기타</label></li>
 									</ul>
 								</div>
 							</div>
@@ -51,45 +47,32 @@
 						</div>
 						<div id="scroll_group">
 								<div id="stepManufact" class="deparea_marker">
-									<dl class="deplist_sort_lista1">
-										<dt class="word1">국산차</dt>
-										<dd>현대</dd> <!-- for문으로 브랜드 조회 -->
-										<dd>기아</dd>
-										<dd>쉐보레(GM대우)</dd>
-										<dd>르노삼성</dd>
-										<dd>기타</dd>
-									</dl>
-									<dl class="deplist_sort_lista2">
-										<dt class="word2">수입차 인기</dt>
-										<dd>테슬라</dd> <!-- 차 정보조회 좋아요 개수 많은순으로 db 호출 -->
-										<dd>벤츠</dd>
-										<dd>포르쉐</dd>
-										<dd>BMW</dd>
-										<dd>아우디</dd>
-										<dd>닛산</dd>
-										<dd>재규어</dd>
-									</dl>
-									<dl class="deplist_sort_lista3">
-										<dt class="word3">수입차 이름순</dt>
-										<dd>BMW</dd> <!-- 이름순으로 호출 영어 -> 한글 ㄱ -->
-										<dd>GMC</dd>
-										<dd>닛산</dd>
-										<dd>도요타</dd>
-										<dd>랜드로버</dd>
-										<dd>렉서스</dd>
-										<dd>링컨</dd>
-										<dd>벤츠</dd>
-										<dd>볼보</dd>
-										<dd>스마트</dd>
-										<dd>아우디</dd>
-										<dd>인피니티</dd>
-										<dd>재규어</dd>
-										<dd>캐딜락</dd>
-										<dd>테슬라</dd>
-										<dd>포드</dd>
-										<dd>포르쉐</dd>
-										<dd>혼다</dd>
-									</dl>
+									<form>
+										<input type="hidden" name="kind" id="kind">
+									</form>
+									<div class="deplist_sort_lista1">
+										<span class="word1">국산차</span>
+										<nav class="korea_model" id="현대">현대</nav>
+										<nav class="korea_model" id="제네시스">제네시스</nav>
+										<nav class="korea_model" id="기아">기아</nav>
+										<nav class="korea_model" id="쉐보레">쉐보레</nav>
+										<nav class="korea_model" id="르노삼성">르노삼성</nav>
+										<nav class="korea_model" id="기타">기타제조사</nav>
+									</div>
+									<div class="deplist_sort_lista2">
+										<span class="word2">수입차</span>
+										<nav class="korea_model" id="BMW">BMW</nav>
+										<nav class="korea_model" id="닛산">닛산</nav>
+										<nav class="korea_model" id="벤츠">벤츠</nav>
+										<nav class="korea_model" id="볼보">볼보</nav>
+										<nav class="korea_model" id="아우디">아우디</nav>
+										<nav class="korea_model" id="테슬라">테슬라</nav>
+										<nav class="korea_model" id="포르쉐">포르쉐</nav>
+									</div>
+									<!-- <div class="deplist_sort_lista3">
+										<span class="word3">수입차 이름순</span>
+										
+									</div>  -->
 								</div>
 							</div>
 							<div id="search_price" class="search_price">
@@ -138,88 +121,18 @@
 				<div id="model_search_info"> <!-- for문으로 구현할곳 -->
 					<div id="sort_list">
 						<h5 class="sort_title">BOONG 검색엔진 결과</h5>
+						<span onclick='rollback();'>전체차량보기</span>
 						<a class="popular_sort">인기순</a>
 						<a class="view_sort">조회순</a>
 						<a class="price_sort">가격순</a>
 					</div>
-					<ul>
-						<li>
-							<a href="">
-								<span><img src="<%=request.getContextPath()%>/assets/img/carInfo/taican.png"></span>
-								<span class="model_name">포르쉐 타이칸 크로스 투리스모 <!-- 모델명 --></span>
-								<span class="model_short_info">복합 2.8~2.9km/h  <!-- 모델명 --></span>
-								<span class="model_short_info">출력 350~500kW</span>
-								<span class="model_price">14,560~23,360만원<!-- 연비 --></span>
-							</a>
-						</li>
-						<li>
-							<a href="">
-								<span><img src="<%=request.getContextPath()%>/assets/img/carInfo/taican.png"></span>
-								<span class="model_name">테슬라 모델 x</span>
-								<span class="model_short_info">복합 3.7~3.9km/h</span>
-								<span class="model_short_info">출력 500~895kW</span>
-								<span class="model_price">13,999~15,999만원</span>
-							</a>
-						</li>
-						<li>
-							<a href="">
-								<span><img src="<%=request.getContextPath()%>/assets/img/carInfo/taican.png"></span>
-								<span class="model_name">테슬라 모델 s</span>
-								<span class="model_short_info">복합 4.3km/h </span>
-								<span class="model_short_info">출력 500~895kW</span>
-								<span class="model_price">12,999~16,999만원</span>
-							</a>
-						</li>
-						<li>
-							<a>
-								<span><img src="<%=request.getContextPath()%>/assets/img/carInfo/taican.png"></span>
-								<span class="model_name">테슬라 모델 y</span>
-								<span class="model_short_info">복합 4.8~5.4km/h </span>
-								<span class="model_short_info">출력 258~336kW</span>
-								<span class="model_price">7,899~8,599만원</span>
-							</a>
-						</li>
-						<li>
-							<a>
-								<span><img src="<%=request.getContextPath()%>/assets/img/carInfo/taican.png"></span>
-								<span class="model_name">테슬라 모델 3</span>
-								<span class="model_short_info">복합 5.1~6.1km/h</span>
-								<span class="model_short_info">출력 211~340kW</span>
-								<span class="model_price">6,059~7939만원</span>
-							</a>
-						</li>
-						<li>
-							<a>
-								<span><img src="<%=request.getContextPath()%>/assets/img/carInfo/taican.png"></span>
-								<span class="model_name">아우디 e-트론 스포트백</span>
-								<span class="model_short_info">복합 3.1km/h </span>
-								<span class="model_short_info">출력 340kW</span>
-								<span class="model_price">12,106만원</span>
-							</a>
-						</li>
-						<li>
-							<a>
-								<span><img src="<%=request.getContextPath()%>/assets/img/carInfo/taican.png"></span>
-								<span class="model_name">2022 BMW iX</span>
-								<span class="model_short_info">복합 3.6~3.9km/h </span>
-								<span class="model_short_info">출력 243~340kW</span>
-								<span class="model_price">12,260~14,630만원</span>
-							</a>
-						</li>
-						<li>
-							<a>
-								<span><img src="<%=request.getContextPath()%>/assets/img/carInfo/taican.png"></span>
-								<span class="model_name">2022 제네시스 GV60</span>
-								<span class="model_short_info">복합 4.1~5.1km/h</span>
-								<span class="model_short_info">출력 168~360kW</span>
-								<span class="model_price">5,990~7,040만원</span>
-							</a>
-						</li>
-					</ul>
+					<div id="model_list">
+				
+					</div>
 				</div>
 			</div>
-			<div id="ad_nav_fixed">
-			</div>
+			<<!-- div id="ad_nav_fixed">
+			</div> -->
 		</div>
 	</div>
 <style>
@@ -274,7 +187,7 @@
 	position:relative;
 	
 }
-#model_search_info>ul>li {
+#model_list>ul>li {
 	position:relative;
 	float:left;
 	/* margin-top:10px;
@@ -284,28 +197,27 @@
 	left:-9px;
 	padding-bottom:15px;
 }
-#model_search_info>ul>li>a  {
+#model_list>ul>li>a  {
 	text-decoration:none;
 }
-#model_search_info>ul>li>a>span[class="model_short_info"]{
+#model_list>ul>li>a>span[class="model_short_info"]{
 	font-size:11px;
 	color:#333;
 	display:flex;
 	
 }
-#model_search_info>ul>li>a>span[class="model_name"]{
+#model_list>ul>li>a>span[class="model_name"]{
 	position:relative;
 	display:flex;
 	align-items:left; 
-	font-weight:bold;
+	font-weight:bolder;
 	color:#333;
 	font-size:13px;
 }
-#model_search_info>ul>li>a>span[class="model_price"]{
+#model_list>ul>li>a>span[class="model_price"]{
 	display:flex;
-	margin-top:10px;
+	margin-top:5px;
 	align-items:left; 
-	font-weight:bold;
 	color:#333;
 	font-size:13px;
 }
@@ -508,11 +420,12 @@ input[type="checkbox"] {
     background: #fbfbfb;
 }
 .word1,.word2,.word3 {
-	font-size:13px;
+	font-size:14px;
 	position:relative;
-	color: #333;
+	color:#288ad8;
     left:15px;
     top:-3px;
+    font-weight:bold;
 }
 dd{
 	position:relative;
@@ -585,8 +498,6 @@ dd{
 	color:#333; 
 	cursor: pointer;
 	margin-left:4px;
-
-	
 }
 #sort_list{
 	border-bottom:1px solid #e5e5e5;
@@ -602,18 +513,77 @@ dd{
 	color:#288ad8;
 	margin-top:10px;
 }
-
-
+.list_style{
+	left:10px;
+	top:-5px;
+	cursor:pointer;
+	font-weight:bold;
+}
+#brand {
+	top:-8px;
+	left:10px;
+}
+.korea_model,.abroad_model{
+	position:relative;
+	left:30px;
+	cursor:pointer;
+	font-size:13px;
+	font-weight:bold;
+	padding-bottom:3px;
+}
+.deplist_sort_lista1 a {
+	top:5px;
+	position:relative;
+	font-size:13px;
+	color:#333; 
+}
+.model_list1{
+	position:relative;
+	margin-bottom:-12px;
+}
+.model_list2{
+	margin-bottom:12px;
+}
+.list_style2{
+	left:10px;
+	top:-5px;
+	cursor:pointer;
+}
+#mdl_info {
+	position:relative;
+	float:right;
+}
+#pagingul{
+	position:absolute;
+	bottom:500px;
+	left:560px;
+}
 </style>
-<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+	//체크박사 중복 불가 로직
+	function NoMultiChk(chk) {
+		var obj=document.getElementsByName("box");
+		for(var i=0; i<obj.length; i++) {
+			if(obj[i]!=chk) {
+				obj[i].checked=false;
+			}
+		}
+	}
+	//전체 선택 해제 로직
 	$("#re_img").click(e=>{
 		$("input[type='checkbox']").prop('checked',false);
+		$("#testContainer").hide();
+		$(".model_list1").hide();
 	});
 	$(".refresh").click(e=>{
 		$("input[type='checkbox']").prop('checked',false);
+		$("#testContainer").hide();
+		$(".model_list1").hide();
+		
 	});
 	
+	//가격 직접입력으로 전환하는 로직
 	$("#price_check").click(e=>{
 		if($(e.target).is(":checked")) {
 			$(".start_price_form").hide();
@@ -625,7 +595,7 @@ dd{
 			$("#enter_price").hide();
 		}
 	});
-	
+	//차종 슬라이드 업 다운 로직
 	$(()=>{
 		$("#category").click(e=>{
 			if($(".deparea_category").is(":visible")){
@@ -637,7 +607,7 @@ dd{
 			}
 		});	
 	});
-	
+	//이거 질문해야하는데..능지가 딸려서 생각이 잘 안남 ㅋㅋ..
 	$("#start_price").change(e=>{
 		const sSelect=Number($("#start_price option:selected").val());
 		for(let i=0; i<=$("#end_price option").length; i++) {
@@ -647,6 +617,235 @@ dd{
 			}
 		}
 	});
+	//로그인 멤버의 관심 브랜드를 받아 ajax로 초기화면 보내주기 뭐 m.get 써서 해야겟찌?
+		let cPage;
+		let numPerpage;	
+			$.ajax({
+				url:"<%=request.getContextPath()%>/total/totalList.do",
+				data:{"cPage":cPage, "numPerpage":numPerpage},
+				success:data=>{
+					$("#pagingul").remove();
+					const div=$("<div id='pagingul'>");
+					const ul=$("<ul>");
+					for(let i=0; i<data[0].length; i++) {
+						 let li=$("<li>");
+						 let a=$("<a href=''>")
+						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelName"]);
+						 let mile=$("<span>").addClass("model_short_info").html(data[0][i]["modelBrand"]);
+						 let output=$("<span>").addClass("model_short_info").html(data[0][i]["modelInfo"]);
+						 let price=$("<span>").addClass("model_price").html(data[0][i]["modelClass"]);
+						 a.append(modelClass).append(mile).append(output).append(price);
+						 li.append(a);
+						 ul.append(li);	
+					}	
+				   		$("#model_list").html(ul);
+				   		div.html(data[1]);
+				   		$("#model_info").after(div);
+				}
+			}); 	
+		const rollback=()=>{
+			$.ajax({
+				url:"<%=request.getContextPath()%>/total/totalList.do",
+				data:{"cPage":cPage, "numPerpage":numPerpage},
+				success:data=>{
+					const div=$("<div id='pagingul'>");
+					const ul=$("<ul>");
+					for(let i=0; i<data[0].length; i++) {
+						 let li=$("<li>");
+						 let a=$("<a href=''>")
+						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelName"]);
+						 let mile=$("<span>").addClass("model_short_info").html(data[0][i]["modelBrand"]);
+						 let output=$("<span>").addClass("model_short_info").html(data[0][i]["modelInfo"]);
+						 let price=$("<span>").addClass("model_price").html(data[0][i]["modelClass"]);
+						 a.append(modelClass).append(mile).append(output).append(price);
+						 li.append(a);
+						 ul.append(li);	
+					}	
+				   		$("#model_list").html(ul);
+				   		div.html(data[1]);
+				   		$("#model_info").after(div);
+				}
+			}); 	
+			
+		}				
+			
+		const paging=(e)=>{
+			let cPage=$(e.target).text();
+			let numPerpage;
+			console.log(cPage);
+			$.ajax({
+				url:"<%=request.getContextPath()%>/total/totalList.do",
+				data:{"cPage":cPage, "numPerpage":numPerpage},
+				success:data=>{
+					const ul=$("<ul>");
+					for(let i=0; i<data[0].length; i++) {
+						 let li=$("<li>");
+						 let a=$("<a href=''>")
+						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelName"]);
+						 let mile=$("<span>").addClass("model_short_info").html(data[0][i]["modelBrand"]);
+						 let output=$("<span>").addClass("model_short_info").html(data[0][i]["modelInfo"]);
+						 let price=$("<span>").addClass("model_price").html(data[0][i]["modelClass"]);
+						 a.append(modelClass).append(mile).append(output).append(price);
+						 li.append(a);
+						 ul.append(li);	
+					}	
+				   		$("#model_list").html(ul);
+				   		$("#pagingul").html(data[1]);
+				}
+			}); 	
+		}	
+
+	//차종 클릭시 modelInfo div에 비동기식 화면전환 처리
+	$("input[name='box']").click(e=>{
+		$.ajax({
+			url:"<%=request.getContextPath()%>/model/modelList.do",
+			data:{"value":$(e.target).val()},
+			success:data=>{
+				$("#pagingul").remove();
+				const ul=$("<ul>");
+				for(let i=0; i<data.length; i++) {
+				 	let li=$("<li>");
+				 	let a=$("<a href=''>")
+					let modelName=$("<span>").addClass("model_name").html(data[i]["modelName"]);
+					let mile=$("<span>").addClass("model_short_info").html(data[i]["modelBrand"]);
+					let output=$("<span>").addClass("model_short_info").html(data[i]["modelInfo"]);
+				 	let price=$("<span>").addClass("model_price").html(data[i]["modelClass"]);
+					a.append(modelName).append(mile).append(output).append(price);
+					li.append(a);
+					ul.append(li);
+				}
+				$("#model_list").html(ul);
+			}
+		});
+	});
+
+
+	//제조사/모델/등급 브랜드명으로 클릭 -> 차량 모델 조회
+	$(".korea_model").on("click",e=>{
+		var value=$(e.target).text();
+		$("input[type='checkbox']").prop('checked',false);
+		$.ajax({
+			url:"<%=request.getContextPath()%>/scroll/scrollList.do",
+			data:{"value":value},
+			success:data=>{
+				$(".model_list1").remove();
+				const div=$("<div>").addClass("model_list1");
+				const ul=$("<ul>");
+				const ulparam=$("<ul>")
+				for(let i=0; i<data.length; i++) {
+					console.log(data);
+					let li=$("<li name="+data[i]+" onclick='clickMethod(event);'>").addClass("list_style").html(data[i]);
+				 	ul.append(li);
+				 	div.append(ul);
+				}
+				$(e.target).after(div);
+			}
+		});
+		$(".model_list1").show();
+	});
+	//제조사/모델/등급 차량 연식 조회
+	const clickMethod=(e)=>{
+		var val=$(e.target).attr("name");
+		$.ajax({
+			url:"<%=request.getContextPath()%>/model/scrollList.do",
+			data:{"val":val},
+			success:data=>{
+				$("#pagingul").remove();
+				$(".model_list2").remove();
+				const div1=$("<div>").addClass("model_list2");
+				const ul1=$("<ul>");
+				const ulparam=$("<ul>")
+				for(let i=0; i<data.length; i++) {
+				 let li=$("<li onclick='searchClass(event);'>").addClass("list_style2").html(data[i]["modelClass"]);
+				 ul1.append(li);
+				 div1.append(ul1);
+					let liparam=$("<li>");
+				 	let a=$("<a>");
+					let modelName=$("<span>").addClass("model_name").html(data[i]["modelName"]);
+					let mile=$("<span>").addClass("model_short_info").html(data[i]["modelBrand"]);
+					let output=$("<span>").addClass("model_short_info").html(data[i]["modelInfo"]);
+				 	let price=$("<span onclick='searchClass(event)'>").addClass("model_price").html(data[i]["modelClass"]);
+				 	a.append(modelName).append(mile).append(output).append(price);
+					liparam.append(a);
+					ulparam.append(liparam);
+				}
+				$(e.target).after(div1);
+				$("#model_list").html(ulparam);
+			}
+		});
+		$(".model_list2").show();
+	}	
+	
+	//제조사/모델/등급 선택시 차 상세 정보 출력
+	//다른 등급 클릭시 그 해당하는 차량의 정보도 출력해주는 기능 구현해주자.
+	const searchClass=(e)=>{
+		var mClass=$(e.target).text();
+		console.log(mClass);
+		$.ajax({
+			url:"<%=request.getContextPath()%>/model/modelInfo.do",
+			data:{"mClass":mClass},
+			success:data=>{
+				$("#pagingul").remove();
+				const div=$("<div id='mdl_img'>");
+				const div2=$("<div id='mdl_info'>");
+				const div3=$("<div id='mdl_comment'>");
+				const table=$("<table>")
+				const tr=$("<tr>");
+				const tr2=$("<tr>");
+				const tr3=$("<tr>");
+				const tr4=$("<tr>");
+				const tr5=$("<tr>");
+				const tr6=$("<tr>");
+				const tr7=$("<tr>");
+				const tr8=$("<tr>");
+				const tr9=$("<tr>");
+				let infoclass=$("<td>").html("모델명");
+				let infobrand=$("<td>").html("브랜드");
+				let infograde=$("<td>").html("등급");
+				let infoprice=$("<td>").html("가격");
+				let infospeed=$("<td>").html("최고속도");
+				let infoperkm=$("<td>").html("주행");
+				let infomile=$("<td>").html("연비");
+				let infooutput=$("<td>").html("출력");
+				let infodrive=$("<td>").html("구동");
+				for(let i=0; i<data.length; i++) {
+					if(data[i]["modelGrade"]=="STANDARD") {
+						let mclass=$("<td class='tdclass'>").html(data[i]["modelClass"]);
+						let brand=$("<td class='tdbrand'>").html(data[i]["modelBrand"]);
+						let grade=$("<td class='tdgrade'>").html(data[i]["modelGrade"]);
+						let price=$("<td class='tdprice'>").html(data[i]["price"]);
+						let speed=$("<td class='tdspeed'>").html(data[i]["speed"]);
+						let perkm=$("<td class='tdperkm'>").html(data[i]["perKm"]);
+						let mile=$("<td class='tdmile'>").html(data[i]["mile"]);
+						let output=$("<td class='tdoutput'>").html(data[i]["output"]);
+						let drive=$("<td class='tddrive'>").html(data[i]["drive"]);		
+						tr.append(infoclass).append(mclass)
+						tr2.append(infobrand).append(brand)
+						tr3.append(infograde).append(grade)
+						tr4.append(infoprice).append(price)
+						tr5.append(infospeed).append(speed);
+						tr6.append(infoperkm).append(perkm);
+						tr7.append(infomile).append(mile);
+						tr8.append(infooutput).append(output);
+						tr9.append(infodrive).append(drive);
+						table.append(tr).append(tr2).append(tr3).append(tr4).append(tr5).append(tr6).append(tr7).append(tr8).append(tr9);
+					}else{
+						let paramgrade=$("<td class='tdotherGrade'>").html(data[i]["modelGrade"]);
+						div2.append(paramgrade);
+					}
+				}
+				
+			<%-- 	let img=$("<img src="<%=request.getContextPath()%>/assets/img/carInfo/data[0]["fileName"]+">");
+				div.append(img); --%>
+				div2.append(table);
+				$("#model_list").html(div2);
+			}
+			
+		});
+	}
+
+	
+	
 	
 		
 </script>
