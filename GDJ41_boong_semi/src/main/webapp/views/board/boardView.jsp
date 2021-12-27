@@ -214,47 +214,32 @@
 			data: {"boardNo":<%=b.getBoardNo()%>},
 			success: function(data){
 				console.log(data);
-				if(data == null){
+				if(data.length == 0){
 					let rowDiv = $("<div>").attr({class: 'row'});
-					let msg = $("<p>").html('댓글이 없습니다.');
-					rowDiv.appen(msg);
+					let msg = $("<div>").html('댓글이 없습니다.');
+					rowDiv.append(msg);
 					$("#board-comment").append(rowDiv);
-				}else{
-					if(<%=b.getBoardWriter().equals(m.getMemberId())%>){
+				}else {
 						let rowDiv = $("<div>").attr({class: 'row'});
 						for(let i = 0; i < data.length; i++){
 							let idDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentWriter"]);
 							let dateDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentDate"]);
-							let btnDiv = $("<div>").attr({class: 'col-sm-7'});
+							let btnDiv = $("<div>").attr({'class': 'col-sm-7'});
 							let replyBtn = $("<button>").attr({
-								onclick: 'deleteComment();'
+								'onclick': 'deleteComment();'
 							});
-							btnDiv.append(replyBtn);
-							let contentDiv = $("<div>").attr({class: 'col-sm-12'}).html(data[i]["boardCommentContent"]);
-							let noDiv = $("<div>").attr({}).hmtl(data[i]["boardCommentNo"]);
+							if(<%=m.getMemberId()%>.equals(data[i]["boardCommentWriter"])) {
+								btnDiv.append(replyBtn);
+							};
+							let contentDiv = $("<div>").attr({'class': 'col-sm-12'}).html(data[i]["boardCommentContent"]);
+							let noDiv = $("<div>").attr({'display':'none'}).html(data[i]["boardCommentNo"]);
 							rowDiv.append(idDiv).append(dateDiv).append(btnDiv).append(contentDiv).append(noDiv);					
-						}
-						$("#board-comment").append(rowDiv);
-					}else{
-						let rowDiv = $("<div>").attr({class: 'row'});
-						for(let i = 0; i < data.length; i++){
-							let idDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentWriter"]);
-							let dateDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentDate"]);
-							let btnDiv = $("<div>").attr({class: 'col-sm-7'});
-							/* let replyBtn = $("<button>").attr({
-								value: '삭제',
-								onclick: 'deleteComment();'
-							});
-							btnDiv.append(replyBtn); */
-							let contentDiv = $("<div>").attr({class: 'col-sm-12'}).html(data[i]["boardCommentContent"]);
-							rowDiv.append(idDiv).append(dateDiv).append(btnDiv).append(contentDiv);					
 						}
 						$("#board-comment").append(rowDiv);
 					}
 				}
-			}
-		})
-	};
+			});
+		};
 	
 	// 삭제 번튼을 눌렀을 경우 댓글 삭제하는 함수
 <%-- 	function deleteComment(){
@@ -263,7 +248,9 @@
 				url: "<%=request.getContextPath()%>/board/boardCommenDeleteAjax.do",
 				type: "post",
 				data: {"commentList":},
-				success: function(data)
+				success: function(data){
+					
+				}
 			})
 		}
 	} --%>
