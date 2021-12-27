@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.boong.member.vo.Member"%>
+<%@ page import="com.boong.member.model.vo.Member"%>
 <%
 	Member loginMember=(Member)session.getAttribute("loginMember");
 %>
@@ -57,17 +57,16 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="">Product Manage</a></li>
-                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/map/mapview.do"">Charge Map</a></li>
+                    	<%if(loginMember!=null&&loginMember.getMemberId().equals("admin")) {%>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/productManage.do">Product Manage</a></li>
+                        <%} %>
+                        <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/map/mapview.do">Charge Map</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/carInfo/main.do">Car Info</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/main.do">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/board/boardList.do">Community</a></li>
                      
                     </ul>
                     <!-- 여기 div추가 바꿈+스타일-->
-                    
-                   
-                    
                     
                     <div>
                     	<%if(loginMember==null) {%>

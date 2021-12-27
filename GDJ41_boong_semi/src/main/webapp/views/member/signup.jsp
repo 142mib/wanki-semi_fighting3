@@ -5,30 +5,24 @@
 
 <style>
 
-div#signUp{
-	margin-top:140px; margin-left: 30%; margin-bottom: 100px;
-}
+div#signUp{margin-top:80px; margin-left: 30%; margin-bottom: 100px;}
 ul,li{list-style: none;}
-li{margin-bottom: 20px; text-align: left;}
+ul#signup-ul li{margin-bottom: 20px; text-align: left;}
 .box{
 	width: 450px; height: 50px; 
 	padding: 10px; border-radius: 8px; 
 	border: solid #288ad8 1px; 
 	background-color: #dee2e6;
 }
-#idbox{
+#memberId_{
 	width: 376px; height: 50px; 
 	padding: 10px; border-radius: 8px; 
 	border: solid #288ad8 1px; 
 	background-color: #dee2e6;
 }
-}
-input[type=checkbox]+label{
-	margin-left:10px;
-}
 #signup-btn{
 	width: 200px;
-	height: 35px;
+	height: 40px;
 	border-radius: 8px;
 	border: none;
 	background-color: #288ad8;
@@ -38,7 +32,7 @@ input[type=checkbox]+label{
 }
 #cancle-btn{
 	width: 200px;
-	height: 35px;
+	height: 40px;
 	border-radius: 8px;
 	border: #288ad8 solid 1px;
 	background-color: white;
@@ -46,85 +40,129 @@ input[type=checkbox]+label{
 	cursor:pointer;
 	margin-left: 10px;
 }
-h3{margin-left:170px; margin-bottom: 60px;}
+h3{margin-left:160px; margin-bottom: 60px;}
 #logo{color:#288ad8; font-size: 40px;}
 #idDuplicateBtn{width: 70px; height: 50px; 
 	padding: 10px; border-radius: 8px; 
-	border: solid 1px coral; 
-	background-color: coral;
-	pointer:cursor;}
+	border: none;
+	background: linear-gradient(#80FFDB, #5390D9);
+	pointer:cursor;
+	font-size: 13px;}
 #idDuplicateBtn:hover{
-	background-color: pink;
-	border: solid 1px pink;
+	background-color: lime; border: solid 1px lime;
 }
+::placeholder{
+	font-size: 14px; font-style: italic;
+}
+#op-default{
+	color: gray; font-size: 14px; font-style: italic;
+}
+.star{color:tomato;}
+.box2{width: 160px; height: 50px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid #288ad8 1px; 
+	background-color: #dee2e6;}
+.box3{width: 130px; height: 50px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid #288ad8 1px; 
+	background-color: #dee2e6;}
+.box4{width: 315px; height: 50px; 
+	padding: 10px; border-radius: 8px; 
+	border: solid #288ad8 1px; 
+	background-color: #dee2e6;}
+.spantitle{font-weight:bold;}
+.id_check_success{width:50px;}
 </style>
-<div id="blank" style="width:100%;height: 70px; background-color: darkcyan;">
-	</div>
+
+<div id="blank" style="width:100%;height: 70px; background-color: darkcyan;"></div>
 <section id=signup-container>
         <title>BOONG 회원가입</title>
         <form name="signUpForm" action="<%=request.getContextPath() %>/member/signupEnd.do" 
         	method="post" onsubmit="return memberSignupValidate();" >
         <div id="signUp">
         	<h3><span id="logo">BOONG</span> 회원 가입</h3>
-        <ul>
-        	<li>
-        	<span>아이디</span><br>
-        		<input type="text" id="idbox" placeholder="네 글자 이상 입력" name="memberId" id="memberId_" >
-				<input type="button" value="중복확인" id="idDuplicateBtn">
-			</li>
-			<li>
-				<span>비밀번호</span><br>
-				<input type="password" class="box" name="memberPw" id="memberPw_" ><br>
-			</li>
-			
-			<li>
-				<span>비밀번호 확인</span><br>
-				<input type="password" class="box" id="memberPw_2" ><br>
-				<span id="pwresult"></span>
-			</li>
-			
-			<li>
-				<span>이름</span><br>
-				<input type="text" class="box" name="memberName" id="memberName" ><br>
-			</li>
-			<li>
-				<span>성별</span><br>
-				<input type="radio" name="gender" id="gender0" value="M" >
-				<label for="gender0">남</label>
-				<input type="radio" name="gender" id="gender1" value="F">
-				<label for="gender1">여</label>
-			</li>	
-			<li>
-				<span>이메일</span><br>
-				<input type="email" class="box" placeholder="abc@xyz.com" name="email" id="email"><br>
-			</li>
-			
-			<li>
-				<span>휴대폰 번호</span><br>
-				<input type="tel" class="box" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" required><br>
-			</li>
-			<li>
-				<span>주소</span><br>
-				<input type="text" class="box" placeholder="" name="address" id="address"><br>
-			</li>
-			<li>
-				<span>관심 전기차 브랜드</span><br>
-					<input type="checkbox" name="brand" id="brand0" value="Audi"><label for="brand0">아우디</label>
-					<input type="checkbox" name="brand" id="brand1" value="BMW"><label for="brand1">BMW</label>
-					<input type="checkbox" name="brand" id="brand2" value="Citroen"><label for="brand2">시트로엥</label><br>
-					<input type="checkbox" name="brand" id="brand3" value="Ford"><label for="brand3">포드</label>
-					<input type="checkbox" name="brand" id="brand4" value="Hyundai"><label for="brand4">현대</label>
-					<input type="checkbox" name="brand" id="brand5" value="벤츠"><label for="brand5">벤츠</label><br>
-					<input type="checkbox" name="brand" id="brand6" value="닛산"><label for="brand6">닛산</label>
-					<input type="checkbox" name="brand" id="brand7" value="Porsche"><label for="brand7">포르쉐</label>
-					<input type="checkbox" name="brand" id="brand8" value="Tesla"><label for="brand8">테슬라</label><br>
-					<input type="checkbox" name="brand" id="brand9" value="Volkswagen"><label for="brand9">폭스바겐</label>
-					<input type="checkbox" name="brand" id="brand10" value="Volvo"><label for="brand10">볼보</label>
-			<li>
-				<input id="signup-btn" type="submit" value="회원가입" >
-				<input id="cancle-btn" type="reset" value="취소" >
-			</li>
-		</ul>
+	        <ul id="signup-ul">
+	        	<li>
+	        	<span class="spantitle">아이디<span class="star">*</span></span><br>
+	        		<input type="text" placeholder="네 글자 이상 입력" name="memberId" id="memberId_" autofocus required>
+					<input type="button" value="중복확인" id="idDuplicateBtn">
+					<img src="<%=request.getContextPath()%>/assets/img/member/check.png" style="display:none; width:40px; height:40px;"><br>
+					<span id=idresult></span>
+				</li>
+				<li>
+					<span class="spantitle">비밀번호<span class="star">*</span></span><br>
+					<input type="password" class="box" name="memberPw" id="memberPw_" placeholder="6글자 이상 입력하세요"><br>
+				</li>
+				
+				<li>
+					<span class="spantitle">비밀번호 확인<span class="star">*</span></span><br>
+					<input type="password" class="box" id="memberPw_2" placeholder="다시 한번 입력하세요"><br>
+					<span id="pwresult"></span>
+				</li>
+				
+				<li>
+					<span class="spantitle">이름<span class="star">*</span></span><br>
+					<input type="text" class="box" name="memberName" id="memberName" placeholder="이름을 입력하세요"><br>
+				</li>
+				<li>
+					<span class="spantitle">성별<span class="star">*</span></span><br>
+					<select class="box" name="gender" placeholder="성별을 선택하세요">
+						<option value="" selected disabled class="box"><span id="op-default">성별을 선택하세요</span></option>
+		  				<option value="M">남자</option>
+		  				<option value="F">여자</option>
+					</select>
+	
+				</li>	
+				<li>
+					<span class="spantitle">이메일<span class="star">*</span></span><br>
+					<input type="text" class="box2" placeholder="" name="email_id" id="email_id">
+					<span>@</span>
+					<input type="text" class="box3" placeholder="" name="email_domain" id="email_domain">
+					<select class="box3" id="select" style="font-size:13px;">
+			            <option value="" disabled selected>E-Mail 선택</option>
+			            <option value="naver.com" id="naver.com">naver.com</option>
+			            <option value="hanmail.net" id="hanmail.net">hanmail.net</option>
+			            <option value="gmail.com" id="gmail.com">gmail.com</option>
+			            <option value="nate.com" id="nate.com">nate.com</option>
+			            <option value="directly" id="textEmail">직접 입력하기</option>
+			        </select>
+				</li>
+				
+				<li>
+					<span class="spantitle">휴대폰 번호<span class="star">*</span></span><br>
+					<input type="tel" class="box" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" required><br>
+				</li>
+				<li>
+					<span class="spantitle">주소<span class="star">*</span></span><br>					
+					<select class="box3" id="address" name="address1">
+			            <option value="" disabled selected>시/도 선택</option>
+			            <option value="서울특별시">서울특별시</option>
+			            <option value="인천광역시">인천광역시</option>
+			            <option value="대전광역시">대전광역시</option>
+			            <option value="광주광역시">광주광역시</option>
+			            <option value="대구광역시">대구광역시</option>
+			            <option value="울산광역시">울산광역시</option>
+			            <option value="부산광역시">부산광역시</option>
+			            <option value="경기도">경기도</option>
+			            <option value="강원도">강원도</option>
+			            <option value="충청북도">충청북도</option>
+			            <option value="충청남도">충청남도</option>
+			            <option value="전라북도">전라북도</option>
+			            <option value="전라남도">전라남도</option>
+			            <option value="경상북도">경상북도</option>
+			            <option value="경상남도">경상남도</option>
+			            <option value="제주도">제주도</option>
+			        </select>
+					<input type="text" class="box4" placeholder="나머지 주소를 입력하세요" name="address2" id="address"><br>
+				</li>
+				<li>
+					<span class="spantitle">보유 전기차</span><br>
+						<input type="text" class="box" placeholder="차종을 입력하세요" name="car" id="car"><br>
+				<li>
+					<input id="signup-btn" type="submit" value="회원가입" >
+					<input id="cancle-btn" type="reset" value="취소" >
+				</li>
+			</ul>
 		</div>
 		
         </form>
@@ -136,12 +174,12 @@ h3{margin-left:170px; margin-bottom: 60px;}
     </section>
     <script>
     	$(()=>{
-    		$("#password_2").keyup(e=>{
-    			if($(e.target).val().trim().length>3){
-    				if($(e.target).val()==$("#password_").val()){
+    		$("#memberPw_2").keyup(e=>{
+    			if($(e.target).val().trim().length>5){
+    				if($(e.target).val()==$("#memberPw_").val()){
     					$("#pwresult").text("비밀번호가 일치합니다.").css({"color":"green"});
     				}else{
-    					$("#pwresult").text("비밀번호가 불일치합니다.").css({"color":"red"});
+    					$("#pwresult").text("비밀번호가 일치하지 않습니다.").css({"color":"tomato"});
     				}
     			}
     		});
@@ -155,46 +193,59 @@ h3{margin-left:170px; margin-bottom: 60px;}
     			$("#memberId_").focus();
     			return false;
     		}
-    		const password=$("#password_").val().trim();
-    		if(password.length<4){
-    			alert("패스워드는 4글자 이상 입력하세요!");
-    			$("#password_").focus();
+    		const memberPw=$("#memberPw_").val().trim();
+    		if(memberPw.length<6){
+    			alert("비밀번호는 6글자 이상 입력하세요!");
+    			$("#memberPw_").focus();
     			return false;
     		}
     		
     	}
     
-    	$(()=>{
-    		$("#idDuplicateBtn").click(e=>{
-    			const memberId=$("#memberId_").val().trim();
-    			if(memberId.length>=4){
-    				const url="<%=request.getContextPath()%>/member/idDuplicate.do";
-    				const title="idDuplcate";
-    				const style="width=300,height=200";
-    				open("",title,style);
-	   				console.log(idDuplicateFrm);//form태그
-	   				console.log(idDuplicateFrm.memberId);//form내부 input
-	   				//form태그 자식 input태그의 value값 설정
-	   				idDuplicateFrm.memberId.value=memberId;
-	   				idDuplicateFrm.action=url;
-	   				idDuplicateFrm.method="post";
-	   				//생성한 윈도우에서 form을 실행하려면 form target속성을 이용
-	   				idDuplicateFrm.target=title;
-	   				
-	   				idDuplicateFrm.submit();//form전송
-	   				
-	   				
-    				
-    			}else{
-    				alert("아이디는 4글자 이상 작성해야합니다.");
-    				$("#memberId_").focus();
+    	$("#idDuplicateBtn").click(e=>{
+    		
+    		let memberId=$("#memberId_").val().trim();
+    		if(memberId.length>=4){
+    		
+    		$.ajax({
+    			url:"<%=request.getContextPath()%>/member/idDuplicate.do",
+    			type: "post",
+    			data: {"memberId" : memberId},
+    			dataType: "json",
+    			success: function(result){
+    				if(result==0){
+    					$("#idresult").text("이미 존재하는 아이디입니다.").css({"color":"red"});
+    					
+    				}else{
+    					$("#idresult").text("사용할 수 있는 아이디입니다.").css({"color":"green"});
+    				}
+    			},
+    			error : function(){
+    				alert("서버요청 실패");
     			}
-    		});
+    			
+    		})
+    		}else{
+    			alert("아이디는 4글자 이상 작성해야합니다.");
+    			$("#memberId_").focus();
+    		}
+    		
     	});
     	
     	
+    	$(function() {
+            $('#select').change(function() {
+                if ($('#select').val() == 'directly') {
+                    $('#email_domain').attr("disabled", false);
+                    $('#email_domain').val("");
+                    $('#email_domain').focus();
+                } else {
+                    $('#email_domain').val($('#select').val());
+                }
+            })
+        });
     	
     </script>
-    
+     
 
 <%@ include file="/views/common/footer.jsp"%>
