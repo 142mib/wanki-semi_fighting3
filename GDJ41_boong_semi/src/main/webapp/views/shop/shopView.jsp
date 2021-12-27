@@ -95,22 +95,22 @@
 			  
 			  <tr style="border-bottom: 1px solid #ddd;">
 			    <td></td>
-			    <td class="sv-table-tdright"  ><%=p.getShopProductPrice() %>원</td>			    
+			    <td class="sv-table-tdright" style="padding:0px 0 5px 0;"  ><%=p.getShopProductPrice() %>원</td>			    
 			  </tr>
 			  <tr>
-			    <td class="sv-table-tdleft" >택배배송</td>
-			    <td class="sv-table-tdright">3000원</td>
+			    <td class="sv-table-tdleft" style="padding:10px 0 0px 0;" >택배배송</td>
+			    <td class="sv-table-tdright" style="padding:10px 0 0px 0;">3000원</td>
 			    
 			  </tr>
 			  
 			  <tr style="border-bottom: 1px solid #ddd;">
-			    <td class="sv-table-tdleft">수량</td>
-			    <td class="sv-table-tdright"><input onchange="incre();" name="orderNumber" type="number" value="1" min="1" style="width: 45px" ></td>			    
+			    <td class="sv-table-tdleft" style="padding:5px 0 10px 0;">수량</td>
+			    <td class="sv-table-tdright" style="padding:5px 0 10px 0;"><input onchange="incre();" name="orderNumber" type="number" value="1" min="1" style="width: 45px" ></td>			    
 			  </tr>
 			  <tr style="font-weight: bold; border-bottom: 1px solid #ddd; ">
-			    <td class="sv-table-tdleft" style="padding:5px 0 5px 0;">총상품금액</td>
+			    <td class="sv-table-tdleft" style="padding:15px 0 5px 0;">총상품금액</td>
 			    
-			    <td class="sv-table-tdright" style="padding:5px 0 5px 0;"><span class="totalMoney"></span>원</td>			   
+			    <td class="sv-table-tdright" style="padding:15px 0 5px 0;"><span class="totalMoney"></span>원</td>			   
 			  </tr>
 			  <tr>
 			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;" ><button>장바구니추가</button> </td>			   			    
@@ -130,7 +130,7 @@
 	<h4>상품 설명</h4>
 	</div>
 	<div class="content-container2">
-	<p><%=p.getShopProductContent() %></p>
+	<p style="padding:10px 0 0px 0;"><%=p.getShopProductContent() %></p>
 	</div>
 	
 	

@@ -38,22 +38,6 @@ public class LoginEndServlet extends HttpServlet {
 //		System.out.println(memberId+"  "+memberPw);
 		Member m=new MemberService().login(memberId,memberPw);
 
-//		System.out.println(m);
-
-	
-		String saveId=request.getParameter("saveId");
-		if(saveId!=null) {
-			Cookie c=new Cookie("saveId",memberId);
-			c.setMaxAge(24*60*60*7);
-			response.addCookie(c);
-		}else {
-			Cookie c=new Cookie("saveId",memberId);
-			c.setMaxAge(0);
-			response.addCookie(c);
-		}
-		
-		
-		
 		if(m!=null) {
 			HttpSession session=request.getSession();
 			session.setAttribute("loginMember", m);
