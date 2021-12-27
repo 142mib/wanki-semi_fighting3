@@ -165,6 +165,7 @@
 <%@ include file="/views/common/footer.jsp" %>
 
 <script>
+	// 게시글 삭제 하는 함수
 	const deleteConfirm=()=>{
 		if(confirm("정말로 삭제 하시겠습니까?")){
 			location.assign("<%=request.getContextPath()%>/board/boardDelete.do?boardNo=<%=b.getBoardNo()%>");
@@ -173,6 +174,7 @@
 		}
 	};
 	
+	// 게시글 추천 함수
 	const boardLike=()=>{
 		if(<%=m.getMemberId().equals(b.getBoardWriter())%>){
 			alert("자신의 게시글은 추천 할 수 없습니다.");
@@ -189,31 +191,84 @@
 	$(document).ready(()=>{
 		commentList();
 		commentListCount();
+/* 		console.log(commentList); */
 	});
 	
+	// 게시글 댓글 불러와서 전역변수에 저장
+<%-- 	var commentList = [];
+	$.ajax({
+		url: "<%=request.getContextPath()%>/board/boardCommentListAjax.do",
+		type: "post",
+		async: false,
+		data: {"boardNo":<%=b.getBoardNo()%>},
+		success: function(data){
+			commentList = data;
+		}
+	}); --%>
+	
+	// 게시글 댓글을 불러오는 함수
 	function commentList(){
 		$.ajax({
 			url: "<%=request.getContextPath()%>/board/boardCommentListAjax.do",
 			type: "post",
 			data: {"boardNo":<%=b.getBoardNo()%>},
 			success: function(data){
-				/* console.log(data); */
-				let rowDiv = $("<div>").attr({class: 'row'});
-				for(let i = 0; i < data.length; i++){
-					/* let iconDiv = $("<div>").attr({class: 'col-sm-1'}); */
-					let idDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentWriter"]);
-					let dateDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentDate"]);
-					let btnDiv = $("<div>").attr({class: 'col-sm-7'});
-					let replyBtn = $("<button>");
-					btnDiv.append(replyBtn);
-					let contentDiv = $("<div>").attr({class: 'col-sm-12'}).html(data[i]["boardCommentContent"]);
-					rowDiv.append(idDiv).append(dateDiv).append(btnDiv).append(contentDiv);					
+				console.log(data);
+				if(data == null){
+					let rowDiv = $("<div>").attr({class: 'row'});
+					let msg = $("<p>").html('댓글이 없습니다.');
+					rowDiv.appen(msg);
+					$("#board-comment").append(rowDiv);
+				}else{
+					if(<%=b.getBoardWriter().equals(m.getMemberId())%>){
+						let rowDiv = $("<div>").attr({class: 'row'});
+						for(let i = 0; i < data.length; i++){
+							let idDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentWriter"]);
+							let dateDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentDate"]);
+							let btnDiv = $("<div>").attr({class: 'col-sm-7'});
+							let replyBtn = $("<button>").attr({
+								onclick: 'deleteComment();'
+							});
+							btnDiv.append(replyBtn);
+							let contentDiv = $("<div>").attr({class: 'col-sm-12'}).html(data[i]["boardCommentContent"]);
+							let noDiv = $("<div>").attr({}).hmtl(data[i]["boardCommentNo"]);
+							rowDiv.append(idDiv).append(dateDiv).append(btnDiv).append(contentDiv).append(noDiv);					
+						}
+						$("#board-comment").append(rowDiv);
+					}else{
+						let rowDiv = $("<div>").attr({class: 'row'});
+						for(let i = 0; i < data.length; i++){
+							let idDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentWriter"]);
+							let dateDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentDate"]);
+							let btnDiv = $("<div>").attr({class: 'col-sm-7'});
+							/* let replyBtn = $("<button>").attr({
+								value: '삭제',
+								onclick: 'deleteComment();'
+							});
+							btnDiv.append(replyBtn); */
+							let contentDiv = $("<div>").attr({class: 'col-sm-12'}).html(data[i]["boardCommentContent"]);
+							rowDiv.append(idDiv).append(dateDiv).append(btnDiv).append(contentDiv);					
+						}
+						$("#board-comment").append(rowDiv);
+					}
 				}
-				$("#board-comment").append(rowDiv);
 			}
 		})
 	};
 	
+	// 삭제 번튼을 눌렀을 경우 댓글 삭제하는 함수
+<%-- 	function deleteComment(){
+		if(confirm("댓글을 삭제하시겠습니까?")){
+			$.ajax({
+				url: "<%=request.getContextPath()%>/board/boardCommenDeleteAjax.do",
+				type: "post",
+				data: {"commentList":},
+				success: function(data)
+			})
+		}
+	} --%>
+	
+	// 게시글의 댓글이 몇개인지 불러오는 함수
 	function commentListCount(){
 		$.ajax({
 			url: "<%=request.getContextPath()%>/board/boardCommentListAjax.do",
@@ -227,8 +282,8 @@
 					let idDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentWriter"]);
 					let dateDiv = $("<div>").attr({class: 'col-sm-2'}).html(data[i]["boardCommentDate"]);
 					let btnDiv = $("<div>").attr({class: 'col-sm-7'});
-					let replyBtn = $("<button>");
-					btnDiv.append(replyBtn);
+					let deleteBtn = $("<button>");
+					btnDiv.append(deleteBtn);
 					let contentDiv = $("<div>").attr({class: 'col-sm-12'}).html(data[i]["boardCommentContent"]);
 					rowDiv.append(idDiv).append(dateDiv).append(btnDiv).append(contentDiv);					
 				}
