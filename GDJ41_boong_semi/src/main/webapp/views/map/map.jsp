@@ -33,81 +33,567 @@
 body{
 	overflow: hidden;
 }
+
+.map_wrap, .map_wrap * {
+   margin: 0;
+   padding: 0;
+   font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+   font-size: 12px;
+}
+
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active {
+   color: #000;
+   text-decoration: none;
+}
+
+.map_wrap {
+   position: relative;
+   width: 100%;
+   height: 500px;
+}
+
+#menu_wrap {
+   position: absolute;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   width: 350px;
+   height: 600px;
+   margin: 10px 0 30px 10px;
+   padding: 5px;
+   overflow-y: auto;
+   background: rgba(255, 255, 255, 0.7);
+   z-index: 1;
+   font-size: 12px;
+   border-radius: 10px;
+}
+
+.bg_white {
+   background: #fff;
+}
+
+#menu_wrap hr {
+   display: block;
+   height: 1px;
+   border: 0;
+   border-top: 2px solid #5F5F5F;
+   margin: 3px 0;
+}
+
+#menu_wrap .option {
+   text-align: center;
+}
+
+#menu_wrap .option p {
+   margin: 10px 0;
+}
+
+#menu_wrap .option button {
+   margin-left: 5px;
+}
+
+#placesList li {
+   list-style: none;
+}
+
+#placesList .item {
+   position: relative;
+   border-bottom: 1px solid #888;
+   overflow: hidden;
+   cursor: pointer;
+   min-height: 65px;
+}
+
+#placesList .item span {
+   display: block;
+   margin-top: 4px;
+}
+
+#placesList .item h5, #placesList .item .info {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+}
+
+#placesList .item .info {
+   padding: 10px 0 10px 55px;
+}
+
+#placesList .info .gray {
+   color: #8a8a8a;
+}
+
+#placesList .info .jibun {
+   padding-left: 26px;
+   background:
+      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png)
+      no-repeat;
+}
+
+#placesList .info .tel {
+   color: #009900;
+}
+
+#placesList .item .markerbg {
+   float: left;
+   position: absolute;
+   width: 36px;
+   height: 37px;
+   margin: 10px 0 0 10px;
+   background:
+      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
+      no-repeat;
+}
+
+#pagination {
+   margin: 10px auto;
+   text-align: center;
+}
+
+#pagination a {
+   display: inline-block;
+   margin-right: 10px;
+}
+
+#pagination .on {
+   font-weight: bold;
+   cursor: default;
+   color: #777;
+}
+
+#placesList li {
+   list-style: none;
+}
+
+#placesList .item {
+   position: relative;
+   border-bottom: 1px solid #888;
+   overflow: hidden;
+   cursor: pointer;
+   min-height: 65px;
+}
+
+#placesList .item span {
+   display: block;
+   margin-top: 4px;
+}
+
+#placesList .item h5, #placesList .item .info {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+}
+
+#placesList .item .info {
+   padding: 10px 0 10px 55px;
+}
+
+#placesList .info .gray {
+   color: #8a8a8a;
+}
+
+#placesList .info .jibun {
+   padding-left: 26px;
+   background:
+      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png)
+      no-repeat;
+}
+
+#placesList .info .tel {
+   color: #009900;
+}
+
+#placesList .item .markerbg {
+   float: left;
+   position: absolute;
+   width: 36px;
+   height: 37px;
+   margin: 10px 0 0 10px;
+   background:
+      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
+      no-repeat;
+}
+
+#placesList li {
+   list-style: none;
+}
+
+#placesList .item {
+   position: relative;
+   border-bottom: 1px solid #888;
+   overflow: hidden;
+   cursor: pointer;
+   min-height: 65px;
+}
+
+#placesList .item span {
+   display: block;
+   margin-top: 4px;
+}
+
+#placesList .item h5, #placesList .item .info {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+}
+
+#placesList .item .info {
+   padding: 10px 0 10px 55px;
+}
+
+#placesList .info .gray {
+   color: #8a8a8a;
+}
+
+#placesList .info .jibun {
+   padding-left: 26px;
+   background:
+      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png)
+      no-repeat;
+}
+
+#placesList .info .tel {
+   color: #009900;
+}
+
+#placesList .item .markerbg {
+   float: left;
+   position: absolute;
+   width: 36px;
+   height: 37px;
+   margin: 10px 0 0 10px;
+   background:
+      url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
+      no-repeat;
+}
 </style>
 </head>
 <body>
-	<div id="container">
+ 	<div id="container">
 		<aside id="input-aside">
-			<span style="margin-left: 10px">지역 선택</span><br>
+		<!-- 	<span style="margin-left: 10px">지역 선택</span><br>
 			<select id="sido">
 			</select>
 			<select id="gungoo">
 			</select>
-			<hr>
-			<div id="station-list-container"></div>
+			<hr> -->
+			
+<div class="map_wrap">
+    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
+    <div id="menu_wrap" class="bg_white">
+        <div class="option">
+            <div>
+                <form onsubmit="searchPlaces(); return false;">
+                    검색어 : <input type="text" value="" id="keyword" size="15" placeholder="검색어를 입력하세요"> 
+                    <button type="submit">검색하기</button> 
+                </form>
+            </div>
+        </div>
+        <hr>
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
+    </div>
+</div>
+			
 		</aside>
 		<section id="map-section"></section>
 
 	</div>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=93a596b6cc1a715ba9be2452db8f8961"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=93a596b6cc1a715ba9be2452db8f8961&&APIKEY&libraries=services"></script>
 	<script>
+		// 마커를 담을 배열입니다
+		var markers = [];
+		
+	
 		var map = document.getElementById('map-section'), // 지도 표시할 div 잡고
 			options = {
-				center: new kakao.maps.LatLng(37.478, 126.879), // 지도의 중심 좌표
-				level: 5 // 지도 기본 확대 레벨
+				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심 좌표
+				level: 3 // 지도 기본 확대 레벨
 			};
 		var map = new kakao.maps.Map(map, options); // 지도생성
+		
+		// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+		if (navigator.geolocation) {
+		    
+		    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		        
+		        var lat = position.coords.latitude, // 위도
+		            lon = position.coords.longitude; // 경도
+		        
+		        var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+		            message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+		        
+		        // 마커와 인포윈도우를 표시합니다
+		        displayMarker(locPosition, message);
+		            
+		      });
+		    
+		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+		    
+		    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+		        message = 'geolocation을 사용할수 없어요..'
+		        
+		    displayMarker(locPosition, message);
+		} 
+
+		// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+		function displayMarker(locPosition, message) {
+
+		    // 마커를 생성합니다
+		    var marker = new kakao.maps.Marker({  
+		        map: map, 
+		        position: locPosition
+		    }); 
+		    
+		    var iwContent = message, // 인포윈도우에 표시할 내용
+		        iwRemoveable = true;
+
+		    // 인포윈도우를 생성합니다
+		    var infowindow = new kakao.maps.InfoWindow({
+		        content : iwContent,
+		        removable : iwRemoveable
+		    });
+		    
+		    // 인포윈도우를 마커위에 표시합니다 
+		    infowindow.open(map, marker);
+		    
+		    // 지도 중심좌표를 접속위치로 변경합니다
+			map.setCenter(locPosition);      
+		}   
+		
+		
+		/* 장소 검색 리스트 */
+// 마커를 담을 배열입니다
+var markers = [];
+
+// 지도를 생성합니다    
+/* var map = new kakao.maps.Map(mapContainer, mapOption);  */
+
+// 장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places();  
+
+// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+// 키워드로 장소를 검색합니다
+searchPlaces();
+
+// 키워드 검색을 요청하는 함수입니다
+function searchPlaces() {
+
+    var keyword = document.getElementById('keyword').value;
+
+    /* if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        alert('키워드를 입력해주세요!');
+        return false;
+    } */
+
+    // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+    ps.keywordSearch( keyword, placesSearchCB); 
+}
+
+// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
+function placesSearchCB(data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+
+        // 정상적으로 검색이 완료됐으면
+        // 검색 목록과 마커를 표출합니다
+        displayPlaces(data);
+
+        // 페이지 번호를 표출합니다
+        displayPagination(pagination);
+
+    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+
+    } else if (status === kakao.maps.services.Status.ERROR) {
+
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+
+    }
+}
+
+// 검색 결과 목록과 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+
+    var listEl = document.getElementById('placesList'), 
+    menuEl = document.getElementById('menu_wrap'),
+    fragment = document.createDocumentFragment(), 
+    bounds = new kakao.maps.LatLngBounds(), 
+    listStr = '';
+    
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    removeAllChildNods(listEl);
+
+    // 지도에 표시되고 있는 마커를 제거합니다
+    removeMarker();
+    
+    for ( var i=0; i<places.length; i++ ) {
+
+        // 마커를 생성하고 지도에 표시합니다
+        var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
+            marker = addMarker(placePosition, i), 
+            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function(marker, title) {
+            kakao.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+            });
+
+            kakao.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });
+
+            itemEl.onmouseover =  function () {
+                displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout =  function () {
+                infowindow.close();
+            };
+        })(marker, places[i].place_name);
+
+        fragment.appendChild(itemEl);
+    }
+
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    listEl.appendChild(fragment);
+    menuEl.scrollTop = 0;
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    map.setBounds(bounds);
+}
+
+// 검색결과 항목을 Element로 반환하는 함수입니다
+function getListItem(index, places) {
+
+    var el = document.createElement('li'),
+    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+                '<div class="info">' +
+                '   <h5>' + places.place_name + '</h5>';
+
+    if (places.road_address_name) {
+        itemStr += '    <span>' + places.road_address_name + '</span>' +
+                    '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    } else {
+        itemStr += '    <span>' +  places.address_name  + '</span>'; 
+    }
+                 
+      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+                '</div>';           
+
+    el.innerHTML = itemStr;
+    el.className = 'item';
+
+    return el;
+}
+
+// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position, idx, title) {
+    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+        imgOptions =  {
+            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+            spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+            marker = new kakao.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage 
+        });
+
+    marker.setMap(map); // 지도 위에 마커를 표출합니다
+    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+    return marker;
+}
+
+// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+    }   
+    markers = [];
+}
+
+// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+function displayPagination(pagination) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
+        i; 
+
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+    }
+
+    for (i=1; i<=pagination.last; i++) {
+        var el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i===pagination.current) {
+            el.className = 'on';
+        } else {
+            el.onclick = (function(i) {
+                return function() {
+                    pagination.gotoPage(i);
+                }
+            })(i);
+        }
+
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+}
+
+// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+// 인포윈도우에 장소명을 표시합니다
+function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
+
+ // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {   
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
+    }
+}
+ 
+//지도를 표시하는 div 크기를 변경하는 함수입니다
+function resizeMap() {
+    var mapContainer = document.getElementById('map');
+    mapContainer.style.width = '650px';
+    mapContainer.style.height = '650px'; 
+}
+
+function relayout() {    
+    
+    // 지도를 표시하는 div 크기를 변경한 이후 지도가 정상적으로 표출되지 않을 수도 있습니다
+    // 크기를 변경한 이후에는 반드시  map.relayout 함수를 호출해야 합니다 
+    // window의 resize 이벤트에 의한 크기변경은 map.relayout 함수가 자동으로 호출됩니다
+    map.relayout();
+}
+		
 	</script>
 	
-<script>
-	$('document').ready(function(){
-		var area0 = ["시/도 선택","서울특별시","인천광역시","대전광역시","광주광역시","대구광역시","울산광역시","부산광역시","경기도","강원도","충청북도","충청남도","전라북도","전라남도","경상북도","경상남도","제주도"];
-		var area1 = ["강남구","강동구","강북구","강서구","관악구","광진구","구로구","금천구","노원구","도봉구","동대문구","동작구","마포구","서대문구","서초구","성동구","성북구","송파구","양천구","영등포구","용산구","은평구","종로구","중구","중랑구"];
-		var area2 = ["계양구","남구","남동구","동구","부평구","서구","연수구","중구","강화군","옹진군"];
-		var area3 = ["대덕구","동구","서구","유성구","중구"];
-		var area4 = ["광산구","남구","동구",     "북구","서구"];
-		var area5 = ["남구","달서구","동구","북구","서구","수성구","중구","달성군"];
-		var area6 = ["남구","동구","북구","중구","울주군"];
-		var area7 = ["강서구","금정구","남구","동구","동래구","부산진구","북구","사상구","사하구","서구","수영구","연제구","영도구","중구","해운대구","기장군"];
-		var area8 = ["고양시","과천시","광명시","광주시","구리시","군포시","김포시","남양주시","동두천시","부천시","성남시","수원시","시흥시","안산시","안성시","안양시","양주시","오산시","용인시","의왕시","의정부시","이천시","파주시","평택시","포천시","하남시","화성시","가평군","양평군","여주군","연천군"];
-		var area9 = ["강릉시","동해시","삼척시","속초시","원주시","춘천시","태백시","고성군","양구군","양양군","영월군","인제군","정선군","철원군","평창군","홍천군","화천군","횡성군"];
-		var area10 = ["제천시","청주시","충주시","괴산군","단양군","보은군","영동군","옥천군","음성군","증평군","진천군","청원군"];
-		var area11 = ["계룡시","공주시","논산시","보령시","서산시","아산시","천안시","금산군","당진군","부여군","서천군","연기군","예산군","청양군","태안군","홍성군"];
-		var area12 = ["군산시","김제시","남원시","익산시","전주시","정읍시","고창군","무주군","부안군","순창군","완주군","임실군","장수군","진안군"];
-		var area13 = ["광양시","나주시","목포시","순천시","여수시","강진군","고흥군","곡성군","구례군","담양군","무안군","보성군","신안군","영광군","영암군","완도군","장성군","장흥군","진도군","함평군","해남군","화순군"];
-		var area14 = ["경산시","경주시","구미시","김천시","문경시","상주시","안동시","영주시","영천시","포항시","고령군","군위군","봉화군","성주군","영덕군","영양군","예천군","울릉군","울진군","의성군","청도군","청송군","칠곡군"];
-		var area15 = ["거제시","김해시","마산시","밀양시","사천시","양산시","진주시","진해시","창원시","통영시","거창군","고성군","남해군","산청군","의령군","창녕군","하동군","함안군","함양군","합천군"];
-		var area16 = ["서귀포시","제주시","남제주군","북제주군"];
-		
-		// 시/도 select 박스 초기화
-		$("select[id=sido]").each(function() {
-			$selsido = $(this);
-			$.each(eval(area0), function() {
-				$selsido.append("<option value='"+this+"'>"+this+"</option>");
-			});
-			$selsido.next().append("<option value=''>구/군 선택</option>");
-		});
 
-		// 시/도 선택시 구/군 설정
-		$("select[id=sido]").change(function() {
-			var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
-			var $gungoo = $(this).next(); // 선택영역 군구 객체
-			$("option",$gungoo).remove(); // 구군 초기화
-			
-			if(area == "area0")
-				$gungoo.append("<option value=''>구/군 선택</option>");
-			else {
-				$.each(eval(area), function() {
-					$gungoo.append("<option value='"+this+"'>"+this+"</option>");
-				});
-			}
-		});
-		
-		// 지도 확대 축소를 제어 할 수 있는 줌 컨트롤 생성
-		var zommController = new kakao.maps.ZoomControl();
-		map.addControl(zommController, kakao.maps.ControlPosition.RIGHT);
-	})
-</script>
 </body>
 </html>
 
