@@ -121,7 +121,7 @@
 				<div id="model_search_info"> <!-- for문으로 구현할곳 -->
 					<div id="sort_list">
 						<h5 class="sort_title">BOONG 검색엔진 결과</h5>
-						<span class="allRollback" onclick='rollback();'>전체차량보기</span>
+						<a class="allRollback" onclick='rollback();'>전체차량조회</a>
 						<a class="popular_sort">인기순</a>
 						<a class="view_sort">조회순</a>
 						<a class="price_sort">가격순</a>
@@ -131,7 +131,7 @@
 					</div>
 				</div>
 			</div>
-			<<!-- div id="ad_nav_fixed">
+			<!-- div id="ad_nav_fixed">
 			</div> -->
 		</div>
 	</div>
@@ -562,13 +562,13 @@ dd{
 	font-weight:bold;
 	font-size:14px;
 	cursor:pointer;
+	text-decoration:none;
+	color:#333;
 } 
 #searchPaging {
 	font-size:13px;
 	cursor:pointer;
 	margin:10px;
-	
-	
 }
 #pagingul{
 	top:33px;
@@ -640,7 +640,7 @@ dd{
 			}
 		}
 	});
-	//로그인 멤버의 관심 브랜드를 받아 ajax로 초기화면 보내주기 뭐 m.get 써서 해야겟찌?
+	//onload시 total 데이터 페이징바 처리
 		let cPage;
 		let numPerpage;	
 			$.ajax({
@@ -653,11 +653,11 @@ dd{
 					for(let i=0; i<data[0].length; i++) {
 						 let li=$("<li>");
 						 let a=$("<a href=''>")
-						 let modelClass=$("<span>").addClass("model_name").html("Model: "+data[0][i]["modelName"]);
+						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelClass"]);
 						 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
 						 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
-						 let price=$("<span>").addClass("model_price").html(data[0][i]["modelClass"]);
-						 a.append(modelClass).append(mile).append(output).append(price);
+						/*  let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+						 a.append(modelClass).append(mile).append(output)/* .append(price) */;
 						 li.append(a);
 						 ul.append(li);	
 					}	
@@ -677,11 +677,11 @@ dd{
 					for(let i=0; i<data[0].length; i++) {
 						 let li=$("<li>");
 						 let a=$("<a href=''>")
-						  let modelClass=$("<span>").addClass("model_name").html("Model: "+data[0][i]["modelName"]);
+						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelClass"]);
 						 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
 						 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
-						 let price=$("<span>").addClass("model_price").html(data[0][i]["modelClass"]);
-						 a.append(modelClass).append(mile).append(output).append(price);
+						 /* let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+						 a.append(modelClass).append(mile).append(output)/* .append(price) */;
 						 li.append(a);
 						 ul.append(li);	
 					}	
@@ -705,11 +705,11 @@ dd{
 					for(let i=0; i<data[0].length; i++) {
 						 let li=$("<li>");
 						 let a=$("<a href=''>")
-						 let modelClass=$("<span>").addClass("model_name").html("Model: "+data[0][i]["modelName"]);
+						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelClass"]);
 						 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
 						 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
-						 let price=$("<span>").addClass("model_price").html(data[0][i]["modelClass"]);
-						 a.append(modelClass).append(mile).append(output).append(price);
+						/*  let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+						 a.append(modelClass).append(mile).append(output)/* .append(price) */;
 						 li.append(a);
 						 ul.append(li);	
 					}	
@@ -730,11 +730,11 @@ dd{
 				for(let i=0; i<data.length; i++) {
 				 	let li=$("<li>");
 				 	let a=$("<a href=''>")
-					let modelName=$("<span>").addClass("model_name").html("Model: "+data[i]["modelName"]);
+					let modelName=$("<span>").addClass("model_name").html(data[i]["modelClass"]);
 					let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[i]["modelBrand"]);
 					let output=$("<span>").addClass("model_short_info").html("Info: "+data[i]["modelInfo"]);
-				 	let price=$("<span>").addClass("model_price").html(data[i]["modelClass"]);
-					a.append(modelName).append(mile).append(output).append(price);
+				 	/* let price=$("<span>").addClass("model_price").html(data[i]["modelName"]); */
+					a.append(modelName).append(mile).append(output)/* .append(price) */;
 					li.append(a);
 					ul.append(li);
 				}
@@ -785,11 +785,11 @@ dd{
 				 div1.append(ul1);
 					let liparam=$("<li>");
 				 	let a=$("<a>");
-					let modelName=$("<span>").addClass("model_name").html("Model: "+data[i]["modelName"]);
+					let modelName=$("<span>").addClass("model_name").html(data[i]["modelClass"]);
 					let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[i]["modelBrand"]);
 					let output=$("<span>").addClass("model_short_info").html("Info: "+data[i]["modelInfo"]);
-				 	let price=$("<span onclick='searchClass(event)'>").addClass("model_price").html(data[i]["modelClass"]);
-				 	a.append(modelName).append(mile).append(output).append(price);
+				 	/* let price=$("<span onclick='searchClass(event)'>").addClass("model_price").html(data[i]["modelName"]); */
+				 	a.append(modelName).append(mile).append(output)/* .append(price) */;
 					liparam.append(a);
 					ulparam.append(liparam);
 				}
