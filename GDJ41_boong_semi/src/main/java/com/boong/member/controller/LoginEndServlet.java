@@ -37,9 +37,9 @@ public class LoginEndServlet extends HttpServlet {
 		String memberPw=request.getParameter("memberPw");
 //		System.out.println(memberId+"  "+memberPw);
 		Member m=new MemberService().login(memberId,memberPw);
-<<<<<<< HEAD
+
 //		System.out.println(m);
-=======
+
 	
 		String saveId=request.getParameter("saveId");
 		if(saveId!=null) {
@@ -53,7 +53,6 @@ public class LoginEndServlet extends HttpServlet {
 		}
 		
 		
->>>>>>> branch 'master' of https://github.com/zziaho/semi_fighting3.git
 		
 		if(m!=null) {
 			HttpSession session=request.getSession();

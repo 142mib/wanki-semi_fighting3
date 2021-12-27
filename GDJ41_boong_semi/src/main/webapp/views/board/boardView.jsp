@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ page import="com.boong.board.model.vo.Board" %>
+<%@ page import="com.boong.board.model.vo.Board, com.boong.member.model.vo.Member" %>
 
 <%
 	Board b = (Board)request.getAttribute("selectBoard");
