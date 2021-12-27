@@ -79,7 +79,7 @@ public class ShopMainServlet extends HttpServlet {
 			+"?cPage="+(pageNo)+"'>[다음]</a>";
 		}
 		
-		request.setAttribute("boardList", list);
+		request.setAttribute("productList", list);
 		request.setAttribute("pageBar", pageBar);
 		
 		request.getRequestDispatcher("/views/shop/shopMain.jsp")
@@ -95,3 +95,4 @@ public class ShopMainServlet extends HttpServlet {
 	}
 
 }
+

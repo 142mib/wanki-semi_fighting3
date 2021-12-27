@@ -16,13 +16,13 @@ import com.boong.shop.model.vo.Product;
  * Servlet implementation class ShopProjectManage
  */
 @WebServlet("/shop/productManage.do")
-public class ShopProjectManage extends HttpServlet {
+public class ShopProjectManageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShopProjectManage() {
+    public ShopProjectManageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +41,7 @@ public class ShopProjectManage extends HttpServlet {
 		try {
 			numPerpage=Integer.parseInt(request.getParameter("numPerpage"));
 		}catch(NumberFormatException e) {
-			numPerpage=10;
+			numPerpage=15;
 		}
 		
 		List<Product> list=new ShopService().selectProductList(cPage,numPerpage);

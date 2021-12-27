@@ -9,8 +9,10 @@ List<Product> list=(List)request.getAttribute("productList");
 <%@ include file="/views/common/header.jsp"%>
 
 <style>
-	section#pm-container{width:600px; margin:0 auto;padding-top:10px; text-align:center;}
+	section#pm-container{width:900px; margin:0 auto;padding-top:10px; text-align:center;}
 	section#pm-container h2{margin:10px 0;}
+	section#pm-container .enroll-btn{margin:5px; }
+	section#pm-container .enroll-btn-container{width:100%; text-align: right;}
 	table#tbl-pm{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
 	table#tbl-pm th, table#tbl-pm td {border:1px solid; padding: 5px 0; text-align:center;} 
 	/*글쓰기버튼*/
@@ -20,30 +22,36 @@ List<Product> list=(List)request.getAttribute("productList");
 	div#pageBar span{color: white;}
 </style>
 	<div style="height: 63px; background-color: rgba(1,138,216,1)"></div>
+	
+	<%
+		if(loginMember!=null&& loginMember.getMemberId().equals("admin"))  {
+		%>
 	<section id="pm-container">
 		<h2>상품관리</h2>
-		<%
-		if(loginMember!=null) {
-		%>
-			<button onclick="location.assign('<%=request.getContextPath()%>/shop/enrollProduct.do')">상품등록</button>
-		<%
-		}
-		%>
+		
+			
+		
+		<div class="enroll-btn-container">
+			<button class="enroll-btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productEnroll.do')">상품등록</button>
+		</div>
+		
 		<table id="tbl-pm">
 			<tr>
 				<th>상품번호</th>
 				<th>상품명</th>
 				<th>가격</th>
 				<th>재고</th>
-				<th>판매량</th>
+				<th>판매수</th>
 				<th>등록일</th>
+				<th>수정</th>
+				<th>삭제</th>
 				
 			</tr>
 			<%
 			if(list.isEmpty()){
 			%>
 				<tr>
-					<td colspan="6">조회된 상품이 없습니다</td>
+					<td colspan="8">조회된 상품이 없습니다</td>
 				</tr>
 			<%
 			}else{ 
@@ -52,7 +60,7 @@ List<Product> list=(List)request.getAttribute("productList");
 				<tr>
 					<td><%=p.getShopProductId() %></td>
 					<td>
-						<a href="<%=request.getContextPath()%>/shop/productView.do?boardNo=<%=p.getShopProductId()%>">
+						<a href="<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>">
 							<%=p.getShopProductName() %>
 						</a>
 					</td>
@@ -60,6 +68,13 @@ List<Product> list=(List)request.getAttribute("productList");
 					<td><%=p.getShopProductStock() %></td>
 					<td><%=p.getShopProductSales() %></td>
 					<td><%=p.getShopProductDate()  %></td>
+					<td>
+						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productUpdate.do?shopProductId=<%=p.getShopProductId()%>')">수정</button>					
+					</td>
+					<td>
+						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productDelete.do?shopProductId=<%=p.getShopProductId()%>')">삭제</button>					
+					</td>
+					
 				</tr>
 			<%	}
 			}%>
@@ -69,6 +84,12 @@ List<Product> list=(List)request.getAttribute("productList");
 			<%=request.getAttribute("pageBar") %>
 		</div>
 	</section>
-
+	<%
+		}else{
+		%>
+		
+		
+		
+	<%} %>
 
 <%@ include file="/views/shop/shopcommon/shopFooter.jsp"%>
