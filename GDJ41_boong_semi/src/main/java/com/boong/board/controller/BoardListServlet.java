@@ -62,7 +62,7 @@ public class BoardListServlet extends HttpServlet {
 		// 페이지 바 생성
 		String pageBar = "";
 		if(pageNo == 1) {
-			pageBar += "<span>[이전]</span>";
+			pageBar += "<span>&nbsp;[이전]&nbsp;</span>";
 		}else {
 			pageBar += "<a href='" + request.getRequestURI() + "cPage=" + (pageNo - 1) + ">[이전]</a>";
 		}
@@ -77,7 +77,7 @@ public class BoardListServlet extends HttpServlet {
 		}
 		
 		if(pageNo > totalPage) {
-			pageBar += "<span>[다음]</span>";
+			pageBar += "<span>  [다음]  </span>";
 		}else {
 			pageBar += "<a href='" + request.getRequestURI() + "cPage=" + (pageNo) + ">[다음]</a>";
 		}
