@@ -65,11 +65,12 @@
 						</a>
 					</td>					
 					<td><%=(b.getShopProductPrice())*(b.getBasketNumber()) %></td>
-					<form>
+					<form action="<%=request.getContextPath()%>/shop/basketUpdate.do?productId=<%=b.getShopProductId()%>" method="post">
+					<input type="hidden" name="memberId" value="<%=loginMember.getMemberId()%>">
 					<td><input  type="number" name="basketNum" value="<%=b.getBasketNumber()%>" min="0" max="<%=b.getShopProductStock()%>"></td>
 					
 					<td>
-						<input type="submit" value="수정" onclick="location.assign('<%=request.getContextPath()%>/shop/basketUpdate.do?productId=<%=b.getShopProductId()%>' )">				
+						<input type="submit" value="수정" >				
 					</td>
 					</form>
 					<td>
