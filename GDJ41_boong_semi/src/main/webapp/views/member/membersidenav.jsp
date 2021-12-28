@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%@ page import="com.boong.member.model.vo.Member"%>
-<%
-	Member loginMember=(Member)session.getAttribute("loginMember");
-%>
+
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 <style>
