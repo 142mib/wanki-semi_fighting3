@@ -91,6 +91,25 @@ public class ShopService {
 		close(conn);
 		return list;		
 	}
+	public int updateBasket(Basket b) {
+		Connection conn=getConnection();
+		int result=dao.updateBasket(conn,b);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+		
+		
+	}
+	public int deleteBasket(Basket b) {
+		Connection conn=getConnection();
+		int result=dao.deleteBasket(conn,b);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 	
 	
 	

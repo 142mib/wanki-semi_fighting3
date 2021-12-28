@@ -246,6 +246,7 @@ public class ShopDao {
 						 .build();
 				 
 				list.add(b);
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -254,6 +255,51 @@ public class ShopDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public int updateBasket(Connection conn, Basket b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "UPDATE SHOP_BASKET SET SHOP_BASKET_NUMBER=?  WHERE SHOP_PRODUCT_ID=? AND MEMBER_ID=? ";
+		try {
+			System.out.println(b);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b.getBasketNumber());
+			pstmt.setInt(2, b.getProductId());
+			pstmt.setString(3, b.getMemberId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println(result);
+		return result;
+		
+	}
+
+	public int deleteBasket(Connection conn, Basket b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "DELETE FROM SHOP_BASKET WHERE SHOP_PRODUCT_ID=? AND MEMBER_ID=? ";
+		try {
+			System.out.println(b);
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, b.getProductId());
+			pstmt.setString(2, b.getMemberId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println(result);
+		return result;
 	}
 
 }

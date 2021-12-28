@@ -65,18 +65,23 @@
 						</a>
 					</td>					
 					<td><%=(b.getShopProductPrice())*(b.getBasketNumber()) %></td>
-					<form action="<%=request.getContextPath()%>/shop/basketUpdate.do?productId=<%=b.getShopProductId()%>" method="post">
-					<input type="hidden" name="memberId" value="<%=loginMember.getMemberId()%>">
-					<td><input  type="number" name="basketNum" value="<%=b.getBasketNumber()%>" min="0" max="<%=b.getShopProductStock()%>"></td>
+					<form action="<%=request.getContextPath()%>/shop/basketUpdate.do" method="post">
+					<input type="hidden" name="memberId" value="<%=b.getMemberId()%>">
+					<input type="hidden" name="productId" value="<%=b.getProductId()%>">
 					
+					<td><input  type="number" name="basketNum" value="<%=b.getBasketNumber()%>" min="0" max="<%=b.getShopProductStock()%>"></td>
+					<%System.out.println(loginMember.getMemberId()); %>
 					<td>
 						<input type="submit" value="수정" >				
 					</td>
 					</form>
+					<form action="<%=request.getContextPath()%>/shop/basketDelete.do" method="post">
 					<td>
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/basketDelete.do?shopProductId=<%=b.getShopProductId()%>')">삭제</button>					
+						<input type="submit" value="삭제">
+						<input type="hidden" name="memberId" value="<%=b.getMemberId()%>">			
+						<input type="hidden" name="productId" value="<%=b.getProductId()%>">			
 					</td>
-					
+					</form>
 				</tr>
 			<%	}
 			}%>
