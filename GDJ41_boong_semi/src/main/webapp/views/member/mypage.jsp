@@ -74,19 +74,19 @@ table {
 
 #edit-btn {
 	width: 100px; height: 40px;
-	border: none; border-radius:30px;
+	border: none; border-radius:10px;
 	background: linear-gradient(65deg, #25aae1, #2bb673);
 	color: white;
 }
 #save-btn {
 	width: 100px; height: 40px;
-	border: none; border-radius:30px;
+	border: none; border-radius:10px;
 	background: linear-gradient(135deg, #855edd 0%, #63afd3 100%);
 	color: white;
 	margin-left:20px;
 }
 #back-btn{width:100px; height:40px; 
-	border:none; border-radius:30px; 
+	border:none; border-radius:10px; 
 	background: -webkit-linear-gradient(360deg,#383836 10%,#4a4a4a 360%); color:white; 
 	margin-left:10px;}
 
@@ -158,7 +158,7 @@ table {
                             <input type="text" class="box editInfo" placeholder="" name="address" id="address" value="<%=loginMember.getAddress()%>">
                         </td>
                         <td colspan="3">
-                            <fieldset>보유 차종</fieldset>
+                            <fieldset>관심 브랜드</fieldset>
                         <input type="text" class="box editInfo" name="car" id="car" value="<%=loginMember.getCar()%>">
                         </td>
                     </tr>

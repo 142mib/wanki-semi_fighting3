@@ -9,11 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.boong.board.model.vo.Board;
 import com.boong.member.model.vo.Member;
 
 
 public class AdminDao {
-	
+	public AdminDao() {}
+
 	public List<Member> viewMemberList(Connection conn, int cPage, int numPerPage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -125,6 +127,89 @@ public class AdminDao {
 		
 	}
 	
+	public Member selectMember(Connection conn, String memberId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Member m=null;
+		String sql="SELECT * FROM MEMBER WHERE MEMBER_ID=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m=Member.builder()
+						.memberId(rs.getString("MEMBER_ID"))
+						.memberName(rs.getString("MEMBER_NAME"))
+						.gender(rs.getString("GENDER"))
+						.email(rs.getString("EMAIL"))
+						.phone(rs.getString("PHONE"))
+						.address(rs.getString("ADDRESS"))
+						.car(rs.getString("CAR"))
+						.enrollDate(rs.getDate("ENROLLDATE"))
+						.build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	
+	public List<Board> viewBoardList(Connection conn, String memberId, int cPage, int numPerPage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Board> mList=new ArrayList();
+		String sql="SELECT * FROM(SELECT ROWNUM AS RNUM, B.* FROM(SELECT * FROM(SELECT * FROM BOARD WHERE BOARD_WRITER=?)BOARD ORDER BY BOARD_DATE DESC) B) WHERE RNUM BETWEEN ? AND ?";
+		try {
+			pstmt=conn.prepareStatement(sql);			
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Board b = Board.builder()
+						.boardCategory(rs.getInt("BOARD_CATEGORY"))
+						.boardTitle(rs.getString("BOARD_TITLE"))
+						.boardWriter(rs.getString("BOARD_TITLE"))
+						.boardDate(rs.getDate("BOARD_DATE"))
+						.boardViewCount(rs.getInt("BOARD_VIEW_COUNT"))
+						.boardLike(rs.getInt("BOARD_LIKE"))
+						.build();
+					mList.add(b);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mList;
+		
+	}
+	
+	
+	public int selectCountAllBoard(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql="SELECT COUNT(*) FROM BOARD";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);	
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 }

@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FindPwServlet
  */
-@WebServlet("/member/findpw.do")
-public class FindPwServlet extends HttpServlet {
+@WebServlet("/member/resetpw.do")
+public class ResetPwServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindPwServlet() {
+    public ResetPwServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class FindPwServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		request.getRequestDispatcher("/views/member/findPw.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/member/resetPw.jsp").forward(request, response);
 	}
 
 	/**

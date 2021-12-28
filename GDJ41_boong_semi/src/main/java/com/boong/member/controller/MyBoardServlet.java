@@ -1,4 +1,4 @@
-package com.boong.admin.controller;
+package com.boong.member.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.boong.admin.model.service.AdminService;
-import com.boong.member.model.vo.Member;
+import com.boong.board.model.vo.Board;
 
 /**
- * Servlet implementation class MemberListViewServlet
+ * Servlet implementation class MyBoardServlet
  */
-@WebServlet("/admin/adminpageview.do")
-public class AdminpageViewServlet extends HttpServlet {
+@WebServlet("/member/myboard.do")
+public class MyBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminpageViewServlet() {
+    public MyBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,6 +31,8 @@ public class AdminpageViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String memberId=request.getParameter("memberId");
+		
 		int cPage;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
@@ -40,9 +42,9 @@ public class AdminpageViewServlet extends HttpServlet {
 		
 		int numPerPage=10;//페이지당 출력 데이터수
 		
-		List<Member> mList=new AdminService().viewMemberList(cPage,numPerPage);
+		List<Board> bList=new AdminService().viewBoardList(memberId,cPage,numPerPage);
 		
-		int totalData=new AdminService().selectCountAllMember();
+		int totalData=new AdminService().selectCountAllBoard();
 		int totalPage=(int)Math.ceil((double)totalData/numPerPage); //소수점이 나오면 날라가니까 올림처리
 		int pageBarSize=5;
 		
@@ -54,30 +56,26 @@ public class AdminpageViewServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar="<span>[이전]</span>";
 		}else {
-			pageBar="<a href='"+request.getContextPath()+"/admin/adminpageview.do?cPage="+(pageNo-1)+"'>[이전]</a>";
+			pageBar="<a href='"+request.getContextPath()+"/member/myboard.do?cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getContextPath()+"/admin/adminpageview.do?cPage="+pageNo+"'>"+pageNo+"</a>";
+				pageBar+="<a href='"+request.getContextPath()+"/member/myboard.do?cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
-			pageBar+="<a href='"+request.getContextPath()+"/admin/adminpageview.do?cPage="+pageNo+"'>[다음]</a>";
+			pageBar+="<a href='"+request.getContextPath()+"/member/myboard.do?cPage="+pageNo+"'>[다음]</a>";
 		}
 		
 		request.setAttribute("pageBar", pageBar);
-		request.setAttribute("mList", mList);
-		
-		
-		//3. 화면단을 선택해서 전환
-		request.getRequestDispatcher("/views/admin/adminpage.jsp").forward(request, response);
-	
+		request.setAttribute("bList", bList);
+		request.getRequestDispatcher("/views/member/myboard.jsp").forward(request, response);
 	}
 
 	/**

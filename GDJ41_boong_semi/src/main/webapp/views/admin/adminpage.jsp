@@ -29,7 +29,7 @@ section{
 }
 .mypage-container{
 	width: 75%;
-	height: 600px;
+	height: 100%;
 	background-color: white;
 	border: none;
 	border-radius: 10px;
@@ -86,6 +86,16 @@ h2{color:#6868ac;}
 }
 div#pageBar{ text-align:center;}
 #pageBar>a,#pageBar>span {padding-right : 20px;}
+#btn{
+	width:70px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:coral; color:white;
+	font-size:13px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
 </style>
 
 <body>
@@ -135,7 +145,7 @@ div#pageBar{ text-align:center;}
 			<table class="styled-table">
 				
 				<thead>
-					<tr>
+					<tr style="text-aglin:center;">
 					<th>아이디</th>
 					<th>이름</th>
 					<th>성별</th>
@@ -155,7 +165,7 @@ div#pageBar{ text-align:center;}
 	            <%}else{ %>
 		       	    <%for(Member m: mList) {%>
 		       	    	<tr>
-			       	    	<td><%=m.getMemberId() %></td>
+			       	    	<td><strong><%=m.getMemberId() %></strong></td>
 			       	    	<td><%=m.getMemberName() %></td>
 			       	    	<td><%=m.getGender() %></td>
 			       	    	<td><%=m.getEmail()%></td>
@@ -163,7 +173,8 @@ div#pageBar{ text-align:center;}
 			       	    	<td><%=m.getAddress() %></td>
 			       	    	<td><%=m.getCar() %></td>
 			       	    	<td><%=m.getEnrollDate() %></td>
-			       	    	<td><input type="button" value="회원 관리" onclick=""></td>
+			       	    	<td><input id="btn" type="button" value="회원 관리" 
+			       	    		onclick="window.open('<%=request.getContextPath()%>/admin/managemember.do?memberId=<%=m.getMemberId()%>','BOONG 회원관리','width=560, height=530');"></td>
 		       	    	</tr>
 		       	    <%}
 		       	   } %>
@@ -181,12 +192,7 @@ div#pageBar{ text-align:center;}
 	$(()=>{
 		$("#searchType").change(e=>{
 			const value=$(e.target).val();
-			//console.log(value);
-			//console.log($("#seach-container>div[id^=seach]"));
-			
-			//$("#search-container>div[id^=search]").css("display","none");
-			
-			//아니면 하나하나 가져와도 됨
+
 			const memberId=$("#search-memberId");
 			const memberName=$("#search-memberName");
 			const gender=$("#search-gender");

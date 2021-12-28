@@ -50,26 +50,29 @@ td.login-input>input{
 } 
 
 .login-button{
-	width: 390px;
-	height: 45px;
-	border-radius: 8px;
-	border: none;
+	width: 390px; height: 45px;
+	border-radius: 8px; border: none;
 	background: linear-gradient(135deg, #855edd 0%, #63afd3 100%);
 	color: white;
 	cursor:pointer;
 	font-size: 16px;
 	font-weight:bold;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.login-button:hover{
+	background: linear-gradient(75deg, #855edd 30%, #63afd3 100%);
 }
 .signUp-button{
-	width: 390px;
-	height: 45px;
-	border-radius: 8px;
-	border: none;
+	width: 390px; height: 45px;
+	border-radius: 8px; border: none;
 	background: linear-gradient(65deg, #25aae1, #2bb673);
 	color: white;
 	cursor:pointer;
-	font-size: 16px;
-	font-weight:bold;
+	font-size: 16px; font-weight:bold;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.signUp-button:hover{
+	background: linear-gradient(135deg, #25aae1 30%, #2bb673 100%);
 }
 .login{
 	text-align:center;
@@ -81,8 +84,8 @@ td.login-input>input{
 	font-size: 14px;
 }
 img{
-	width: 32px;
-	height: 32px;
+	width: 25px;
+	height: 25px;
 }
 #x-btn{
 	display:flex;
@@ -101,7 +104,7 @@ table, h2{
 </style>
 <body>
 		<div class="login-container">
-			<a id="x-btn" onclick="location.assign('<%=request.getContextPath()%>')"><img src="<%=request.getContextPath() %>/assets/img/member/icon_close.png"></a>
+			<a id="x-btn" onclick="location.assign('<%=request.getContextPath()%>')"><img src="<%=request.getContextPath() %>/assets/img/member/x.png"></a>
 			<form id="loginForm" action="<%=request.getContextPath() %>/member/loginend.do" method="post">
 				
 			<h2 class="login">BOONG</h2>
@@ -120,7 +123,7 @@ table, h2{
 					<td>
 						<input type="checkbox" name="saveId" id="saveId" <%=saveId!=null?"checked":"" %>>
 						<label for="saveId" class="text1">아이디 기억하기</label>&nbsp&nbsp&nbsp
-						<a id="findPw" class="text3" style="cursor:pointer;" onclick="findPwPopUp();">비밀번호 찾기</a> 
+						<a id="findPw" class="text3" style="cursor:pointer;" onclick="resetPwPopUp();">비밀번호 재설정</a> 
 						<span class="text3"> &nbsp|&nbsp </span> 
 						<a id="findId" class="text3" style="cursor:pointer;" onclick="findIdPopUp();">아이디 찾기</a>
 					<td>
@@ -149,14 +152,14 @@ table, h2{
 		function findIdPopUp(){
 			const url="<%=request.getContextPath()%>/member/findid.do";
 			const title="findId";
-			const style="width=460, height=300";
+			const style="width=460, height=330";
 			window.open(url,title,style);		
 		};
 		
-		function findPwPopUp(){
-			const url="<%=request.getContextPath()%>/member/findpw.do";
+		function resetPwPopUp(){
+			const url="<%=request.getContextPath()%>/member/resetpw.do";
 			const title="findPw";
-			const style="width=500, height=300";
+			const style="width=460, height=600";
 			window.open(url,title,style);
 		};
 		</script>

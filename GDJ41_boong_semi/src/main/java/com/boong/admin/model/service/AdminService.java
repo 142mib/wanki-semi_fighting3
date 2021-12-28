@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.boong.admin.model.dao.AdminDao;
+import com.boong.board.model.vo.Board;
 import com.boong.member.model.vo.Member;
 
 public class AdminService {
@@ -42,5 +43,30 @@ public class AdminService {
 		return result;
 		
 	}
+	
+	public Member selectMember(String memberId) {
+		Connection conn=getConnection();
+		Member m=dao.selectMember(conn,memberId);
+		close(conn);
+		return m;
+	}
 
+	
+	public List<Board> viewBoardList(String memberId, int cPage, int numPerPage){
+		Connection conn=getConnection();
+		List<Board> bList=dao.viewBoardList(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return bList;
+		
+	}
+	
+	public int selectCountAllBoard() {
+		Connection conn=getConnection();
+		int result=dao.selectCountAllBoard(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	
 }

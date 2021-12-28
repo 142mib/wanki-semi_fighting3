@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ page import="com.boong.member.model.vo.Member"%>
+<%
+	Member loginMember=(Member)session.getAttribute("loginMember");
+%>
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 <style>
@@ -135,13 +140,19 @@ body.active .wrapper .section {
                     </a>
                 </li>
                 <li>
-                    <a id="third-menu"href="#">
+                    <a id="third-menu"href="<%=request.getContextPath()%>/member/myboard.do?memberId=<%=loginMember.getMemberId()%>">
+                        <span class="icon"><i class="fas fa-clipboard-list"></i></span>
+                        <span class="item">내가 쓴 글</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="fourth-menu"href="#">
                         <span class="icon"><i class="fas fa-weight-hanging"></i></span>
                         <span class="item">주문내역</span>
                     </a>
                 </li>
                 <li>
-                    <a id="fourth-menu" href="<%=request.getContextPath()%>/member/delete.do">
+                    <a id="fifth-menu" href="<%=request.getContextPath()%>/member/delete.do">
                         <span class="icon"><i class="fas fa-trash-alt"></i></span>
                         <span class="item">회원탈퇴</span>
                     </a>
