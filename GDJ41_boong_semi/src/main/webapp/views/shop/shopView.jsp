@@ -79,7 +79,7 @@
 	<div id="sv-container">
 	<div class="img-container">
 		<p style="font-weight: bold; color: grey;">이미지에 마우스를 가져가 보세요:</p>
-		<div class="img-magnifier-container">
+		<div class="img-magnifier-container" >
 		<img id="myimage" src="<%= request.getContextPath() %>/upload/shop/<%= p.getShopProductImageRename() %>">
 		</div>
 	
@@ -87,7 +87,7 @@
 	<div class="content-container">
 		
 		<div class="content-table-container">
-			
+			<form action="<%=request.getContextPath()%>/shop/basketEnroll.do" method="post">
 			<table class="shop-table">
 			  <tr>
 			    <th class="sv-table-tdleft" rowspan="1" colspan="2"><h3 style="font-weight: bold;"><%=p.getShopProductName() %></h3></th>  			  	
@@ -105,7 +105,13 @@
 			  
 			  <tr style="border-bottom: 1px solid #ddd;">
 			    <td class="sv-table-tdleft" style="padding:5px 0 10px 0;">수량</td>
-			    <td class="sv-table-tdright" style="padding:5px 0 10px 0;"><input onchange="incre();" name="orderNumber" type="number" value="1" min="1" style="width: 45px" ></td>			    
+			    <td class="sv-table-tdright" style="padding:5px 0 10px 0;">
+			    <input onchange="incre();" name="orderNumber" type="number" value="1" min="1" style="width: 45px" >
+			    <input type="hidden" name="productId" value="<%=p.getShopProductId() %>" >
+			    <%if(loginMember!=null){ %>
+			    <input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>" >
+			    <%} %>
+			    </td>			    
 			  </tr>
 			  <tr style="font-weight: bold; border-bottom: 1px solid #ddd; ">
 			    <td class="sv-table-tdleft" style="padding:15px 0 5px 0;">총상품금액</td>
@@ -113,14 +119,18 @@
 			    <td class="sv-table-tdright" style="padding:15px 0 5px 0;"><span class="totalMoney"></span>원</td>			   
 			  </tr>
 			  <tr>
-			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;" ><button>장바구니추가</button> </td>			   			    
+			  	<%if(loginMember!=null){ %>
+			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:20px;"><input type="submit"  value="주문하기"> </td>			   			    
+			    <%} %>			   			    
 			  </tr>
-			  <tr>
-			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;"><button>구매하기</button></td>			   		    
-			  </tr>
+			  <!-- <tr>
+			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;"><button>바로 구매하기</button></td>			   		    
+			  </tr> -->
 			</table>
-			
-		
+			</form>
+				<%if(loginMember==null){ %>
+				<span ><button style="margin-top: 20px;" onclick="alert('로그인후 사용 가능합니다.');">장바구니에 추가</button></span>
+				<%} %>
 		</div>
 		</div>
 		

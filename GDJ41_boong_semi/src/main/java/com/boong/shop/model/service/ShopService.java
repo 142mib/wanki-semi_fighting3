@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.boong.shop.model.dao.ShopDao;
+import com.boong.shop.model.vo.Basket;
 import com.boong.shop.model.vo.Product;
 import com.boong.shop.model.vo.ProductComment;
 
@@ -72,6 +73,23 @@ public class ShopService {
 		else rollback(conn);
 		close(conn);
 		return result;
+	}
+	public int insertBasket(Basket b) {
+		Connection conn=getConnection();
+		int result=dao.insertBasket(conn,b);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+		
+		
+	}
+	public List<Basket> selectBasket(String memberId) {
+		Connection conn=getConnection();
+		List<Basket> list=dao.selectBasket(conn,memberId);
+		close(conn);
+		return list;		
 	}
 	
 	

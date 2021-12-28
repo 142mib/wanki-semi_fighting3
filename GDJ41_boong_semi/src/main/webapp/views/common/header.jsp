@@ -3,6 +3,7 @@
 <%@ page import="com.boong.member.model.vo.Member"%>
 <%
 	Member loginMember=(Member)session.getAttribute("loginMember");
+	
 %>
     <!DOCTYPE html>
 	<html lang="ko">
@@ -56,9 +57,11 @@
 						  	<%if(loginMember.getMemberId().equals("admin")) {%>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/basketList.do?id=<%=loginMember.getMemberId()%>">장바구니 </a>
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
 							<%}else{ %>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/basketList.do?id=<%=loginMember.getMemberId()%>">장바구니 </a>
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
 						  	<%} %>
 						  </div>

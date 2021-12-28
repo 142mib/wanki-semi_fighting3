@@ -2,10 +2,10 @@ package com.boong.shop.model.vo;
 
 import java.util.Date;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 @Data
-@Builder
+@SuperBuilder
 public class Product {
 	
 	private int shopProductId;
