@@ -294,7 +294,7 @@ public class BoardDao {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				BoardComment bc = BoardComment.builder()
-						.boardCommetNo(rs.getInt("board_comment_no"))
+						.boardCommentNo(rs.getInt("board_comment_no"))
 						.boardRef(rs.getInt("board_ref"))
 						.boardCommentWriter(rs.getString("board_comment_writer"))
 						.boardCommentContent(rs.getString("board_comment_content"))
@@ -325,6 +325,45 @@ public class BoardDao {
 			pstmt.setString(3, bc.getBoardCommentContent());
 			pstmt.setInt(4, bc.getBoardCommentLevel());
 			pstmt.setInt(5, bc.getBoardCommentRef());
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	// 게시글 댓글 전체 개수 가져오기
+	public int countBoardComment(Connection conn, BoardComment bc) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int total = 0;
+		String sql = "select count(*) from BOARD_COMMENT where BOARD_REF=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bc.getBoardRef());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return total;
+	}
+	
+	// 댓글 삭제
+	public int deleteComment(Connection conn, int boardComment) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "delete from BOARD_COMMENT where BOARD_COMMENT_NO=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardComment);
 			result = pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

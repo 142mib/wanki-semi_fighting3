@@ -145,6 +145,28 @@ public class BoardService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
+		return result;
+	}
+	
+	// 게시글 댓글 전체 개수를 가져오는 서비스
+	public int countBoardComment(BoardComment bc) {
+		Connection conn = getConnection();
+		int total = dao.countBoardComment(conn, bc);
+		close(conn);
+		return total;
+	}
+	
+	// 댓글 삭제하는 서비스
+	public int deleteComment(int boardCommentNo) {
+		Connection conn = getConnection();
+		int result = dao.deleteComment(conn, boardCommentNo);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
 		return result;
 	}
 }

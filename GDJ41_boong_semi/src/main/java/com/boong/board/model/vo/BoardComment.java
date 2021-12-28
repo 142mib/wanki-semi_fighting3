@@ -13,7 +13,7 @@ import lombok.Data;
 public class BoardComment {
 	// 게시판 댓글
 	
-	private int boardCommetNo; // 댓글 식별번호
+	private int boardCommentNo; // 댓글 식별번호
 	private int boardRef; // 참조 게시글 번호
 	private String boardCommentWriter; // 댓글 작성자
 	private String boardCommentContent; // 댓글 내용
