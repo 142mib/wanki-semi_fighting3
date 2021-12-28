@@ -631,14 +631,25 @@ dd{
 		});	
 	});
 	//이거 질문해야하는데..능지가 딸려서 생각이 잘 안남 ㅋㅋ..
+	
 	$("#start_price").change(e=>{
 		const sSelect=Number($("#start_price option:selected").val());
-		for(let i=0; i<=$("#end_price option").length; i++) {
+		let count=0;
+		$("#end_price>option").css('display','block');
+		$("#end_price>option").each((i,v)=>{
+			if($(v).val()<=sSelect){
+				$(v).css('display','none');
+				count++;
+			}
+		});
+		$($("#end_price>option")[count]).attr("selected",true);
+		
+		/* for(let i=0; i<$("#end_price option").length; i++) {
 			if(sSelect>=Number($("#end_price option:eq("+i+")").val())) {
 				const value1=$("#end_price option:eq("+i+")").val();
 				$("#end_price option[value="+value1+"]").prop('disabled',true);
 			}
-		}
+		} */
 	});
 	//onload시 total 데이터 페이징바 처리
 		let cPage;
