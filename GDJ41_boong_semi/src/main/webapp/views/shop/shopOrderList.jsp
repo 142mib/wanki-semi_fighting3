@@ -48,13 +48,13 @@
 	table#tbl-order th
 	{
 		width:125px;
-		border-bottom:1px solid;
+		border-top:1px solid;
 		padding:10px ;
 		text-align:center;
 	}
 	table#tbl-order td
 	{
-		border-bottom:1px solid;
+		border-top:1px solid; 
 		padding:5px 5px 5px 10px;
 		text-align:left;
 	}
@@ -106,8 +106,9 @@
 					<form action="<%=request.getContextPath()%>/shop/orderUpdate.do" method="post">
 					<input type="hidden" name="orderId" value="<%=op.getOrderId()%>">
 					<input type="hidden" name="productId" value="<%=op.getProductId()%>">
+					<input type="hidden" name="memberId" value="<%=loginMember.getMemberId()%>">
 					
-					<td><input  type="number" name="basketNum" value="<%=op.getOrderProductNumber()%>" min="0" max="<%=op.getShopProductStock()%>"></td>
+					<td><input  type="number" name="orderNum" value="<%=op.getOrderProductNumber()%>" min="0" max="<%=op.getShopProductStock()%>"></td>
 					<%System.out.println(loginMember.getMemberId()); %>
 					<td>
 						<input type="submit" value="수정" >				
@@ -131,10 +132,7 @@
 			<form action='<%=request.getContextPath()%>/shop/orderEnd.do' method="post">
 			<table id="tbl-order">
 			
-				<tr>
-					<th>주문번호</th>
-					<td><%=order.getOrderId()%></td>
-				</tr>
+				
 				<tr>
 					<th>수령인</th>
 					<td><input type="text" name="name" value="<%=order.getOrderReceiver()%>"></td>
@@ -150,7 +148,7 @@
 					<input type="hidden" name="price" value="<%=order.getOrderPrice()%>" >
 				<tr>
 					<th>요청사항</th>
-					<td><textarea cols="50" rows="9" name="request" ><%=order.getOrderRequest() %></textarea></td>
+					<td><textarea cols="50" rows="4" name="request" ><%=order.getOrderRequest() %></textarea></td>
 				</tr>
 				<tr>
 					<th colspan="2">

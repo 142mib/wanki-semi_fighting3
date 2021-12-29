@@ -425,4 +425,26 @@ public class ShopDao {
 		return list;
 	}
 
+	public int updateOrder(Connection conn, OrderProduct op) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "UPDATE SHOP_ORDER_PRODUCT SET ORDER_PRODUCT_NUMBER=?  WHERE SHOP_PRODUCT_ID=? AND SHOP_ORDER_ID=? ";
+		try {
+			System.out.println(op);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, op.getOrderProductNumber());
+			pstmt.setInt(2, op.getProductId());
+			pstmt.setInt(3, op.getOrderId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println(result);
+		return result;
+	}
+
 }
