@@ -20,6 +20,7 @@ List<Product> list=(List)request.getAttribute("productList");
 	/*페이지바*/
 	div#pageBar{margin-top:10px; text-align:center; background-color:rgba(1,138,216,1);}
 	div#pageBar span{color: white;}
+	#pageBar>a,#pageBar>span {padding-right : 5px;}
 	.btn{
 	width:50px; height:35px;
 	border:none;
