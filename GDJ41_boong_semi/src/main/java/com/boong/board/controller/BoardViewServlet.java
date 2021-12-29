@@ -46,7 +46,7 @@ public class BoardViewServlet extends HttpServlet {
 			for(Cookie c : cookies) {
 				String name=c.getName();
 				String value=c.getValue();
-				System.out.println(name + value);
+//				System.out.println(name + value);
 				if(name.equals("boardRead")) {
 					boardRead=value;
 					if(value.contains("|"+boardNo+"|")) {
@@ -73,6 +73,7 @@ public class BoardViewServlet extends HttpServlet {
 		
 		// 화면 전환
 		request.getRequestDispatcher("/views/board/boardView.jsp").forward(request, response);
+		
 		
 	}
 

@@ -69,16 +69,22 @@
        	</div>
     </div>
     <br>
-	    <div class="row">
+	    <!-- <div class="row">
+			<div class="col-xs-12" style="text-align: center;">
+				<button id="" type="button" onclick="boardLike();">추천하기</button>
+			</div>
+			<div class="row" style="border-bottom: 1px solid #ddd; padding-top: 20px; padding-bottom: 20px;"></div>
+	    </div> -->
+    
+    <!-- 로그인한 아이디와 작성자 아이디가 같을 경우에만 수정/삭제 버튼 출력 -->
+    <!-- 로그인도 했고 내가 글 작성자면 -->
+    <%if(m != null && m.getMemberId().equals(b.getBoardWriter())) { %>
+    	<div class="row">
 			<div class="col-xs-12" style="text-align: center;">
 				<button id="" type="button" onclick="boardLike();">추천하기</button>
 			</div>
 			<div class="row" style="border-bottom: 1px solid #ddd; padding-top: 20px; padding-bottom: 20px;"></div>
 	    </div>
-    
-    <!-- 로그인한 아이디와 작성자 아이디가 같을 경우에만 수정/삭제 버튼 출력 -->
-    <!-- 로그인도 했고 내가 글 작성자면 -->
-    <%if(m != null && m.getMemberId().equals(b.getBoardWriter())) { %>
     	<form action="<%=request.getContextPath()%>/board/boardUpdate.do" method="post">
 	    	<div class="row">
 		        <div class="col-lg-12" style="text-align: right;">
@@ -119,6 +125,12 @@
 			</div>
 		</div>
     <%}else if(m != null && !m.getMemberId().equals(b.getBoardWriter())) { %>
+    	<div class="row">
+			<div class="col-xs-12" style="text-align: center;">
+				<button id="" type="button" onclick="boardLike();">추천하기</button>
+			</div>
+			<div class="row" style="border-bottom: 1px solid #ddd; padding-top: 20px; padding-bottom: 20px;"></div>
+	    </div>
 		<div></div>
 		<div class="commentWrap">
 			<div class="row board-comment-container">
@@ -141,24 +153,32 @@
 				</div>
 			</div>
 		</div>
-    <%} %>
-    
-    <!-- 로그인을 안했으면 -->
-	<%if(m == null) { %>
-		<div></div>
-		<div class="commentWrap">
-			<div class="row board-comment-container">
+	<!--  로그인 안했으면 -->
+    <%}else if(m == null){ %>
+    	 <div class="row">
+			<div class="col-xs-12" style="text-align: center;">
+				<button id="boardLike" type="button" onclick="boardLike();">추천하기</button>
+			</div>
+			<div class="row" style="border-bottom: 1px solid #ddd; padding-top: 20px; padding-bottom: 20px;"></div>
+	    </div>
+    	<div></div>
+		<div class="commentWrap" style="margin: 0 auto; width: 1320px;">
+			<div class="row board-comment-container" style="widows: 1000px; margin: 0 auto;">
 				<div id="commentCount" class="board-comment-count col-sm-12"></div>
-				<div id="board-comment" class="comment-container col-sm-12"></div>
-				<div class="board-write col-sm-12" style="border: 1px solid black;">
-						댓글쓰기<br>
-						<textarea id="disabled-comment" name="" rows="3" cols="60" placeholder="로그인 후 사용하실 수 있습니다." disabled></textarea>
-						<button type="submit" name="disabled">등록</button>
+				<div id="board-comment" class="comment-container col-sm-12" style="widows: 1000px; margin: 0 auto; padding-top: 10px;"></div>
+				<div class="board-write col-sm-12" style="widows: 1000px; margin: 0 auto; padding-top: 10px;">
+					<span style="padding-top: 20px;">댓글 쓰기</span><br>
+					<input type="hidden" name="boardRef" value="<%=b.getBoardNo()%>"/>
+					<div style="display: inline-block; vertical-align: middle;">
+						<textarea id="boardCommentContent" name="boardCommentContent" rows="2" cols="134" placeholder="댓글을 입력하세요"></textarea>
+					 </div>
+					 <div style="display: inline-block; vertical-align: middle;">
+						<button type="submit" name="insert-btn" style="width: 100px; height: 55;">등록</button>
+					 </div>
 				</div>
 			</div>
 		</div>
-	<%} %>
-
+    <%}; %>
 </section>
 
 <%@ include file="/views/common/footer.jsp" %>
@@ -175,13 +195,12 @@
 	
 	// 게시글 추천 함수
 	const boardLike=()=>{
-		if(m == null){
+		 if(<%=m%> == null){
 			alert("로그인을 해야 게시글을 추천 할 수 있습니다.");
-		};
-		if(<%=m.getMemberId().equals(b.getBoardWriter())%>){
+		}else if(<%=m.getMemberId()%> != null && <%=m.getMemberId()%>.equals(b.getBoardWriter())){
 			alert("자신의 게시글은 추천 할 수 없습니다.");
 			location.reload();
-		}else{
+		}else if(<%=m.getMemberId()%> != null && !<%=m.getMemberId()%>.equals(b.getBoardWriter())){
 			if(confirm("해당 게시글을 추천하시겠습니까?")){
 				location.assign("<%=request.getContextPath()%>/board/boardLike.do?boardNo=<%=b.getBoardNo()%>&boardWriter=<%=b.getBoardWriter()%>");
 			}else{
@@ -246,7 +265,6 @@
 			type: "post",
 			data: {"boardNo":<%=b.getBoardNo()%>},
 			success: function(data){
-				console.log(data);
 				$("#commentCount").text('댓글' + data + '개');
 			}
 		})

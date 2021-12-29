@@ -174,16 +174,32 @@
 					  		<%} %>
 				  		</div>
 			  		</div>
-				  		
-			  <!-- pageBar -->
-			  <div class="row" id="pageBar">
-			  	<div class="col-sm-12"><%=request.getAttribute("pageBar") %></div>
-			  </div>
+			  		<br>
+				<!-- 게시글 검색 -->
+				<div class="row">
+					<form action="" method="post" name="search-form">
+						<select>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+							<option value="writer">작성자</option>
+						</select>
+						<input type="text" name="keyword" value="">
+						<input type="button" onclick="getSearchList();" class="" value="검색">
+					</form>				
+				</div>
+				<br>
+			
+				<!-- pageBar -->
+				<div class="row" id="pageBar">
+					<div class="col-sm-12"><%=request.getAttribute("pageBar") %></div>
+				</div>
 	</section>
 
 <%@ include file="/views/common/footer.jsp" %>
 
 <script>
+
+	// 카테고리 별 글 불러오기
 	$("#board-category-btn-container button").click(e=>{
 		var tabNo = $(e.target).val();
 		$.ajax({
@@ -191,44 +207,82 @@
 			type: "post",
 			data: {"tabNo":tabNo},
 			success:function(data){
+				console.log(data);
 				$("div").remove("#boardList-body-container");
-				let containerDiv = $("<div>").attr({
-					'id': 'boardList-body-container', 
-					'class': 'row'
-				});
+				let containerDiv = $("<div id='boardList-body-container' class='row'>");
+				let fontColor = "";
 				for(let i = 0; i < data.length; i++){
-					let categoryDiv = $("<div>").attr({
-						'class': 'col-sm-2 margin'
-					})
+					let tapDiv = $("<div class='col-sm-2 margin con'>");
+					let tapSpan = $("<span>");
 					switch(data[i]["boardCategory"]){
-			    		case 1 : categoryDiv.html("질문/답변"); break;
-			    		case 2 : categoryDiv.html("정보/팁"); break;
-			    		case 3 : categoryDiv.html("사요/팔아요"); break;
-			    		case 4 : categoryDiv.html("자유"); break;
-					}
-					let a = $("<a>").attr({
+			    		case 1 : tapSpan.text("질문/답변"); fontColor = "red"; break;
+			    		case 2 : tapSpan.text("정보/팁"); fontColor = "green"; break;
+			    		case 3 : tapSpan.text("사요/팔아요"); fontColor = "gold"; break;
+			    		case 4 : tapSpan.text("자유"); fontColor = "skyblue"; break;
+					};
+					tapSpan.attr({
+						'style': 'padding: 8px; color:' + fontColor + '; white-space: nowrap;'
+					});
+					tapDiv.append(tapSpan);
+					let titleDiv = $("<div class='col-sm-5 margin'>");
+					let a = $("<a style='cursor: pointer; color: #222; transition: border-color .4s,box-shadow .4s,background .4s,color .4s,opacity .4s;'>").attr({
 						'href': '<%=request.getContextPath()%>/board/boardView.do?boardNo=' + data[i]["boardNo"]
 					});
-					a.append().html(data[i]["boardTitle"])
-					let titleDiv = $("<div>").append(a).attr({
-						'class': 'col-sm-5 margin'
-					});
-					let writerDiv = $("<div>").html(data[i]["boardWriter"]).attr({
-						'class': 'col-sm-1 margin'
-					});
-					let dateDiv = $("<div>").html(data[i]["boardDate"]).attr({
-						'class': 'col-sm-2 margin'
-					});
-					let viewDiv = $("<div>").html(data[i]["boardViewCount"]).attr({
-						'class': 'col-sm-1 margin'
-					});
-					let likeDiv = $("<div>").html(data[i]["boardLike"]).attr({
-						'class': 'col-sm-1 margin'
-					});
-					containerDiv.append(categoryDiv).append(titleDiv).append(writerDiv).append(dateDiv).append(viewDiv).append(likeDiv);
+					a.text(data[i]["boardTitle"]);
+					titleDiv.append(a);
+					let writerDiv = $("<div class='col-sm-1 margin con'>");
+					let writerSpan = $("<span style='padding: 8px; color: #666; white-space: nowrap;'>").text(data[i]["boardWriter"]);
+					writerDiv.append(writerSpan);
+					let dateDiv = $("<div class='col-sm-2 margin con'>")
+					let dateSpan = $("<span style='padding: 8px; color: #666; white-space: nowrap;'>").text(data[i]["boardDate"]);
+					dateDiv.append(dateSpan);
+					let countDiv = $("<div class='col-sm-1 margin con'>");
+					let countSpan = $("<span style='padding: 8px; color: #666; white-space: nowrap;'>").text(data[i]["boardViewCount"]);
+					countDiv.append(countSpan);
+					let likeDiv = $("<div class='col-sm-1 margin con'>");
+					let likeSpan = $("<span style='padding: 8px; color: #666; white-space: nowrap;'>").text(data[i]["boardLike"]);
+					likeDiv.append(likeSpan);
+					a.append().html(data[i]["boardTitle"]);
+					
+					containerDiv.append(tapDiv).append(titleDiv).append(writerDiv).append(dateDiv).append(countDiv).append(likeDiv);
 				}
-				$("#wrap").append().html(containerDiv);
+				$("#wrap").append(containerDiv);
 			}
 		})
-	})
+	});
+	
+	// 검색 게시글 불러오기
+<%-- 	function getSearchList(){
+		$.ajax({
+			type: 'GET',
+			url : "<%=request.getContextPath()%>/board/searchBoardList.do",
+			data : $("form[name=search-form]").serialize(),
+			success : function(data){
+	} --%>
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
