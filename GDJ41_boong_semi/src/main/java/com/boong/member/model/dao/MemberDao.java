@@ -2,19 +2,19 @@ package com.boong.member.model.dao;
 
 import static com.boong.common.JDBCTemplate.close;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.boong.board.model.vo.Board;
 import com.boong.member.model.vo.Member;
+import com.boong.shop.model.vo.Order;
 
 public class MemberDao {
 	
-	private Properties prop=new Properties();
 	public MemberDao() {}
 	
 	public Member login(Connection conn, String memberId, String memberPw) {
@@ -216,6 +216,116 @@ public class MemberDao {
 		}
 		return m;
 	}
+	
+	
+	public List<Board> viewBoardList(Connection conn, String memberId, int cPage, int numPerPage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Board> mList=new ArrayList();
+		String sql="SELECT * FROM(SELECT ROWNUM AS RNUM, B.* FROM(SELECT * FROM(SELECT * FROM BOARD WHERE BOARD_WRITER=?)BOARD ORDER BY BOARD_DATE DESC) B) WHERE RNUM BETWEEN ? AND ?";
+		try {
+			pstmt=conn.prepareStatement(sql);			
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Board b = Board.builder()
+						.boardCategory(rs.getInt("BOARD_CATEGORY"))
+						.boardTitle(rs.getString("BOARD_TITLE"))
+						.boardWriter(rs.getString("BOARD_TITLE"))
+						.boardDate(rs.getDate("BOARD_DATE"))
+						.boardViewCount(rs.getInt("BOARD_VIEW_COUNT"))
+						.boardLike(rs.getInt("BOARD_LIKE"))
+						.build();
+					mList.add(b);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return mList;
+		
+	}
+	
+	
+	public int selectCountAllBoard(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql="SELECT COUNT(*) FROM BOARD";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);	
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<Order> viewOrderList(Connection conn, String memberId, int cPage, int numPerPage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Order> oList=new ArrayList();
+		String sql="SELECT * FROM(SELECT ROWNUM AS RNUM, O.* FROM(SELECT * FROM(SELECT * FROM SHOP_ORDER JOIN SHOP_ORDER_PRODUCT USING (SHOP_ORDER_ID) WHERE MEMBER_ID=?)SHOP_ORDER ORDER BY SHOP_ORDER_DATE DESC) O) WHERE RNUM BETWEEN ? AND ?";
+		try {
+			pstmt=conn.prepareStatement(sql);			
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, (cPage-1)*numPerPage+1);
+			pstmt.setInt(3, cPage*numPerPage);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				Order o = Order.builder()
+						.orderId(rs.getInt("SHOP_ORDER_ID"))
+						.orderReceiver(rs.getString("SHOP_ORDER_RECEIVER"))
+						.orderReceiverAdd(rs.getString("SHOP_ORDER_RECEIVERADD"))
+						.orderRequest(rs.getString("SHOP_ORDER_REQUEST"))
+						.orderPrice(rs.getInt("SHOP_ORDER_PRICE"))
+						.orderDate(rs.getDate("SHOP_ORDER_DATE"))
+						.orderState(rs.getInt("SHOP_ORDER_STATUS"))
+						.build();
+					oList.add(o);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return oList;
+		
+	}
+	
+	
+	public int selectCountAllOrder(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		String sql="SELECT COUNT(*) FROM SHOP_ORDER";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				result=rs.getInt(1);	
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	
 	
 	
 	
