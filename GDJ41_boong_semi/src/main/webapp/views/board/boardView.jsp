@@ -194,7 +194,7 @@
 	};
 	
 	// 게시글 추천 함수
-	const boardLike=()=>{
+<%-- 	const boardLike=()=>{
 		 if(<%=m%> == null){
 			alert("로그인을 해야 게시글을 추천 할 수 있습니다.");
 		}else if(<%=m.getMemberId()%> != null && <%=m.getMemberId()%>.equals(b.getBoardWriter())){
@@ -207,7 +207,7 @@
 				location.assign("<%=request.getContextPath()%>/board/boardView.do");
 			}
 		};
-	};
+	}; --%>
 	
 	$(document).ready(()=>{
 		commentList();

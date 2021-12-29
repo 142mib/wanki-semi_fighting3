@@ -169,6 +169,22 @@ public class BoardService {
 		close(conn);
 		return result;
 	}
+	
+	// 제목, 작성자, 내용으로 검색할 때
+	public List<Board> searchBoard(int cPage, int numPerpage, String searchType, String keyword){
+		Connection conn = getConnection();
+		List<Board> result = dao.searchBoard(conn,cPage,numPerpage, searchType, keyword);
+		close(conn);
+		return result;
+	}
+	
+	// 게시글 검색 시 개수 가져오기
+	public int searchBoardCount(String searchType, String keyword) {
+		Connection conn = getConnection();
+		int result = dao.searchBoardCount(conn,searchType, keyword);
+		close(conn);
+		return result;
+	}
 }
 
 

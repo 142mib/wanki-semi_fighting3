@@ -7,6 +7,10 @@
 	List<Board> list = (List)request.getAttribute("boardList");
 	Member m = (Member)session.getAttribute("loginMember");
 	List<Board> cbl = (List)request.getAttribute("categoryboardList");
+	
+	List<Board> bsc = (List)request.getAttribute("boardSearchList");
+	String searchType=request.getParameter("searchType");
+	String keyword=request.getParameter("searchKeyword");
 %>
 
 <%@ include file="/views/common/header.jsp" %>
@@ -177,17 +181,38 @@
 			  		<br>
 				<!-- 게시글 검색 -->
 				<div class="row">
-					<form action="" method="post" name="search-form">
-						<select>
-							<option value="title">제목</option>
-							<option value="content">내용</option>
-							<option value="writer">작성자</option>
-						</select>
-						<input type="text" name="keyword" value="">
-						<input type="button" onclick="getSearchList();" class="" value="검색">
-					</form>				
-				</div>
-				<br>
+			        <div id="search-container">
+			        	<select id="searchType">
+			        		<option value="userId" <%=searchType!=null&&searchType.equals("userId")?"selected":"" %>>아이디</option>
+			        		<option value="userName" <%=searchType!=null&&searchType.equals("userName")?"selected":"" %>>제목</option>
+			        		<option value="gender" <%=searchType!=null&&searchType.equals("gender")?"selected":"" %>>내용</option>
+			        	</select>
+			        	<div id="search-userId">
+			        		<form action="<%=request.getContextPath()%>/board/searchBoardList.do">
+			        			<input type="hidden" name="searchType" value="board_Writer" >
+			        			<input type="text" name="searchKeyword" size="25" value="<%=searchType!=null&&searchType.equals("board_Writer")?keyword:"" %>"
+			        			placeholder="검색할 아이디를 입력하세요" >
+			        			<button type="submit">검색</button>
+			        		</form>
+			        	</div>
+			        	<div id="search-userName">
+			        		<form action="<%=request.getContextPath()%>/board/searchBoardList.do">
+			        			<input type="hidden" name="searchType" value="board_Title">
+			        			<input type="text" name="searchKeyword" size="25" value="<%=searchType!=null&&searchType.equals("board_Title")?keyword:"" %>"
+			        			placeholder="검색할 제목을 입력하세요">
+			        			<button type="submit">검색</button>
+			        		</form>
+			        	</div>
+			        	<div id="search-gender">
+			        		<form action="<%=request.getContextPath()%>/board/searchBoardList.do">
+			        			<input type="hidden" name="searchType" value="board_Content">
+			        			<input type="text" name="searchKeyword" size="25" value="<%=searchType!=null&&searchType.equals("board_Content")?keyword:"" %>"
+			        			placeholder="검색할 내용을 입력하세요">
+			        			<button type="submit">검색</button>
+			        		</form>
+			        	</div>
+			        </div>
+		        </div>
 			
 				<!-- pageBar -->
 				<div class="row" id="pageBar">
@@ -252,13 +277,29 @@
 	});
 	
 	// 검색 게시글 불러오기
-<%-- 	function getSearchList(){
-		$.ajax({
-			type: 'GET',
-			url : "<%=request.getContextPath()%>/board/searchBoardList.do",
-			data : $("form[name=search-form]").serialize(),
-			success : function(data){
-	} --%>
+    	$(()=>{
+    			
+    		$("#searchType").change(e=>{
+    			const value=$(e.target).val();
+    			//console.log(value);
+    			//console.log($("#search-container>div[id^=search]"));
+    			$("#search-container>div[id^=search]").css("display","none");
+    			
+    			/* const userId=$("#search-userId");
+    			const userName=$("#search-userName");
+    			const gender=$("#search-gender");
+    			userId.css("display","none");
+    			userName.css("display","none");
+    			gender.css("display","none"); */
+    			
+    			
+    			$("div#search-"+value).css("display","inline-block");
+    		});
+    		
+    	})
+    	$(()=>{
+    		$("#searchType").change();//페이지로드 후 바로 select태그에 change이벤트발생시킴!
+    	})
 </script>
 
 
