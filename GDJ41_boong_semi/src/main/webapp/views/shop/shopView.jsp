@@ -70,6 +70,7 @@
 	  /* border-bottom: 1px solid #ddd; */
 	 
 	}
+	#reply-container{margin-bottom:50px;}
 	
 </style>
 
