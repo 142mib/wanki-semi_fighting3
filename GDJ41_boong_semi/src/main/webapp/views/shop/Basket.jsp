@@ -35,7 +35,10 @@
 			
 		
 		<div class="enroll-btn-container">
-			<button class="enroll-btn" onclick="location.assign('<%=request.getContextPath()%>/')">주문하기</button>
+			<form action="<%=request.getContextPath()%>/shop/orderEnroll.do" method="post">
+			<input type="hidden" name="id" value="<%=loginMember.getMemberId()%>">
+			<input class="enroll-btn" type="submit" value="주문하기" >		
+			</form>
 		</div>
 		
 		<table id="tbl-pm">
@@ -51,7 +54,7 @@
 			if(list.isEmpty()){
 			%>
 				<tr>
-					<td colspan="7">조회된 상품이 없습니다</td>
+					<td colspan="6">조회된 상품이 없습니다</td>
 				</tr>
 			<%
 			}else{ 
@@ -65,17 +68,23 @@
 						</a>
 					</td>					
 					<td><%=(b.getShopProductPrice())*(b.getBasketNumber()) %></td>
-					<form>
-					<td><input  type="number" name="basketNum" value="<%=b.getBasketNumber()%>" min="0" max="<%=b.getShopProductStock()%>"></td>
+					<form action="<%=request.getContextPath()%>/shop/basketUpdate.do" method="post">
+					<input type="hidden" name="memberId" value="<%=b.getMemberId()%>">
+					<input type="hidden" name="productId" value="<%=b.getProductId()%>">
 					
+					<td><input  type="number" name="basketNum" value="<%=b.getBasketNumber()%>" min="0" max="<%=b.getShopProductStock()%>"></td>
+					<%System.out.println(loginMember.getMemberId()); %>
 					<td>
-						<input type="submit" value="수정" onclick="location.assign('<%=request.getContextPath()%>/shop/basketUpdate.do?productId=<%=b.getShopProductId()%>' )">				
+						<input type="submit" value="수정" >				
 					</td>
 					</form>
+					<form action="<%=request.getContextPath()%>/shop/basketDelete.do" method="post">
 					<td>
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/basketDelete.do?shopProductId=<%=b.getShopProductId()%>')">삭제</button>					
+						<input type="submit" value="삭제">
+						<input type="hidden" name="memberId" value="<%=b.getMemberId()%>">			
+						<input type="hidden" name="productId" value="<%=b.getProductId()%>">			
 					</td>
-					
+					</form>
 				</tr>
 			<%	}
 			}%>

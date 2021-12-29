@@ -1,14 +1,14 @@
 package com.boong.shop.model.vo;
 
-import java.util.Date;
-
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
-public class OrderProduct {
-	private int orderNumber;
-	private int productId;
+@SuperBuilder
+public class OrderProduct extends Product {
+	private int orderProductNumber;
+	private int orderProductStatus;
+	
 	private int orderId;
+	private int productId;
 }
