@@ -20,6 +20,20 @@ List<Product> list=(List)request.getAttribute("productList");
 	/*페이지바*/
 	div#pageBar{margin-top:10px; text-align:center; background-color:rgba(1,138,216,1);}
 	div#pageBar span{color: white;}
+	.btn{
+	width:50px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:rgba(1,138,216,1); color:white;
+	font-size:13px;
+	
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	}
+	.btn:hover{
+	color:lightgrey;
+	}
+	
 </style>
 	<div style="height: 63px; background-color: rgba(1,138,216,1)"></div>
 	
@@ -32,7 +46,7 @@ List<Product> list=(List)request.getAttribute("productList");
 			
 		
 		<div class="enroll-btn-container">
-			<button class="enroll-btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productEnroll.do')">상품등록</button>
+			<button style="width: 90px;" class="enroll-btn btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productEnroll.do')">상품등록</button>
 		</div>
 		
 		<table id="tbl-pm">
@@ -60,7 +74,7 @@ List<Product> list=(List)request.getAttribute("productList");
 				<tr>
 					<td><%=p.getShopProductId() %></td>
 					<td>
-						<a href="<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>">
+						<a style="text-decoration: none;" href="<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>">
 							<%=p.getShopProductName() %>
 						</a>
 					</td>
@@ -69,10 +83,10 @@ List<Product> list=(List)request.getAttribute("productList");
 					<td><%=p.getShopProductSales() %></td>
 					<td><%=p.getShopProductDate()  %></td>
 					<td>
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productUpdate.do?shopProductId=<%=p.getShopProductId()%>')">수정</button>					
+						<button class="btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productUpdate.do?shopProductId=<%=p.getShopProductId()%>')">수정</button>					
 					</td>
 					<td>
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productDelete.do?shopProductId=<%=p.getShopProductId()%>')">삭제</button>					
+						<button class="btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productDelete.do?shopProductId=<%=p.getShopProductId()%>')">삭제</button>					
 					</td>
 					
 				</tr>

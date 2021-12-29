@@ -16,21 +16,34 @@
 	{
 		
 		margin:0 auto;
-		border:1px solid black;
+		/* border:1px solid black; */
 		border-collapse:collapse;
 	}
 	table#tbl-product th
 	{
 		width:125px;
-		border:1px solid;
+		border:2px solid #ddd;
 		padding:10px ;
 		text-align:center;
 	}
 	table#tbl-product td
 	{
-		border:1px solid;
+		border:2px solid #ddd;
 		padding:5px 5px 5px 10px;
 		text-align:left;
+	}
+	.btn{
+	width:60px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:rgba(1,138,216,1); color:white;
+	font-size:13px;
+	
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	}
+	.btn:hover{
+	color:lightgrey;
 	}
 
 </style>
@@ -72,9 +85,9 @@
 				
 				<tr>
 					<th colspan="2">
-						<input type="submit" value="등록">
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productManage.do')">취소</button>
-						<input type="reset" value="초기화">
+						<input class="btn" type="submit" value="등록">
+						<button class="btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productManage.do')">취소</button>
+						<input class="btn" type="reset" value="초기화">
 						
 					</th>
 				</tr>

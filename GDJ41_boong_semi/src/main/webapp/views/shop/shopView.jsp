@@ -39,6 +39,20 @@
     /*답글관련*/
     table#tbl-comment textarea{margin: 4px 0 0 0;}
     table#tbl-comment button.btn-insert2{width:60px; height:26px;  position:relative; top:-5px; left:10px;}
+	.btn{
+	width:70px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:rgba(1,138,216,1); color:white;
+	font-size:13px;
+	
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	}
+	.btn:hover{
+	color:lightgrey;
+	}
+	
 	
 	#comment-container{ width:80%; text-align: center;justify-content: center; display: flex;margin: 10px 10% 0 10%;}
 	.sv-table-tdleft{text-align: left;}
@@ -121,7 +135,7 @@
 			  </tr>
 			  <tr>
 			  	<%if(loginMember!=null){ %>
-			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:20px;"><input type="submit"  value="주문하기"> </td>			   			    
+			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:20px; "><input type="submit" style="width: 90px;" class="btn" value="주문하기"> </td>			   			    
 			    <%} %>			   			    
 			  </tr>
 			  <!-- <tr>
@@ -130,7 +144,7 @@
 			</table>
 			</form>
 				<%if(loginMember==null){ %>
-				<span ><button style="margin-top: 20px;" onclick="alert('로그인후 사용 가능합니다.');">장바구니에 추가</button></span>
+				<span ><button style="margin-top: 20px;" onclick="alert('로그인후 사용 가능합니다.');">주문하기</button></span>
 				<%} %>
 		</div>
 		</div>
@@ -163,7 +177,7 @@
 					<input type="hidden" name="writer" value="<%=loginMember!=null?loginMember.getMemberId():""%>">
 					<input type="hidden" name="productRef" value="<%=p.getShopProductId()%>">
 					<input type="hidden" name="productCommentRef" value="0">
-					<button  type="submit" id="btn-insert">등록</button>
+					<button  type="submit" id="btn-insert" class="btn">등록</button>
 			</form>
 		</div>
 		<%}else{ %>	
@@ -189,10 +203,10 @@
 					</td>
 					<td>
 						<%if(loginMember!=null){ %>
-							<button class="btn-reply" value="<%=pc.getShopCommentId()%>">답글</button>
+							<button class="btn-reply btn" value="<%=pc.getShopCommentId()%>">답글</button>
 							<%if(loginMember.getMemberId().equals("admin")
 									||loginMember.getMemberId().equals(pc.getMemberId()) ) {%>
-							<button class="btn-delete">삭제</button>
+							<button class="btn-delete btn">삭제</button>
 							<%} %>
 						<%} %>					
 					</td>

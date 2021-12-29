@@ -60,13 +60,26 @@
 		text-align:left;
 	}
 	div.total-price{height: 50px; padding-top: 10px;}
+	.btn{
+	width:70px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:rgba(1,138,216,1); color:white;
+	font-size:13px;
+	
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	}
+	.btn:hover{
+	color:lightgrey;
+	}
 	
 </style>
 
 <div style="height: 63px; background-color: rgba(1,138,216,1)"></div>
 
 	<section id="pm-container">
-		<h2>주문페이지</h2>
+		<h2 >주문페이지</h2>
 		
 			
 		
@@ -100,7 +113,7 @@
 				<tr>
 					<td width="200px" height="100px" style="background-size:cover ;background-image:url('<%=request.getContextPath()%>/upload/shop/<%=op.getShopProductImageRename()%>');" ></td>
 					<td>
-						<a href="<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=op.getProductId()%>">
+						<a style="text-decoration-line:none; " href="<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=op.getProductId()%>">
 							<%=op.getShopProductName() %>
 						</a>
 					</td>					
@@ -113,12 +126,12 @@
 					<td><input  type="number" name="orderNum" value="<%=op.getOrderProductNumber()%>" min="0" max="<%=op.getShopProductStock()%>"></td>
 					<%System.out.println(loginMember.getMemberId()); %>
 					<td>
-						<input type="submit" value="수정" >				
+						<input type="submit" class="btn" value="수정" >				
 					</td>
 					</form>
 					<form action="<%=request.getContextPath()%>/shop/orderDelete.do" method="post">
 					<td>
-						<input type="submit" value="삭제">
+						<input type="submit" class="btn" value="삭제">
 						<input type="hidden" name="orderId" value="<%=op.getOrderId()%>">			
 						<input type="hidden" name="productId" value="<%=op.getProductId()%>">			
 						<input type="hidden" name="memberId" value="<%=loginMember.getMemberId()%>">			
@@ -155,8 +168,8 @@
 				</tr>
 				<tr>
 					<th colspan="2">
-						<input type="submit" value="결제하기">
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/Main.do')">취소</button>						
+						<input type="submit" class="btn" style="width: 90px;" value="결제하기">
+						<button class="btn" onclick="location.assign('<%=request.getContextPath()%>/shop/Main.do')">취소</button>						
 					</th>
 				</tr>
 			
