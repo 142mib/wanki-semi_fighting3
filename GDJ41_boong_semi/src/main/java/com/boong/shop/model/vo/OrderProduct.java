@@ -5,7 +5,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-public class OrderProduct extends Order {
+public class OrderProduct extends Product {
 	private int orderProductNumber;
 	private int orderProductStatus;
 	

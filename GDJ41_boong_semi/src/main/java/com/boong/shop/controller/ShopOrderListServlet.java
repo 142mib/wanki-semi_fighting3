@@ -1,11 +1,17 @@
 package com.boong.shop.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.boong.shop.model.service.ShopService;
+import com.boong.shop.model.vo.Order;
+import com.boong.shop.model.vo.OrderProduct;
 
 /**
  * Servlet implementation class ShopOrderListServlet
@@ -27,9 +33,14 @@ public class ShopOrderListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String memberId=request.getParameter("id");
-		System.out.println(memberId);
+		System.out.println(memberId+" servlet id 받아욤");
+		Order order=new ShopService().selectOrder(memberId);
+		List<OrderProduct> list=new ShopService().selectOrderProduct(order.getOrderId());
 		
+		request.setAttribute("order", order);
+		request.setAttribute("orderProductList", list);
 		
+		request.getRequestDispatcher("/views/shop/shopOrderList.jsp").forward(request, response);		
 	}
 
 	/**

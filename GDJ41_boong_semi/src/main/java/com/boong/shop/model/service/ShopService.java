@@ -12,6 +12,7 @@ import com.boong.member.model.vo.Member;
 import com.boong.shop.model.dao.ShopDao;
 import com.boong.shop.model.vo.Basket;
 import com.boong.shop.model.vo.Order;
+import com.boong.shop.model.vo.OrderProduct;
 import com.boong.shop.model.vo.Product;
 import com.boong.shop.model.vo.ProductComment;
 
@@ -126,6 +127,12 @@ public class ShopService {
 		else rollback(conn);
 		close(conn);
 		return result;
+	}
+	public List<OrderProduct> selectOrderProduct(int orderId) {
+		Connection conn=getConnection();
+		List<OrderProduct> list=dao.selectOrderProduct(conn,orderId);
+		close(conn);
+		return list;
 	}
 	
 	

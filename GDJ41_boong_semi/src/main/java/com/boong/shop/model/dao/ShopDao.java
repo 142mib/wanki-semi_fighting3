@@ -12,6 +12,7 @@ import java.util.List;
 import com.boong.member.model.vo.Member;
 import com.boong.shop.model.vo.Basket;
 import com.boong.shop.model.vo.Order;
+import com.boong.shop.model.vo.OrderProduct;
 import com.boong.shop.model.vo.Product;
 import com.boong.shop.model.vo.ProductComment;
 
@@ -390,6 +391,38 @@ public class ShopDao {
 		}
 		System.out.println(result);
 		return result;
+	}
+
+	public List<OrderProduct> selectOrderProduct(Connection conn, int orderId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<OrderProduct> list = new ArrayList();
+		String sql = "SELECT * FROM SHOP_ORDER_PRODUCT JOIN SHOP_PRODUCT USING (SHOP_PRODUCT_ID)  WHERE SHOP_ORDER_ID=? AND ORDER_PRODUCT_STATUS=0 ";
+		try {
+			pstmt = conn.prepareStatement(sql);			
+			pstmt.setInt(1, orderId);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {				
+				OrderProduct op=OrderProduct.builder()
+						.productId(rs.getInt("SHOP_PRODUCT_ID"))
+						.orderId(rs.getInt("SHOP_ORDER_ID"))
+						.orderProductNumber(rs.getInt("ORDER_PRODUCT_NUMBER"))
+						.orderProductStatus(rs.getInt("ORDER_PRODUCT_STATUS"))
+						
+						.shopProductName(rs.getString("SHOP_PRODUCT_NAME"))
+						.shopProductPrice(rs.getInt("SHOP_PRODUCT_PRICE"))
+						.shopProductStock(rs.getInt("SHOP_PRODUCT_STOCK"))
+						.shopProductImageRename(rs.getString("SHOP_PRODUCT_IMAGERENAME"))
+						.build();				 
+				list.add(op);				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
 	}
 
 }

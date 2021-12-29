@@ -54,7 +54,7 @@
 			if(list.isEmpty()){
 			%>
 				<tr>
-					<td colspan="7">조회된 상품이 없습니다</td>
+					<td colspan="6">조회된 상품이 없습니다</td>
 				</tr>
 			<%
 			}else{ 
