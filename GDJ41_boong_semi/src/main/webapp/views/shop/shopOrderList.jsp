@@ -88,7 +88,7 @@
 			if(list.isEmpty()){
 			%>
 				<tr>
-					<td colspan="7">조회된 상품이 없습니다</td>
+					<td colspan="6">조회된 상품이 없습니다</td>
 				</tr>
 			<%
 			}else{ 
@@ -119,6 +119,7 @@
 						<input type="submit" value="삭제">
 						<input type="hidden" name="orderId" value="<%=op.getOrderId()%>">			
 						<input type="hidden" name="productId" value="<%=op.getProductId()%>">			
+						<input type="hidden" name="memberId" value="<%=loginMember.getMemberId()%>">			
 					</td>
 					</form>
 				</tr>

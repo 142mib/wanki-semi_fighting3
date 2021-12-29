@@ -447,4 +447,22 @@ public class ShopDao {
 		return result;
 	}
 
+	public int deleteOrder(Connection conn, OrderProduct op) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "DELETE FROM SHOP_ORDER_PRODUCT WHERE SHOP_ORDER_ID=? AND SHOP_PRODUCT_ID=?  ";
+		try {			
+			pstmt = conn.prepareStatement(sql);			
+			pstmt.setInt(1, op.getOrderId());			
+			pstmt.setInt(2, op.getProductId());			
+			result = pstmt.executeUpdate();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println(result);
+		return result;
+	}
+
 }
