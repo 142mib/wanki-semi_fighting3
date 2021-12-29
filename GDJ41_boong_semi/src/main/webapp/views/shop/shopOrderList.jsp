@@ -28,6 +28,37 @@
 	div#pageBar span{color: white;}	
 	#tbl-pm td>input{width:50px;}
 	
+	div#order-container
+	{
+		width:800px;
+		margin:0 auto;
+		text-align:center;
+	}
+	div#order-container h2
+	{
+		margin:10px 0;
+	}
+	table#tbl-order
+	{
+		
+		margin:0 auto;
+		/* border-bottom:1px solid black; */
+		border-collapse:collapse;
+	}
+	table#tbl-order th
+	{
+		width:125px;
+		border-bottom:1px solid;
+		padding:10px ;
+		text-align:center;
+	}
+	table#tbl-order td
+	{
+		border-bottom:1px solid;
+		padding:5px 5px 5px 10px;
+		text-align:left;
+	}
+	
 </style>
 
 <div style="height: 63px; background-color: rgba(1,138,216,1)"></div>
@@ -102,7 +133,7 @@
 			
 				<tr>
 					<th>주문번호</th>
-					<td><input type="text" name="id" value="<%=order.getOrderId()%>" readonly></td>
+					<td><%=order.getOrderId()%></td>
 				</tr>
 				<tr>
 					<th>수령인</th>
