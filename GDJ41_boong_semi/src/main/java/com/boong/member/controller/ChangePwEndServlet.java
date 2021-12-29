@@ -49,7 +49,7 @@ public class ChangePwEndServlet extends HttpServlet {
 				if(session!=null) session.invalidate();
 			}else {
 				msg="비밀번호 변경 실패, 다시 시도해주세요";
-				loc="/member/changepw.do";
+				loc="/member/resetpwing.do";
 			}
 			
 		}else {

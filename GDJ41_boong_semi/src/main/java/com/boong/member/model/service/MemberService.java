@@ -11,7 +11,7 @@ import java.util.List;
 import com.boong.board.model.vo.Board;
 import com.boong.member.model.dao.MemberDao;
 import com.boong.member.model.vo.Member;
-import com.boong.shop.model.vo.Order;
+import com.boong.shop.model.vo.OrderProduct;
 
 public class MemberService {
 	
@@ -108,11 +108,11 @@ public class MemberService {
 	}
 	
 	//주문내역
-	public List<Order> viewOrderList(String memberId, int cPage, int numPerPage){
+	public List<OrderProduct> viewOrderList(String memberId, int cPage, int numPerPage){
 		Connection conn=getConnection();
-		List<Order> bList=dao.viewOrderList(conn, memberId, cPage, numPerPage);
+		List<OrderProduct> opList=dao.viewOrderList(conn, memberId, cPage, numPerPage);
 		close(conn);
-		return bList;
+		return opList;
 		
 	}
 	

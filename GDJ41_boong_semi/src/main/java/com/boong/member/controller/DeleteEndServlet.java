@@ -34,8 +34,6 @@ public class DeleteEndServlet extends HttpServlet {
 		
 		String memberId=request.getParameter("memberId");
 		String memberPw=request.getParameter("memberPw");
-		System.out.println(memberId);
-		System.out.println(memberPw);
 		
 		Member m=new MemberService().login(memberId, memberPw);
 		String msg="";

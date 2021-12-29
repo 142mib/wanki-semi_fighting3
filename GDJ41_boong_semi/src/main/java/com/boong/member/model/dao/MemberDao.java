@@ -12,6 +12,7 @@ import java.util.List;
 import com.boong.board.model.vo.Board;
 import com.boong.member.model.vo.Member;
 import com.boong.shop.model.vo.Order;
+import com.boong.shop.model.vo.OrderProduct;
 
 public class MemberDao {
 	
@@ -301,10 +302,10 @@ public class MemberDao {
 		return result;
 	}
 	
-	public List<Order> viewOrderList(Connection conn, String memberId, int cPage, int numPerPage){
+	public List<OrderProduct> viewOrderList(Connection conn, String memberId, int cPage, int numPerPage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<Order> oList=new ArrayList();
+		List<OrderProduct> opList=new ArrayList();
 		String sql="SELECT * FROM(SELECT ROWNUM AS RNUM, O.* FROM(SELECT * FROM(SELECT * FROM SHOP_ORDER JOIN SHOP_ORDER_PRODUCT USING (SHOP_ORDER_ID) WHERE MEMBER_ID=?)SHOP_ORDER ORDER BY SHOP_ORDER_DATE DESC) O) WHERE RNUM BETWEEN ? AND ?";
 		try {
 			pstmt=conn.prepareStatement(sql);			
@@ -313,16 +314,24 @@ public class MemberDao {
 			pstmt.setInt(3, cPage*numPerPage);
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
-				Order o = Order.builder()
+//				Order o = Order.builder()
+//						.orderId(rs.getInt("SHOP_ORDER_ID"))
+//						.orderReceiver(rs.getString("SHOP_ORDER_RECEIVER"))
+//						.orderReceiverAdd(rs.getString("SHOP_ORDER_RECEIVERADD"))
+//						.orderRequest(rs.getString("SHOP_ORDER_REQUEST"))
+//						.orderPrice(rs.getInt("SHOP_ORDER_PRICE"))
+//						.orderDate(rs.getDate("SHOP_ORDER_DATE"))
+//						.orderStatus(rs.getInt("SHOP_ORDER_STATUS"))
+//						.shopProductId(rs.getInt("SHOP_PRODUCT_ID"))
+//						.build();
+//					oList.add(o);
+				OrderProduct op=OrderProduct.builder()
+						.shopProductId(rs.getInt("SHOP_PRODUCT_ID"))
 						.orderId(rs.getInt("SHOP_ORDER_ID"))
-						.orderReceiver(rs.getString("SHOP_ORDER_RECEIVER"))
-						.orderReceiverAdd(rs.getString("SHOP_ORDER_RECEIVERADD"))
-						.orderRequest(rs.getString("SHOP_ORDER_REQUEST"))
-						.orderPrice(rs.getInt("SHOP_ORDER_PRICE"))
-						.orderDate(rs.getDate("SHOP_ORDER_DATE"))
-						.orderState(rs.getInt("SHOP_ORDER_STATUS"))
+						.orderProductNumber(rs.getInt("ORDER_PRODUCT_NUMBER"))
+						.orderProductStatus(rs.getInt("ORDER_PRODUCT_STATUS"))
 						.build();
-					oList.add(o);
+				opList.add(op);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -330,7 +339,7 @@ public class MemberDao {
 			close(rs);
 			close(pstmt);
 		}
-		return oList;
+		return opList;
 		
 	}
 	

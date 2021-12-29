@@ -18,32 +18,35 @@
 <meta charset="UTF-8">
 <title>BOONG 로그인</title>
 <link rel="icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/electric-car.png" />
+<link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 </head>
 <style>
 body{
 	/* background: linear-gradient(#80FFDB, #5390D9); */
 	background: linear-gradient(45deg, #80FFDB, #5390D9);
 	display:flex;
-	justify-content: center;
-	align-items: center;
+	justify-content: center; align-items: center;
 	min-height:100vh;
-	}
+}
 div.login-container{
-	width:500px;
-	height: 600px;
+	width:500px; height: 600px;
 	border-radius: 20px;
 	border-shadow: 5px 5px 5px 5px gray;
 	background-color: white;
-	display:flex;
 	justify-content: center;
 	align-items: center;
 } 
+#loginForm{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
 tr{
 	height: 55px;
 }
 td.login-input>input{
-	width: 385px;
-	height: 45px;
+	width: 385px; height: 45px;
 	border-radius: 8px;
 	border: solid #288ad8 1px;
 	background-color: #dee2e6;
@@ -55,8 +58,7 @@ td.login-input>input{
 	background: linear-gradient(135deg, #855edd 0%, #63afd3 100%);
 	color: white;
 	cursor:pointer;
-	font-size: 16px;
-	font-weight:bold;
+	font-size: 16px; font-weight:bold;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .login-button:hover{
@@ -72,42 +74,31 @@ td.login-input>input{
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .signUp-button:hover{
-	background: linear-gradient(135deg, #25aae1 30%, #2bb673 100%);
+	background: linear-gradient(225deg, #25aae1 40%, #2bb673 90%);
 }
 .login{
 	text-align:center;
-	font-size: 30px;
-	color:#288ad8;
+	font-size: 36px; color:#288ad8; font-family: 'Gugi', cursive;
 	margin-bottom:50px;
 }
-.login-inputbox{
-	font-size: 14px;
-}
-img{
-	width: 25px;
-	height: 25px;
-}
-#x-btn{
-	display:flex;
-	position: relative;
-	top: -43%;
-	right: -83%;
-	cursor: pointer;
-}
-table, h2{
-	position: relative;
-	left: -3%;
-}
+.login-inputbox{font-size: 14px;}
+img{width: 25px; height: 25px;}
+#x-btn{position:relative; margin-bottom: 50px; float:right; cursor: pointer; right:4%;}
 .text1{font-size:14px; color:gray;}
 .text2{font-size:14px; font-weight:bold; vertical-align:bottom; color:teal;}
 .text3{float:right; font-size:14px; font-weight:bolder; color:#6868ac;}
 </style>
+
 <body>
 		<div class="login-container">
-			<a id="x-btn" onclick="location.assign('<%=request.getContextPath()%>')"><img src="<%=request.getContextPath() %>/assets/img/member/x.png"></a>
+			<div>
+			<br>
+				<a id="x-btn" onclick="location.assign('<%=request.getContextPath()%>')"><img src="<%=request.getContextPath() %>/assets/img/member/x.png"></a>
+			</div>
+			<br><br><br>
+			<h2 class="login">BOONG</h2>
 			<form id="loginForm" action="<%=request.getContextPath() %>/member/loginend.do" method="post">
 				
-			<h2 class="login">BOONG</h2>
 			<table>
 				<tr>     
 					<td class="login-input">
@@ -159,7 +150,7 @@ table, h2{
 		function resetPwPopUp(){
 			const url="<%=request.getContextPath()%>/member/resetpw.do";
 			const title="findPw";
-			const style="width=460, height=600";
+			const style="width=460, height=420";
 			window.open(url,title,style);
 		};
 		</script>

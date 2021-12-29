@@ -11,16 +11,16 @@ import com.boong.member.model.service.MemberService;
 import com.boong.member.model.vo.Member;
 
 /**
- * Servlet implementation class FIndPwEndServlet
+ * Servlet implementation class ResetPwIngServlet
  */
-@WebServlet("/member/findpwend.do")
-public class FIndPwEndServlet extends HttpServlet {
+@WebServlet("/member/resetpwing.do")
+public class ResetPwIngServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FIndPwEndServlet() {
+    public ResetPwIngServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,6 +29,7 @@ public class FIndPwEndServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String memberId=request.getParameter("memberId");
 		String memberName=request.getParameter("memberName");
 		String email=request.getParameter("email_id")+"@"+request.getParameter("email_domain");
@@ -42,16 +43,18 @@ public class FIndPwEndServlet extends HttpServlet {
 		String loc="";
 		
 		if(m!=null) {
-			request.setAttribute("member", m);
+			request.setAttribute("memberId", m.getMemberId());
 			msg="정보 확인 성공, 비밀번호를 재설정해 주세요.";
-			loc="/views/member/findpwresult.jsp?member="+m;
+			loc="/views/member/resetPwing.jsp?memberId="+memberId;
 		}else{
 			msg="일치하는 회원이 없습니다. 정보를 다시 확인해 주세요.";
-			loc="/views/member/findPw.jsp";
+			loc="/views/member/resetPw.jsp";
 		}
 		request.setAttribute("msg", msg);
 		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+		
+		
+		request.getRequestDispatcher("/views/member/resetPwing.jsp").forward(request, response);
 	}
 
 	/**

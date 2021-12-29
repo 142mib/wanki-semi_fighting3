@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
 <div id="blank"
-	style="width: 100%; height: 70px; background-color: steelblue;"></div>
+	style="width: 100%; height: 63px; background-color: #288ad8;"></div>
 
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
@@ -32,10 +32,6 @@
 	width: 100%
 }
 
-h2 {
-	padding: 0 60px;
-	margin-left: 45px;
-}
 
 ul {
 	list-style: none;
@@ -82,7 +78,7 @@ table {
 
 		<div class="section">
 			<div class="mypage-container">
-				<h3>비밀번호 변경</h3>
+				<h2 style="color:#288ad8; margin-top:30px;">비밀번호 변경</h2>
 				<p><strong><%=loginMember.getMemberName() %></strong>
 					님의 비밀번호를 변경합니다.
 				</p>

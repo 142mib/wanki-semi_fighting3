@@ -26,7 +26,7 @@
                     <div class="col-lg-8 text-center">
                         <h2 class="text-white mt-0">"Welcome To the Future of Electric Cars"</h2>
                         <hr class="divider divider-light" />
-                        <p class="text-white-75 mb-4">급격히 증가하는 전기차에 대한 수요와 인프라에 대해 무분별한 정보들을 사용자가 쉽게 이용할 수 있도록 서비스를 제공합니다.</p>
+                        <p class="text-white-75 mb-4">급격히 증가하는 전기차의 수요와 인프라에 대한 다양한 정보들을 사용자가 쉽게 이용할 수 있도록 서비스를 제공합니다.</p>
 
                         <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
                     </div>

@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.boong.member.model.service.MemberService;
-import com.boong.board.model.vo.Board;
+import com.boong.shop.model.vo.OrderProduct;
 
 /**
- * Servlet implementation class MyBoardServlet
+ * Servlet implementation class MyOrderServlet
  */
-@WebServlet("/member/myboard.do")
-public class MyBoardServlet extends HttpServlet {
+@WebServlet("/member/myorder.do")
+public class MyOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyBoardServlet() {
+    public MyOrderServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,9 +42,9 @@ public class MyBoardServlet extends HttpServlet {
 		
 		int numPerPage=10;//페이지당 출력 데이터수
 		
-		List<Board> bList=new MemberService().viewBoardList(memberId,cPage,numPerPage);
+		List<OrderProduct> opList=new MemberService().viewOrderList(memberId,cPage,numPerPage);
 		
-		int totalData=new MemberService().selectCountAllBoard();
+		int totalData=new MemberService().selectCountAllOrder();
 		int totalPage=(int)Math.ceil((double)totalData/numPerPage); //소수점이 나오면 날라가니까 올림처리
 		int pageBarSize=5;
 		
@@ -56,27 +56,28 @@ public class MyBoardServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar="<span>[이전]</span>";
 		}else {
-			pageBar="<a href='"+request.getContextPath()+"/member/myboard.do?cPage="+(pageNo-1)+"'>[이전]</a>";
+			pageBar="<a href='"+request.getContextPath()+"/member/myorder.do?cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getContextPath()+"/member/myboard.do?cPage="+pageNo+"'>"+pageNo+"</a>";
+				pageBar+="<a href='"+request.getContextPath()+"/member/myorder.do?cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
-			pageBar+="<a href='"+request.getContextPath()+"/member/myboard.do?cPage="+pageNo+"'>[다음]</a>";
+			pageBar+="<a href='"+request.getContextPath()+"/member/myorder.do?cPage="+pageNo+"'>[다음]</a>";
 		}
 		
 		request.setAttribute("pageBar", pageBar);
-		request.setAttribute("bList", bList);
-		request.getRequestDispatcher("/views/member/myboard.jsp").forward(request, response);
+		request.setAttribute("opList", opList);
+		request.getRequestDispatcher("/views/member/myorder.jsp").forward(request, response);
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
