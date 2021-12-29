@@ -9,17 +9,32 @@ List<Product> list=(List)request.getAttribute("productList");
 
 
 <style>
-	section#pm-container{width:900px; margin:0 auto;padding-top:10px; text-align:center;}
+	section#pm-container{width:900px; margin:0 auto;padding-top:20px; text-align:center;}
 	section#pm-container h2{margin:10px 0;}
 	section#pm-container .enroll-btn{margin:5px; }
 	section#pm-container .enroll-btn-container{width:100%; text-align: right;}
-	table#tbl-pm{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
-	table#tbl-pm th, table#tbl-pm td {border:1px solid; padding: 5px 0; text-align:center;} 
+	table#tbl-pm{width:100%; margin:0 auto; /* border:1px solid black; */ border-collapse:collapse; clear:both; }
+	table#tbl-pm th, table#tbl-pm td {border-top:2px solid #ddd;  padding: 5px 0; text-align:center;} 
 	/*글쓰기버튼*/
 	input#btn-add{float:right; margin: 0 0 15px;}
 	/*페이지바*/
 	div#pageBar{margin-top:10px; text-align:center; background-color:rgba(1,138,216,1);}
 	div#pageBar span{color: white;}
+	#pageBar>a,#pageBar>span {padding-right : 5px;}
+	.btn{
+	width:50px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:rgba(1,138,216,1); color:white;
+	font-size:13px;
+	
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	}
+	.btn:hover{
+	color:lightgrey;
+	}
+	
 </style>
 	<div style="height: 63px; background-color: rgba(1,138,216,1)"></div>
 	
@@ -32,7 +47,7 @@ List<Product> list=(List)request.getAttribute("productList");
 			
 		
 		<div class="enroll-btn-container">
-			<button class="enroll-btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productEnroll.do')">상품등록</button>
+			<button style="width: 90px;" class="enroll-btn btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productEnroll.do')">상품등록</button>
 		</div>
 		
 		<table id="tbl-pm">
@@ -60,7 +75,7 @@ List<Product> list=(List)request.getAttribute("productList");
 				<tr>
 					<td><%=p.getShopProductId() %></td>
 					<td>
-						<a href="<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>">
+						<a style="text-decoration: none;" href="<%=request.getContextPath()%>/shop/shopView.do?shopProductId=<%=p.getShopProductId()%>">
 							<%=p.getShopProductName() %>
 						</a>
 					</td>
@@ -69,10 +84,10 @@ List<Product> list=(List)request.getAttribute("productList");
 					<td><%=p.getShopProductSales() %></td>
 					<td><%=p.getShopProductDate()  %></td>
 					<td>
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productUpdate.do?shopProductId=<%=p.getShopProductId()%>')">수정</button>					
+						<button class="btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productUpdate.do?shopProductId=<%=p.getShopProductId()%>')">수정</button>					
 					</td>
 					<td>
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productDelete.do?shopProductId=<%=p.getShopProductId()%>')">삭제</button>					
+						<button class="btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productDelete.do?shopProductId=<%=p.getShopProductId()%>')">삭제</button>					
 					</td>
 					
 				</tr>

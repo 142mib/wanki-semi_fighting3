@@ -134,6 +134,22 @@ public class ShopService {
 		close(conn);
 		return list;
 	}
+	public int updateOrder(OrderProduct op) {
+		Connection conn=getConnection();
+		int result=dao.updateOrder(conn,op);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
+	public int deleteOrder(OrderProduct op) {
+		Connection conn=getConnection();
+		int result=dao.deleteOrder(conn,op);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;		
+	}
 	
 	
 	

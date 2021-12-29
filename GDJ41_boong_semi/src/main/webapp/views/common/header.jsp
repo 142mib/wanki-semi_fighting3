@@ -52,7 +52,7 @@
                    		<%}else{ %>
            				<div class="dropdown">
 						 <a class="dropbtn"><img id="mypage-icon" src="<%=request.getContextPath()%>/assets/usericon.png"></a>
-                   			<p id="after-login" class="text-white-75 mb-4"><%=loginMember.getMemberName() %> 님 ▼</p>
+                   			<p id="after-login"  class="text-white-75 mb-4"><%=loginMember.getMemberName() %> 님 ▼</p>
 						  <div class="dropdown-content">
 						  	<%if(loginMember.getMemberId().equals("admin")) {%>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>
