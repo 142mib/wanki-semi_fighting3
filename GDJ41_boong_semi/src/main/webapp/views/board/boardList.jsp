@@ -101,7 +101,7 @@
 </style>
 
 <header>
-		<div id="blank" style="width:100%;height: 70px;background-color: #288ad8; vertical-align: middle;"></div>
+		<div id="blank" style="width:100%;height: 63px; background-color: #288ad8; vertical-align: middle;"></div>
 </header>
 		
 	<section>
