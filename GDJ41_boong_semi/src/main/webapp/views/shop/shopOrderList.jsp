@@ -15,12 +15,12 @@
 
 <style>
 	section>div{width:80%; text-align: center;margin: 0 10% 0 10%;}
-	section#pm-container{width:900px; margin:0 auto;padding-top:10px; text-align:center;}
+	section#pm-container{width:900px; margin:0 auto; margin-bottom:50px; padding-top:20px; text-align:center;}
 	section#pm-container h2{margin:10px 0;}
 	section#pm-container .enroll-btn{margin:5px; }
 	section#pm-container .enroll-btn-container{width:100%; text-align: right;}
-	table#tbl-pm{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
-	table#tbl-pm th, table#tbl-pm td {border:1px solid; padding: 5px 0; text-align:center;} 
+	table#tbl-pm{width:100%; margin:0 auto; /* border-top:1px solid black; */ border-collapse:collapse; clear:both; }
+	table#tbl-pm th, table#tbl-pm td {border-bottom:2px solid #ddd;  padding: 5px 0; text-align:center;} 
 	/*글쓰기버튼*/
 	input#btn-add{float:right; margin: 0 0 15px;}
 	/*페이지바*/
@@ -30,6 +30,7 @@
 	
 	div#order-container
 	{
+		padding-top:50px;
 		width:800px;
 		margin:0 auto;
 		text-align:center;
@@ -48,16 +49,17 @@
 	table#tbl-order th
 	{
 		width:125px;
-		border-top:1px solid;
+		border-top:2px solid #ddd; 
 		padding:10px ;
 		text-align:center;
 	}
 	table#tbl-order td
 	{
-		border-top:1px solid; 
+		border-top:2px solid #ddd;  
 		padding:5px 5px 5px 10px;
 		text-align:left;
 	}
+	div.total-price{height: 50px; padding-top: 10px;}
 	
 </style>
 
