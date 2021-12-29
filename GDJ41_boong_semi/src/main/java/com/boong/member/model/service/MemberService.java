@@ -74,5 +74,18 @@ public class MemberService {
 		close(conn);
 		return m;
 	}
+	public Member findPw(String memberId, String memberName, String email) {
+		Connection conn=getConnection();
+		Member m=dao.findPw(conn,memberId, memberName, email);
+		close(conn);
+		return m;
+	}
+
+	public Member selectMember(String memberId) {
+		Connection conn=getConnection();
+		Member m=dao.selectMember(conn,memberId);
+		close(conn);
+		return m;		
+	}
 	
 }

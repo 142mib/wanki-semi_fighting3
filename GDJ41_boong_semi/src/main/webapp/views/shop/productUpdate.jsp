@@ -15,27 +15,40 @@
 	}
 	div#product-container h2
 	{
-		margin:10px 0;
+		margin:20px 0;
 	}
 	table#tbl-product
 	{
 		
 		margin:0 auto;
-		border:1px solid black;
+		border:2px solid #ddd;
 		border-collapse:collapse;
 	}
 	table#tbl-product th
 	{
 		width:125px;
-		border:1px solid;
+		border:2px solid #ddd;
 		padding:10px ;
 		text-align:center;
 	}
 	table#tbl-product td
 	{
-		border:1px solid;
+		border:2px solid #ddd;
 		padding:5px 5px 5px 10px;
 		text-align:left;
+	}
+	.btn{
+	width:70px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:rgba(1,138,216,1); color:white;
+	font-size:13px;
+	
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	}
+	.btn:hover{
+	color:lightgrey;
 	}
 
 </style>
@@ -72,7 +85,7 @@
 				</tr>			
 				<tr>
 					<th>이미지</th>
-					<td><input type="file" name="upfile" ><span style="font-size:9pt"><%=p.getShopProductImageRename() %></span></td>
+					<td><input type="file"  name="upfile" ><span style="font-size:9pt"><%=p.getShopProductImageRename() %></span></td>
 					<input type="hidden" name="orifile" value="<%=p.getShopProductImage()%>">
 					<input type="hidden" name="orifileRename" value="<%=p.getShopProductImageRename()%>">
 					
@@ -80,9 +93,9 @@
 				
 				<tr>
 					<th colspan="2">
-						<input type="submit" value="수정">
-						<button onclick="location.assign('<%=request.getContextPath()%>/shop/productManage.do')">취소</button>
-						<input type="reset" value="초기화">
+						<input type="submit" class="btn" value="수정">
+						<button class="btn" onclick="location.assign('<%=request.getContextPath()%>/shop/productManage.do')">취소</button>
+						<input type="reset" class="btn" value="초기화">
 						
 					</th>
 				</tr>

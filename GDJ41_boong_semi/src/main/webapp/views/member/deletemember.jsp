@@ -69,14 +69,14 @@
 	
 	<script>
 		function delConfirm(){
-			if(confirm("정말 탈퇴하시겠습니까?")==true){
+			if(confirm("정말 탈퇴하시겠습니까? 회원 탈퇴 시 회원님의 모든 정보는 삭제되고 복구할 수 없습니다.")==true){
 				return true;
 			}else{
 				return false;
 			}
 		}
 		
-		$("#fourth-menu").addClass("active");
+		$("#fifth-menu").addClass("active");
 		
 	</script>
 

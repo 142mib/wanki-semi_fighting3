@@ -137,10 +137,6 @@ public class MemberDao {
 		return result;
 	}
 	
-	
-	
-	
-	
 	public int changePassword(Connection conn, String memberId, String newMemberPw) {
 		PreparedStatement pstmt=null;
 		int result=0;
@@ -188,6 +184,69 @@ public class MemberDao {
 		}
 		return m;
 	}
+	
+	public Member findPw(Connection conn, String memberId, String memberName, String email) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Member m=null;
+		String sql="SELECT * FROM MEMBER WHERE MEMBER_ID=? AND MEMBER_NAME=? AND EMAIL=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberName);
+			pstmt.setString(3, email);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m=Member.builder()
+						.memberId(rs.getString("MEMBER_ID"))
+						.memberName(rs.getString("MEMBER_NAME"))
+						.gender(rs.getString("GENDER"))
+						.email(rs.getString("EMAIL"))
+						.phone(rs.getString("PHONE"))
+						.address(rs.getString("ADDRESS"))
+						.car(rs.getString("CAR"))
+						.enrollDate(rs.getDate("ENROLLDATE"))
+						.build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return m;
+	}
+
+	public Member selectMember(Connection conn, String memberId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Member m=null;
+		String sql="SELECT * FROM MEMBER WHERE MEMBER_ID=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);			
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m=Member.builder()
+						.memberId(rs.getString("MEMBER_ID"))
+						.memberName(rs.getString("MEMBER_NAME"))
+						.gender(rs.getString("GENDER"))
+						.email(rs.getString("EMAIL"))
+						.phone(rs.getString("PHONE"))
+						.address(rs.getString("ADDRESS"))
+						.car(rs.getString("CAR"))
+						.enrollDate(rs.getDate("ENROLLDATE"))
+						.build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return m;		
+	}
+	
 	
 	
 }

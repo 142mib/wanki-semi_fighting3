@@ -3,6 +3,7 @@
 <%@ page import="com.boong.member.model.vo.Member"%>
 <%
 	Member loginMember=(Member)session.getAttribute("loginMember");
+	
 %>
     <!DOCTYPE html>
 	<html lang="ko">
@@ -42,7 +43,7 @@
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/shop/main.do">Shop</a></li>
                         <li class="nav-item"><a class="nav-link" href="<%=request.getContextPath()%>/board/boardList.do">Community</a></li>
 					</ul>
-                    <!-- 여기 div추가 바꿈+스타일-->
+                
                     <div>
                     	<%if(loginMember==null) {%>
                     	<div>
@@ -51,14 +52,18 @@
                    		<%}else{ %>
            				<div class="dropdown">
 						 <a class="dropbtn"><img id="mypage-icon" src="<%=request.getContextPath()%>/assets/usericon.png"></a>
-                   			<p id="after-login" class="text-white-75 mb-4"><%=loginMember.getMemberName() %> 님 ▼</p>
+                   			<p id="after-login"  class="text-white-75 mb-4"><%=loginMember.getMemberName() %> 님 ▼</p>
 						  <div class="dropdown-content">
 						  	<%if(loginMember.getMemberId().equals("admin")) {%>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/basketList.do?id=<%=loginMember.getMemberId()%>">장바구니 </a>
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/orderList.do?id=<%=loginMember.getMemberId()%>">주문페이지 </a>
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
 							<%}else{ %>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/basketList.do?id=<%=loginMember.getMemberId()%>">장바구니 </a>
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/orderList.do?id=<%=loginMember.getMemberId()%>">주문페이지 </a>
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
 						  	<%} %>
 						  </div>
@@ -127,5 +132,4 @@
        	margin-left: 30px;
     }
 
-   </style>
-       
+   </style>       

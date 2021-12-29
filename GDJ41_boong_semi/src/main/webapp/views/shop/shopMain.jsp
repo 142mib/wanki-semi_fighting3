@@ -17,6 +17,7 @@ window.location.reload(true);
 <style>
 	div#pageBar{margin-top:10px; text-align:center; background-color:rgba(1,138,216,1);}
 	div#pageBar span{color: white;}
+	#pageBar>a,#pageBar>span {padding-right : 5px;}
 
 </style>
     

@@ -77,8 +77,18 @@
 						 <a class="dropbtn"><img id="mypage-icon" src="<%=request.getContextPath()%>/assets/usericon.png"></a>
                    			<p id="after-login" class="text-white-75 mb-4 "><%=loginMember.getMemberName() %> 님 ▼</p>
 						  <div class="dropdown-content">
-							<a class="dropdown-item" href="#">My Page </a>  
+						  	<%if(loginMember.getMemberId().equals("admin")) {%>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/basketList.do?id=<%=loginMember.getMemberId()%>">장바구니 </a>
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/orderList.do?id=<%=loginMember.getMemberId()%>">주문페이지 </a>
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
+							<%}else{ %>
+							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/basketList.do?id=<%=loginMember.getMemberId()%>">장바구니 </a>
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/orderList.do?id=<%=loginMember.getMemberId()%>">주문페이지 </a>
+							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
+						  	<%} %>
 						  </div>
 						</div>
                    		<%} %>

@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.boong.member.model.service.MemberService;
 import com.boong.member.model.vo.Member;
@@ -39,12 +40,14 @@ public class DeleteEndServlet extends HttpServlet {
 		Member m=new MemberService().login(memberId, memberPw);
 		String msg="";
 		String loc="";
+		System.out.println(m);
 		if(m!=null) {
 			int result=new MemberService().deleteMember(memberId);
-			
+			System.out.println(result);
 			if(result>0) {
 				msg="그동안 BOONG을 이용해 주셔서 감사합니다!";
-				loc="/";
+				HttpSession session=request.getSession(false);
+				if(session!=null) session.invalidate();
 			}else {
 				msg="회원탈퇴 실패, 다시 시도하세요";
 				loc="/member/delete.do";
