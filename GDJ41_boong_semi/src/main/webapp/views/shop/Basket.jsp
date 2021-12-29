@@ -35,7 +35,10 @@
 			
 		
 		<div class="enroll-btn-container">
-			<button class="enroll-btn" onclick="location.assign('<%=request.getContextPath()%>/')">주문하기</button>
+			<form action="<%=request.getContextPath()%>/shop/orderEnroll.do" method="post">
+			<input type="hidden" name="id" value="<%=loginMember.getMemberId()%>">
+			<input class="enroll-btn" type="submit" value="주문하기" >		
+			</form>
 		</div>
 		
 		<table id="tbl-pm">

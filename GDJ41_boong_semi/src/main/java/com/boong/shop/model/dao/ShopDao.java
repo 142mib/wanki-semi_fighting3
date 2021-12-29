@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.boong.member.model.vo.Member;
 import com.boong.shop.model.vo.Basket;
+import com.boong.shop.model.vo.Order;
 import com.boong.shop.model.vo.Product;
 import com.boong.shop.model.vo.ProductComment;
 
@@ -293,6 +295,94 @@ public class ShopDao {
 			
 			result = pstmt.executeUpdate();
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println(result);
+		return result;
+	}
+
+	public int insertOrder(Connection conn, Member member) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "INSERT INTO SHOP_ORDER VALUES(DEFAULT,?,DEFAULT,DEFAULT,DEFAULT,?,?,?,?)";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "요청사항 없음");
+			pstmt.setString(2, member.getMemberId());
+			pstmt.setString(3, member.getMemberName());
+			pstmt.setString(4, member.getAddress());
+			pstmt.setString(5, member.getPhone());
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Order selectOrder(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Order o = null;
+		String sql = "SELECT * FROM SHOP_ORDER WHERE MEMBER_ID=? AND SHOP_ORDER_STATUS=0";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				o=Order.builder()
+						.orderId(rs.getInt("shop_order_id"))
+						.orderReceiver(rs.getString("shop_order_receiver"))
+						.orderReceiverAdd(rs.getString("shop_order_receiveradd"))
+						.orderPhone(rs.getString("shop_order_phone"))
+						.orderRequest(rs.getString("shop_order_request"))
+						.orderPrice(rs.getInt("shop_order_price"))
+						.orderDate(rs.getDate("shop_order_date"))
+						.orderStatus(rs.getInt("shop_order_status"))
+						.memberId(rs.getString("member_id"))
+						.build();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return o;
+	}
+
+	public int insertOrderProduct(Connection conn, int orderId, Basket b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "INSERT INTO SHOP_ORDER_PRODUCT VALUES(?,?,?,DEFAULT)";
+		try {			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, b.getProductId());
+			pstmt.setInt(2, orderId);
+			pstmt.setInt(3, b.getBasketNumber());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteBasket(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = "DELETE FROM SHOP_BASKET WHERE MEMBER_ID=? ";
+		try {			
+			pstmt = conn.prepareStatement(sql);			
+			pstmt.setString(1, memberId);			
+			result = pstmt.executeUpdate();			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

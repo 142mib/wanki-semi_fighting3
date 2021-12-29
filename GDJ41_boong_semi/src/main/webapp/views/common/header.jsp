@@ -58,10 +58,12 @@
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/admin/adminpageview.do');">관리자페이지 </a>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
 							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/basketList.do?id=<%=loginMember.getMemberId()%>">장바구니 </a>
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/orderList.do?id=<%=loginMember.getMemberId()%>">주문페이지 </a>
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
 							<%}else{ %>
 							<a class="dropdown-item" onclick="location.assign('<%=request.getContextPath()%>/member/mypageview.do');">My Page </a>  
 							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/basketList.do?id=<%=loginMember.getMemberId()%>">장바구니 </a>
+							<a class="dropdown-item" href="<%=request.getContextPath()%>/shop/orderList.do?id=<%=loginMember.getMemberId()%>">주문페이지 </a>
 							<a class="dropdown-item" onclick="location.replace('<%=request.getContextPath()%>/member/logout.do');">Logout </a>
 						  	<%} %>
 						  </div>
