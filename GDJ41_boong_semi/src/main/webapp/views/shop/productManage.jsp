@@ -13,8 +13,8 @@ List<Product> list=(List)request.getAttribute("productList");
 	section#pm-container h2{margin:10px 0;}
 	section#pm-container .enroll-btn{margin:5px; }
 	section#pm-container .enroll-btn-container{width:100%; text-align: right;}
-	table#tbl-pm{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
-	table#tbl-pm th, table#tbl-pm td {border:1px solid; padding: 5px 0; text-align:center;} 
+	table#tbl-pm{width:100%; margin:0 auto; /* border:1px solid black; */ border-collapse:collapse; clear:both; }
+	table#tbl-pm th, table#tbl-pm td {border-top:2px solid #ddd;  padding: 5px 0; text-align:center;} 
 	/*글쓰기버튼*/
 	input#btn-add{float:right; margin: 0 0 15px;}
 	/*페이지바*/
