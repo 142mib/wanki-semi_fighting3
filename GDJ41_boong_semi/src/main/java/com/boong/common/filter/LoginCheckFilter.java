@@ -17,7 +17,7 @@ import com.boong.member.model.vo.Member;
 /**
  * Servlet Filter implementation class LoginCheckFilter
  */
-@WebFilter(urlPatterns= {"/member/mypageview.do","/member/changepw.do","/member/delete.do","/member/myboard.do",
+@WebFilter(urlPatterns= {"/shop/orderList.do","/shop/basketList.do","/shop/productUpdate.do","/shop/productEnroll.do","/shop/productManage.do","/member/mypageview.do","/member/changepw.do","/member/delete.do","/member/myboard.do",
 		"/admin/adminpageview.do","/admin/searchmember.do","/admin/managemember.do"})
 public class LoginCheckFilter implements Filter {
 
