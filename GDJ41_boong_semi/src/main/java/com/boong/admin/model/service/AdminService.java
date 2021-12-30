@@ -1,7 +1,9 @@
 package com.boong.admin.model.service;
 
 import static com.boong.common.JDBCTemplate.close;
+import static com.boong.common.JDBCTemplate.commit;
 import static com.boong.common.JDBCTemplate.getConnection;
+import static com.boong.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
@@ -52,20 +54,14 @@ public class AdminService {
 	}
 
 	
-	public List<Board> viewBoardList(String memberId, int cPage, int numPerPage){
+
+	public int deleteMember(String memberId) {
 		Connection conn=getConnection();
-		List<Board> bList=dao.viewBoardList(conn, memberId, cPage, numPerPage);
-		close(conn);
-		return bList;
-		
-	}
-	
-	public int selectCountAllBoard() {
-		Connection conn=getConnection();
-		int result=dao.selectCountAllBoard(conn);
+		int result=dao.deleteMember(conn, memberId);
+		if(result>0) commit(conn);
+		else rollback(conn);
 		close(conn);
 		return result;
-		
 	}
 	
 	

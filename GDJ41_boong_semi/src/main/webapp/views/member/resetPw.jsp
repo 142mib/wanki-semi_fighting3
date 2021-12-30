@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BOONG 비밀번호 찾기</title>
+<title>BOONG 비밀번호 재설정</title>
 </head>
 
 <style>
@@ -17,16 +17,16 @@
 	font-size:15px;
 }
 div{
-margin-bottom: 10px;
+margin-bottom: 20px;
 }
 </style>
 <script src="<%=request.getContextPath() %>/js/jquery-3.6.0.min.js"></script>
 
 <body>
 <body style="padding:0 20px;">
-	<form method="post" action="<%=request.getContextPath()%>/member/findpwend.do">
+	<form method="post" action="<%=request.getContextPath()%>/member/resetpwing.do">
 		<div>
-			<h2 style="color:#7f47e9;">비밀번호 재설정</h2>
+			<h2 style="color:#7f47e9;">비밀번호 재설정 정보 확인</h2>
 			<span style="color:#7f47e9;">가입 시 등록한 아이디, 이름, 이메일을 입력해주세요.</span>
 		</div>
 		<hr>
@@ -56,22 +56,9 @@ margin-bottom: 10px;
 			            <option value="directly" id="textEmail">직접 입력하기</option>
 			        </select>
 	    </div>
-	    <div>
-						<span>새로운 비밀번호</span><br> 
-						<input type="password" style="height:32px; width:200px; border-radius:5px; border:solid 1px lightgray; id="newPw" name="newMemberPw" required><br>
-					</div>
-					<div>
-						<span>비밀번호 확인</span><br> 
-						<input type="password" style="height:32px; width:200px; border-radius:5px; border:solid 1px lightgray; id="newPwCheck"required><br>
-						<span id="pwresult"></span>
-					</div>
-					<div>
-						<input type="submit" value="변경">
-					</div>
-					<%-- <input type="hidden" name="memberId" value="<%=m.getMemberId()%>"> --%>
-	    <hr>
+	    
 	    <div style="text-align:center; margin-top:30px;">
-	    	<input class="btn" type="submit" value="비밀번호 재설정">
+	    	<input class="btn" type="submit" value="정보 확인">
 	    	<input class="btn" type="button" value="닫기" onclick="window.close();">
 	    </div>
 	    

@@ -124,7 +124,7 @@ body.active .wrapper .section {
 			</div>
 			<ul>
 				<li>
-                    <a id="first-menu" href="<%=request.getContextPath()%>/admin/memberlistview.do">
+                    <a id="first-menu" href="<%=request.getContextPath()%>/admin/adminpageview.do">
                         <span class="icon"><i class="fas fa-user"></i></span>
                         <span class="item">회원 관리</span>
                     </a>

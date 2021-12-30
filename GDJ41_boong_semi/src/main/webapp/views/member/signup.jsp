@@ -5,7 +5,7 @@
 
 <style>
 
-div#signUp{margin-top:80px; margin-left: 30%; margin-bottom: 100px;}
+/* div#signUp{margin-top:80px; margin-left: 37%; margin-bottom: 100px;} */
 ul,li{list-style: none;}
 ul#signup-ul li{margin-bottom: 20px; text-align: left;}
 .box{
@@ -40,16 +40,17 @@ ul#signup-ul li{margin-bottom: 20px; text-align: left;}
 	cursor:pointer;
 	margin-left: 10px;
 }
-h3{margin-left:160px; margin-bottom: 60px;}
-#logo{color:#288ad8; font-size: 40px;}
-#idDuplicateBtn{width: 70px; height: 50px; 
-	padding: 10px; border-radius: 8px; 
+h3{text-align:center; margin-top:30px; margin-bottom:50px;}
+#logo{color:#288ad8; font-size: 40px; font-family: 'Gugi', cursive; font-weight: 700;}
+#idDuplicateBtn{width: 70px; height: 49px; 
+	 border-radius: 8px; 
 	border: none;
-	background: linear-gradient(#80FFDB, #5390D9);
+	background: #288ad8;
 	pointer:cursor;
-	font-size: 13px;}
+	font-size: 13px;
+}
 #idDuplicateBtn:hover{
-	background-color: lime; border: solid 1px lime;
+	background: linear-gradient(#80FFDB 10%, #5390D9 100%); border: none;
 }
 ::placeholder{
 	font-size: 14px; font-style: italic;
@@ -83,16 +84,19 @@ input[type="checkbox"] + label{
 	margin-left:5px; cursor:pointer; 
 }
 td{width:91px;}
-
+#signup-container{margin-top:30px; margin-bottom: 50px;display:flex; justify-content: center;
+	align-items: center;}
 </style>
 
-<div id="blank" style="width:100%;height: 70px; background-color: darkcyan;"></div>
+<div id="blank" style="width:100%; height: 63px; background-color: #288ad8;"></div>
+
+<body>
 <section id=signup-container>
         <title>BOONG 회원가입</title>
         <form name="signUpForm" action="<%=request.getContextPath() %>/member/signupEnd.do" 
         	method="post" onsubmit="return memberSignupValidate();" >
         <div id="signUp">
-        	<h3><span id="logo">BOONG</span> 회원 가입</h3>
+        	<h3><span id="logo">BOONG</span><span style="font-size:24px;"> 회원가입</span></h3>
 	        <ul id="signup-ul">
 	        	<li>
 	        	<span class="spantitle">아이디<span class="star">*</span></span><br>
@@ -139,6 +143,7 @@ td{width:91px;}
 			            <option value="nate.com" id="nate.com">nate.com</option>
 			            <option value="directly" id="textEmail">직접 입력하기</option>
 			        </select>
+			        <br><span id="emailresult_"></span>
 				</li>
 				
 				<li>
@@ -169,7 +174,7 @@ td{width:91px;}
 					<input type="text" class="box4" placeholder="나머지 주소를 입력하세요" name="address2" id="address"><br>
 				</li>
 				<li>
-					<span class="spantitle">관심 브랜드</span><br>
+					<span class="spantitle">관심 브랜드</span><span class="star">*</span><br>
 						<table>
 							<tr>
 								<td><input type="checkbox" name="car" id="car0" value="현대"><label for="car0">현대</label></td>
@@ -188,13 +193,13 @@ td{width:91px;}
 							<tr>
 								<td><input type="checkbox" name="car" id="car10" value="테슬라"><label for="car10">테슬라</label></td>
 								<td><input type="checkbox" name="car" id="car11" value="포르쉐"><label for="car11">포르쉐</label></td>
-								<td><input type="checkbox" name="car" id="car12" value="null"><label for="car12">없음</label></td>
+								<td><input type="checkbox" name="car" id="car12" value="null" checked><label for="car12">없음</label></td>
 							</tr>
 						</table>
 						
 				<li>
 					<input id="signup-btn" type="submit" value="회원가입" >
-					<input id="cancle-btn" type="reset" value="취소" >
+					<input id="cancle-btn" type="reset" value="취소" onclick="location.assign('<%=request.getContextPath()%>')">
 				</li>
 			</ul>
 		</div>
@@ -227,6 +232,11 @@ td{width:91px;}
     				$("#pwresult_").remove();
     			}
     		});
+    		
+    		$("#email_id").blur(e=>{
+    			$("#emailresult_").text("이메일은 비밀번호 재설정 시 필요합니다. 정확하게 입력해주세요.").css({"color":"blue"});
+    			
+    		});
     	});
     	
     	
@@ -234,38 +244,46 @@ td{width:91px;}
     	//제출전확인
     	const memberSignupValidate=()=>{
     		const memberId=$("#memberId_").val().trim();
+    		var pattern = /\s/g;
     		if(memberId.length<4){
     			alert("아이디는 4글자 이상입력하세요!");
     			$("#memberId_").focus();
     			return false;
-    		}else if(memberId.search(/₩s/)!=-1){
+    		}else if(memberId.match(pattern)){
     			alert("아이디는 공백없이 입력하세요!");
     			$("#memberId_").focus();
     			return false;
     		}
-    		
+    	
     		const memberPw=$("#memberPw_").val().trim();
     		if(memberPw.length<6){
     			alert("비밀번호는 6글자 이상 입력하세요!");
     			$("#memberPw_").focus();
     			return false;
     		}
-    		//버튼이 안눌렸으면 알람창.......
-    		/* if(!$("#idresult").clicked){
-    			alert("아이디 중복 확인을 해주세요.");
+    		//버튼이 안눌렸으면 알람창 No...
+    		if($("#idresult").clicked==false){
+    			alert("아이디 중복 확인을 진행하세요.");
     			return false;
-    		} */
+    		} 
     		
-    		//이메일유효성체크
-/*      		const emailId=$("#email_id").val().trim();
+    		//이메일유효성체크 No..
+     		/* const emailId=$("#email_id").val().trim();
     		const emailDomain=$("#email_domain").val().trim();
     		var idReg=/^[a-z0-9]$/g;	//영문소문자, 숫자
+    		
     		if(idReg.test(emailId)==false || idReg.test(emailDomain)==false){
     			alert("올바른 이메일 형식이 아닙니다.");
     			$("#email_id").focus();
     			return false;
-    		} */
-    		
+    		}
+    		 */
+    		 
+    		//체크박스 OK
+    		if ($("input:checkbox[name='car']").is(":checked")!=true) {
+    			alert("관심 브랜드를 하나 이상 선택해 주세요.");
+    			return false;
+    		}
     	}
     	
     	//중복확인버튼
@@ -311,6 +329,7 @@ td{width:91px;}
                 }
             })
         });
+
     	
     </script>
      

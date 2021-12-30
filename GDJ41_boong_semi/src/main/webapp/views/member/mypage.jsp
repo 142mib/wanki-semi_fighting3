@@ -2,11 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
 <div id="blank"
-	style="width: 100%; height: 70px; background-color: steelblue;" ></div>
+	style="width: 100%; height: 63px; background-color: #288ad8;" ></div>
 	
 <script src="https://kit.fontawesome.com/f88ebc8ec2.js" crossorigin="anonymous"></script>
 <style>
-/* @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap'); */
 
 #section {
 	padding: 100px 20px 100px 220px;
@@ -29,11 +28,6 @@
 }
 .mypage-content{
 	width:100%
-}
-
-h2 {
-	padding: 0 60px;
-	margin-left: 45px;
 }
 
 ul {
@@ -101,8 +95,8 @@ table {
     
         <div class="section">
             <div class="mypage-container">
-                <h3>내정보 보기</h3>
-                <p>안녕하세요, <%=loginMember.getMemberName()%> 님!</p>
+                <h2 style="color:#288ad8; margin-top:30px;">내정보 보기</h2>
+                <p>안녕하세요, <strong><%=loginMember.getMemberName()%></strong> 님! 프로필을 확인하고 변경 가능합니다.</p>
                 <hr>
             
             <form action="<%=request.getContextPath()%>/member/editmember.do?memberId=<%=loginMember.getMemberId() %>" method="post">
@@ -191,7 +185,7 @@ table {
     	$(this).hide();
     	$(".editInfo").prop("disabled",false);
     	$(".editInfo").css("background-color","#fcf9e8");
-    	$(".oriInfo").css("background-color","#9ec2e6");
+    	$(".oriInfo").css("background-color","lightgray");
     	$("#save-btn").show();
     	$("#back-btn").show();
     })

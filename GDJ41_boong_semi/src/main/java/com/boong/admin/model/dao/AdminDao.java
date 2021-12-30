@@ -158,54 +158,20 @@ public class AdminDao {
 	}
 	
 	
-	public List<Board> viewBoardList(Connection conn, String memberId, int cPage, int numPerPage){
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<Board> mList=new ArrayList();
-		String sql="SELECT * FROM(SELECT ROWNUM AS RNUM, B.* FROM(SELECT * FROM(SELECT * FROM BOARD WHERE BOARD_WRITER=?)BOARD ORDER BY BOARD_DATE DESC) B) WHERE RNUM BETWEEN ? AND ?";
-		try {
-			pstmt=conn.prepareStatement(sql);			
-			pstmt.setString(1, memberId);
-			pstmt.setInt(2, (cPage-1)*numPerPage+1);
-			pstmt.setInt(3, cPage*numPerPage);
-			rs=pstmt.executeQuery();
-			while(rs.next()) {
-				Board b = Board.builder()
-						.boardCategory(rs.getInt("BOARD_CATEGORY"))
-						.boardTitle(rs.getString("BOARD_TITLE"))
-						.boardWriter(rs.getString("BOARD_TITLE"))
-						.boardDate(rs.getDate("BOARD_DATE"))
-						.boardViewCount(rs.getInt("BOARD_VIEW_COUNT"))
-						.boardLike(rs.getInt("BOARD_LIKE"))
-						.build();
-					mList.add(b);
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
-		}
-		return mList;
-		
-	}
+
 	
 	
-	public int selectCountAllBoard(Connection conn) {
+	public int deleteMember(Connection conn, String memberId) {
 		PreparedStatement pstmt=null;
-		ResultSet rs=null;
 		int result=0;
-		String sql="SELECT COUNT(*) FROM BOARD";
+		String sql="DELETE FROM MEMBER WHERE MEMBER_ID=?";
 		try {
 			pstmt=conn.prepareStatement(sql);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				result=rs.getInt(1);	
-			}
+			pstmt.setString(1, memberId);
+			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
-			close(rs);
 			close(pstmt);
 		}
 		return result;
