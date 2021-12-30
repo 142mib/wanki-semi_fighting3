@@ -1,6 +1,7 @@
 package com.boong.carInfo.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.boong.carInfo.model.service.CarInfoService;
 import com.boong.carInfo.model.vo.ClassInfo;
+import com.boong.carInfo.model.vo.Comment;
 import com.google.gson.Gson;
 
 /**
@@ -34,10 +36,12 @@ public class ModelInfoViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String mClass=request.getParameter("mClass");
-		System.out.println(mClass);
 		response.setContentType("application/json;charset=utf-8");
-		List<ClassInfo> list = new CarInfoService().modelInfoView(mClass);
-		System.out.println(list);
+		List<ClassInfo> result = new CarInfoService().modelInfoView(mClass);
+		List<Comment> result2= new CarInfoService().commentList(mClass);
+		List list=new ArrayList();
+		list.add(result);
+		list.add(result2);
 		new Gson().toJson(list,response.getWriter());
 	
 	}

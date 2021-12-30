@@ -14,18 +14,17 @@ import com.boong.carInfo.model.service.CarInfoService;
 import com.boong.carInfo.model.vo.CarInfo;
 import com.google.gson.Gson;
 
-
 /**
- * Servlet implementation class TotalListAjaxServlet
+ * Servlet implementation class ParsePriceAjaxServlet
  */
-@WebServlet("/total/totalList.do")
-public class TotalListAjaxServlet extends HttpServlet {
+@WebServlet("/parse/parsePrice.do")
+public class ParsePriceAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TotalListAjaxServlet() {
+    public ParsePriceAjaxServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,6 +35,8 @@ public class TotalListAjaxServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("application/json;charset=utf-8");
+		int val=Integer.parseInt(request.getParameter("val"));
+		int value=Integer.parseInt(request.getParameter("value"));
 		int cPage;
 		int numPerpage;
 		
@@ -50,7 +51,7 @@ public class TotalListAjaxServlet extends HttpServlet {
 			numPerpage=15;
 		}
 		
-		List<CarInfo> result=new CarInfoService().totalList(cPage,numPerpage);
+		List<CarInfo> result=new CarInfoService().parsePrice(val,value,cPage,numPerpage);
 		int totalData=new CarInfoService().totalListCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		
@@ -63,14 +64,14 @@ public class TotalListAjaxServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar="<span class='paging'><</span>";
 		}else {
-			pageBar+="<a onclick='paging(event);'"+"'><</a>";
+			pageBar+="<a onclick='pageparseprice(event);'"+"'><</a>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<span id='currentPage' class='paging'>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a id='searchPaging' onclick='paging(event);'>"+pageNo+"</a>";
+				pageBar+="<a id='searchPaging' onclick='pageparseprice(event);'>"+pageNo+"</a>";
 			}
 			pageNo++;                    
 		}
@@ -78,7 +79,7 @@ public class TotalListAjaxServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar+="<span class='paging'>></span>";
 		}else {
-			pageBar+="<a onclick='paging(event);'>></a>";
+			pageBar+="<a onclick='pageparseprice(event);'>></a>";
 		}
 		List list = new ArrayList();
 		list.add(result);
@@ -86,9 +87,9 @@ public class TotalListAjaxServlet extends HttpServlet {
 		
 		
 		response.setContentType("application/json;charset=utf-8");
-		new Gson().toJson(list,response.getWriter());
+		new Gson().toJson(list,response.getWriter());	
 		
-	}
+ 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

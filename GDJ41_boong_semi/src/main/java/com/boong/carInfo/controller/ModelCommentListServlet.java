@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 /**
- * Servlet implementation class ModelAutoCompleteAjaxServlet
+ * Servlet implementation class ModelCommentListServlet
  */
-@WebServlet("/search/searchAuto.do")
-public class ModelAutoCompleteAjaxServlet extends HttpServlet {
+@WebServlet("/comment/commentList.do")
+public class ModelCommentListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModelAutoCompleteAjaxServlet() {
+    public ModelCommentListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,9 +29,11 @@ public class ModelAutoCompleteAjaxServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
-		String value=request.getParameter("value");
-		System.out.println(value);
+		/*
+		 * String mClass=request.getParameter("mClass"); System.out.println(mClass);
+		 * response.setContentType("application/json;charset=utf-8"); new
+		 * Gson().toJson(response.getWriter());
+		 */
 	}
 
 	/**

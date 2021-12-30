@@ -10,19 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.boong.carInfo.model.service.CarInfoService;
-import com.boong.carInfo.model.vo.CarInfo;
+import com.boong.carInfo.model.vo.Comment;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class CarInfoMainServlet
+ * Servlet implementation class DeleteCommentServlet
  */
-@WebServlet("/carInfo/main.do")
-public class CarInfoMainServlet extends HttpServlet {
+@WebServlet("/comment/commentDel.do")
+public class DeleteCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CarInfoMainServlet() {
+    public DeleteCommentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,9 +33,16 @@ public class CarInfoMainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("application/json;charset=utf-8");
+		int val=Integer.parseInt(request.getParameter("val"));
+		System.out.println(val);
+		String mClass=request.getParameter("mClass");
 		
 		
-		request.getRequestDispatcher("/views/carInfo/carInfoMain.jsp").forward(request, response);
+		int result=new CarInfoService().deleteComment(val,mClass);
+		List<Comment> list = new CarInfoService().commentList(mClass);
+		new Gson().toJson(list,response.getWriter());
+		
 	}
 
 	/**

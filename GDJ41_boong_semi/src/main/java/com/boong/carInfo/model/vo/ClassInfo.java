@@ -16,6 +16,8 @@ public class ClassInfo {
 	private String mile;
 	private String output;
 	private String drive;
+	private int likeCount;
 	private String fileName;
+	private String fileReName;
 	
 }

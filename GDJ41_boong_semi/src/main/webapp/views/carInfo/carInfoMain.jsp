@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/views/common/header.jsp" %> 
-
-	<div id="blank" style="width:100%;height: 70px;background-color: brown;">
+<%@ page import="com.boong.member.model.vo.Member" %>
+<% 
+ Member m = (Member)session.getAttribute("loginMember"); 
+%>
+<%@ include file="/views/common/header.jsp" %>
+<script src="https://kit.fontawesome.com/f88ebc8ec2.js" crossorigin="anonymous"></script>
+		<div id="blank" style="width:100%;height: 63px;background-color: #288ad8;">
 	</div>
-	
-	<div id="container">
+	<div id="container"> 
+	<span id='memberIdchk' style="display:none;"><%=m==null?"":m.getMemberId()%></span>
 		<div id="search_wrap">
 			<div id="search_car">
 				<div class="search_title">
@@ -77,8 +81,8 @@
 							</div>
 							<div id="search_price" class="search_price">
 								<a>가격</a>
-								<form action="" class="start_price_form">
-									<select name="start_price" id="start_price"> <!-- 벨류로 파싱해야됨 -->
+								<!-- <form action="" class="start_price_form">
+									<select name="start_price" id="start_price"> 벨류로 파싱해야됨
 										<option value="1">1000만원</option>
 										<option value="2">2000만원</option>
 										<option value="3">3000만원</option>
@@ -104,15 +108,15 @@
 										<option value="9">9000만원</option>
 										<option value="10">10000만원</option>
 									</select><a>까지</a>
-								</form>
+								</form> -->
 								<div id="enter_price">
-									<input type="text" name="start_enter_price" placeholder="숫자만 입력">&nbsp;만원
-									<input type="text" name="end_enter_price" placeholder="숫자만 입력">&nbsp;만원
-									<input type="submit" value="검색">
+									<input type="text" name="start_enter_price" pattern="[0-9]+" placeholder="숫자만 입력">&nbsp;만원
+									<input type="text" name="end_enter_price" pattern="[0-9]+" placeholder="숫자만 입력">&nbsp;만원
+									<input type="submit" onclick='parsePrice();' value="검색">
 								</div>
-								<div id="enter_price_check">
+								<!-- <div id="enter_price_check">
 									<input type="checkbox" id="price_check">&nbsp;직접입력
-								</div>
+								</div> -->
 							</div>
 					</fieldset>
 				</div>
@@ -122,17 +126,18 @@
 					<div id="sort_list">
 						<h5 class="sort_title">BOONG 검색엔진 결과</h5>
 						<a class="allRollback" onclick='rollback();'>전체차량조회</a>
-						<a class="popular_sort">인기순</a>
-						<a class="view_sort">조회순</a>
-						<a class="price_sort">가격순</a>
+						<a class="popular_sort" onclick='likeDesc();'>인기순</a>
+						<a class="price_sort" onclick='priceAsc();'>가격낮은순</a>
+						<a class="price_sort2" onclick='priceDesc();'>가격높은순</a>
 					</div>
 					<div id="model_list">
 				
 					</div>
 				</div>
+				<div id="model_comment">
+					
+				</div>	
 			</div>
-			<!-- div id="ad_nav_fixed">
-			</div> -->
 		</div>
 	</div>
 <style>
@@ -147,8 +152,11 @@
 	left: 50px; top: 100px;
 	border: 1px solid #e1e2e6;
 	left:150px; */
-	border: 1px solid #e1e2e6;
-	width:1100px;
+	border-left: 1px solid #e1e2e6;
+	border-top: 1px solid #e1e2e6;
+	border-right: 1px solid #e1e2e6;
+	border-bottom:none;
+	width:1300px;
 	height:1100px;
 	/* left:17%; */
 	position:relative;
@@ -156,13 +164,14 @@
 	margin:0 auto;
 	top:70px;
 	align-items:center;
+	
 }
 #search_car {
 	width:239px; height:1100px;
 	border: 1px solid #e5e5e5;
 	border-top:none;
 	border-left:none;
-	border-bottom:none;
+/* 	border-bottom:none; */
 	display:inline-block;	
 	
 }
@@ -170,7 +179,7 @@
 	display:inline-block;
 	float:right;
 	position:relative;
-	width:859px;
+	width:1055px;
 	height:auto;
 	border-bottom:1px solid #e5e5e5;
 }
@@ -184,7 +193,7 @@
 
 }
 #model_search_info>ul {
-	position:relative;
+	/* position:relative; */
 	
 }
 #model_list>ul>li {
@@ -205,11 +214,12 @@
 	color:#333;
 	display:flex;
 	
+	
 }
 #model_list>ul>li>a>span[class="model_name"]{
 	position:relative;
 	display:flex;
-	align-items:left; 
+	align-items:center; 
 	font-weight:bolder;
 	color:#333;
 	font-size:13px;
@@ -217,13 +227,12 @@
 #model_list>ul>li>a>span[class="model_price"]{
 	display:flex;
 	margin-top:5px;
-	align-items:left; 
+	align-items:center; 
 	color:#333;
 	font-size:13px;
 }
 #enter_price{
 	position:relative;
-	display:none;
 	font-size:13px;
 	color: #333;
 	margin-top:15px;
@@ -490,7 +499,7 @@ dd{
 	font-size:13px;
 	border-radius:0 3px 3px 0;
 }
-.price_sort,.popular_sort,.view_sort {
+.price_sort,.popular_sort,.view_sort,.price_sort2 {
 	position:relative;
 	text-decoration: none;
 	font-size:12px;
@@ -550,13 +559,19 @@ dd{
 	cursor:pointer;
 }
 #mdl_info {
-	position:relative;
-	float:right;
+	display:inline-block;
+	text-align:center;
 }
 #pagingul{
 	position:absolute;
 	bottom:500px;
 	left:560px;
+}
+#insert_car{
+	position:absolute;
+	bottom:320px;
+	left:950px;
+	
 }
 .allRollback{
 	font-weight:bold;
@@ -581,11 +596,128 @@ dd{
 	margin:10px;
 	
 }
+#listTable {
+	align-items:center;
+	margin:20px;
+}
+#listTable tr{
+	border:1px solid  #e5e5e5;
+}
+#listTable td{
+	border:1px solid  #e5e5e5;
+	text-align:center;
+	padding:20px;
+	font-size:14px; 
+}
+#listTable th{
+	border:1px solid  #e5e5e5;
+	text-align:center;
+	background-color:#e5e5e5;
+	
+}
+#model_list{
+	text-align:center;
+}
+#otherGrade{
+	font-weight:bold;
+	font-size:14px;
+	
+}
+#carimg{
+	width:500px;
+	height:300px;
+	margin:20px;
+	border:4px solid #e5e5e5;
+}
+#model_comment{
+	/* text-align:center; */
+}
+#comment_list{
+	border:1px solid #e5e5e5;
+	
+}
+
+textarea {
+   	
+    width: 700px;
+    height:160px;
+    border: 1px solid #333;
+    resize: none;
+    font-size:14px;
+}
+#comment_submit{
+	
+	width:200px;
+	height:160px;
+	font-weight:bold;
+	color:white;
+	background-color:#288ad8;
+	border:none;
+	
+}
+#textDiv{
+	float:middle;
+	display:flex;
+	margin-left:75px;
+	margin-bottom:30px;
+}
+#Idform{
+	display:flex;
+}
+#commentWriter {
+	position:relative;
+	padding-left:10px;
+	padding-right:10px;
+	top:20px;
+	font-weight:bold;
+	color:#288ad8;
+}
+.modelContent {
+	position:relative;
+	padding:50px; 
+}
+pre{
+	white-space: pre-wrap;
+}
+#date{
+	position:relative;
+	top:20px;
+	font-size:12px;
+	color:gray;
+}
+#deleteDiv{
+	
+	padding-left:155px;
+	margin-top:-4px;
+}
+.del{
+	font-size:14px;
+	text-decoration:none;
+	cursor:pointer;
+}
+#updateCarInfo{
+	background-color:#288ad8;
+	border:none;
+	width:80px;
+	color:white;
+	font-weight:bold;
+	border-radius:5px;
+}
+#readCount{
+	position:relative;
+	bottom:530px; 
+	right:490px;
+	font-size:13px;
+}
+#imgview{
+	width:170px;
+	height:85px;
+}
+
 </style>
 <script>
-
-	//체크박사 중복 불가 로직
-	function NoMultiChk(chk) {
+		
+		function NoMultiChk(chk) {
 		var obj=document.getElementsByName("box");
 		for(var i=0; i<obj.length; i++) {
 			if(obj[i]!=chk) {
@@ -593,16 +725,20 @@ dd{
 			}
 		}
 	}
+
+	
 	//전체 선택 해제 로직
 	$("#re_img").click(e=>{
 		$("input[type='checkbox']").prop('checked',false);
 		$("#testContainer").hide();
 		$(".model_list1").hide();
+		rollback();
 	});
 	$(".refresh").click(e=>{
 		$("input[type='checkbox']").prop('checked',false);
 		$("#testContainer").hide();
 		$(".model_list1").hide();
+		rollback();
 		
 	});
 	
@@ -628,11 +764,11 @@ dd{
 				$(".deparea_category").slideDown();
 				$("#arr_img").attr("src","<%=request.getContextPath()%>/assets/img/carInfo/arrow1.png");
 			}
-		});	
+		});
 	});
 	//이거 질문해야하는데..능지가 딸려서 생각이 잘 안남 ㅋㅋ..
 	
-	$("#start_price").change(e=>{
+	/* $("#start_price").change(e=>{
 		const sSelect=Number($("#start_price option:selected").val());
 		let count=0;
 		$("#end_price>option").css('display','block');
@@ -644,31 +780,31 @@ dd{
 		});
 		$($("#end_price>option")[count]).attr("selected",true);
 		
-		/* for(let i=0; i<$("#end_price option").length; i++) {
-			if(sSelect>=Number($("#end_price option:eq("+i+")").val())) {
-				const value1=$("#end_price option:eq("+i+")").val();
-				$("#end_price option[value="+value1+"]").prop('disabled',true);
-			}
-		} */
-	});
+	}); */
 	//onload시 total 데이터 페이징바 처리
 		let cPage;
 		let numPerpage;	
+			
+		$(()=>{
 			$.ajax({
 				url:"<%=request.getContextPath()%>/total/totalList.do",
 				data:{"cPage":cPage, "numPerpage":numPerpage},
 				success:data=>{
+					$("#insertComment").remove();
+					$("#comment").remove();
 					$("#pagingul").remove();
+					$("#comment_submit").remove();
 					const div=$("<div id='pagingul'>");
 					const ul=$("<ul>");
 					for(let i=0; i<data[0].length; i++) {
 						 let li=$("<li>");
-						 let a=$("<a href=''>")
-						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelClass"]);
+						 let a=$("<a>")
+						 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+						 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
 						 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
 						 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
 						/*  let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
-						 a.append(modelClass).append(mile).append(output)/* .append(price) */;
+						 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
 						 li.append(a);
 						 ul.append(li);	
 					}	
@@ -677,22 +813,29 @@ dd{
 				   		$("#sort_list").after(div);
 				}
 			}); 	
-		const rollback=()=>{
+		})
+			
+		
+	const rollback=()=>{
 			$.ajax({
 				url:"<%=request.getContextPath()%>/total/totalList.do",
 				data:{"cPage":cPage, "numPerpage":numPerpage},
 				success:data=>{
+					$("#insertComment").remove();
+					$("#comment").remove();
 					$("#pagingul").remove();
+					$("#comment_submit").remove();
 					const div=$("<div id='pagingul'>");
 					const ul=$("<ul>");
 					for(let i=0; i<data[0].length; i++) {
 						 let li=$("<li>");
-						 let a=$("<a href=''>")
-						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelClass"]);
+						 let a=$("<a>")
+						 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+						 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
 						 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
 						 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
 						 /* let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
-						 a.append(modelClass).append(mile).append(output)/* .append(price) */;
+						 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
 						 li.append(a);
 						 ul.append(li);	
 					}	
@@ -712,15 +855,19 @@ dd{
 				url:"<%=request.getContextPath()%>/total/totalList.do",
 				data:{"cPage":cPage, "numPerpage":numPerpage},
 				success:data=>{
+					$("#insertComment").remove();
+					$("#comment").remove();
+					$("#comment_submit").remove();
 					const ul=$("<ul>");
 					for(let i=0; i<data[0].length; i++) {
 						 let li=$("<li>");
-						 let a=$("<a href=''>")
-						 let modelClass=$("<span>").addClass("model_name").html(data[0][i]["modelClass"]);
+						 let a=$("<a>")
+						 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+						 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
 						 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
 						 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
 						/*  let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
-						 a.append(modelClass).append(mile).append(output)/* .append(price) */;
+						 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
 						 li.append(a);
 						 ul.append(li);	
 					}	
@@ -732,20 +879,25 @@ dd{
 
 	//차종 클릭시 modelInfo div에 비동기식 화면전환 처리
 	$("input[name='box']").click(e=>{
+		console.log($(e.target).val());
 		$.ajax({
 			url:"<%=request.getContextPath()%>/model/modelList.do",
 			data:{"value":$(e.target).val()},
 			success:data=>{
+				$("#insertComment").remove();
+				$("#comment").remove();
 				$("#pagingul").remove();
+				$("#comment_submit").remove();
 				const ul=$("<ul>");
 				for(let i=0; i<data.length; i++) {
 				 	let li=$("<li>");
-				 	let a=$("<a href=''>")
-					let modelName=$("<span>").addClass("model_name").html(data[i]["modelClass"]);
+				 	let a=$("<a>");
+				 	let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[i]["fileName"]+">");
+					let modelName=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[i]["modelClass"]);
 					let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[i]["modelBrand"]);
 					let output=$("<span>").addClass("model_short_info").html("Info: "+data[i]["modelInfo"]);
 				 	/* let price=$("<span>").addClass("model_price").html(data[i]["modelName"]); */
-					a.append(modelName).append(mile).append(output)/* .append(price) */;
+					a.append(img).append(modelName).append(mile).append(output)/* .append(price) */;
 					li.append(a);
 					ul.append(li);
 				}
@@ -763,7 +915,13 @@ dd{
 			url:"<%=request.getContextPath()%>/scroll/scrollList.do",
 			data:{"value":value},
 			success:data=>{
-				$(".model_list1").remove();
+				$("#insertComment").remove();
+				$("#comment").remove();
+				$(".model_list1").remove(); 
+				/* $(".model_list2").remove(); */
+				$("#comment_submit").remove();
+				$("#mdl_info").remove();
+				$("#mdl_img").remove();
 				const div=$("<div>").addClass("model_list1");
 				const ul=$("<ul>");
 				const ulparam=$("<ul>")
@@ -785,8 +943,11 @@ dd{
 			url:"<%=request.getContextPath()%>/model/scrollList.do",
 			data:{"val":val},
 			success:data=>{
+				$("#insertComment").remove();
+				$("#comment").remove();
 				$("#pagingul").remove();
 				$(".model_list2").remove();
+				$("#comment_submit").remove();
 				const div1=$("<div>").addClass("model_list2");
 				const ul1=$("<ul>");
 				const ulparam=$("<ul>")
@@ -796,11 +957,12 @@ dd{
 				 div1.append(ul1);
 					let liparam=$("<li>");
 				 	let a=$("<a>");
-					let modelName=$("<span>").addClass("model_name").html(data[i]["modelClass"]);
+				 	let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[i]["fileName"]+">");
+					let modelName=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[i]["modelClass"]);
 					let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[i]["modelBrand"]);
 					let output=$("<span>").addClass("model_short_info").html("Info: "+data[i]["modelInfo"]);
 				 	/* let price=$("<span onclick='searchClass(event)'>").addClass("model_price").html(data[i]["modelName"]); */
-				 	a.append(modelName).append(mile).append(output)/* .append(price) */;
+				 	a.append(img).append(modelName).append(mile).append(output)/* .append(price) */;
 					liparam.append(a);
 					ulparam.append(liparam);
 				}
@@ -815,70 +977,552 @@ dd{
 	//다른 등급 클릭시 그 해당하는 차량의 정보도 출력해주는 기능 구현해주자.
 	const searchClass=(e)=>{
 		var mClass=$(e.target).text();
-		console.log(mClass);
 		$.ajax({
 			url:"<%=request.getContextPath()%>/model/modelInfo.do",
 			data:{"mClass":mClass},
 			success:data=>{
+				$("#insertComment").remove();
+				$("#textDiv").remove();
+				$("#comment").remove();
+				$("#mdl_info").remove();
 				$("#pagingul").remove();
+				$("#mdl_img").remove();
+				$("#comment_submit").remove();
 				const div=$("<div id='mdl_img'>");
 				const div2=$("<div id='mdl_info'>");
 				const div3=$("<div id='mdl_comment'>");
-				const table=$("<table>")
-				const tr=$("<tr>");
-				const tr2=$("<tr>");
-				const tr3=$("<tr>");
-				const tr4=$("<tr>");
-				const tr5=$("<tr>");
-				const tr6=$("<tr>");
-				const tr7=$("<tr>");
-				const tr8=$("<tr>");
-				const tr9=$("<tr>");
-				let infoclass=$("<td>").html("모델명");
-				let infobrand=$("<td>").html("브랜드");
-				let infograde=$("<td>").html("등급");
-				let infoprice=$("<td>").html("가격");
-				let infospeed=$("<td>").html("최고속도");
-				let infoperkm=$("<td>").html("주행");
-				let infomile=$("<td>").html("연비");
-				let infooutput=$("<td>").html("출력");
-				let infodrive=$("<td>").html("구동");
-				for(let i=0; i<data.length; i++) {
-					if(data[i]["modelGrade"]=="STANDARD") {
-						let mclass=$("<td class='tdclass'>").html(data[i]["modelClass"]);
-						let brand=$("<td class='tdbrand'>").html(data[i]["modelBrand"]);
-						let grade=$("<td class='tdgrade'>").html(data[i]["modelGrade"]);
-						let price=$("<td class='tdprice'>").html(data[i]["price"]);
-						let speed=$("<td class='tdspeed'>").html(data[i]["speed"]);
-						let perkm=$("<td class='tdperkm'>").html(data[i]["perKm"]);
-						let mile=$("<td class='tdmile'>").html(data[i]["mile"]);
-						let output=$("<td class='tdoutput'>").html(data[i]["output"]);
-						let drive=$("<td class='tddrive'>").html(data[i]["drive"]);		
-						tr.append(infoclass).append(mclass)
-						tr2.append(infobrand).append(brand)
-						tr3.append(infograde).append(grade)
-						tr4.append(infoprice).append(price)
-						tr5.append(infospeed).append(speed);
-						tr6.append(infoperkm).append(perkm);
-						tr7.append(infomile).append(mile);
-						tr8.append(infooutput).append(output);
-						tr9.append(infodrive).append(drive);
-						table.append(tr).append(tr2).append(tr3).append(tr4).append(tr5).append(tr6).append(tr7).append(tr8).append(tr9);
+				const table=$("<table id='listTable'>");
+				const header="<tr><th>모델명</th><th>브랜드</th><th>등급</th><th>가격</th><th>최고속도</th><th>주행</th><th>연비</th><th>출력</th><th>구동</th>";
+				const viewCount=$("<div class='likeCountDiv'>");
+				const thumbs=$("<img src='https://media.istockphoto.com/vectors/thumbs-up-and-like-icon-vector-design-on-white-background-vector-id1204236090?b=1&k=20&m=1204236090&s=612x612&w=0&h=w2Pt1zTPg5OhEW1Ad6RXnq_r0z9-lcTQ-z8AxfuJPEs=' style='widht:60px; height:60px;' onclick='likeUp()'>");
+				viewCount.append(thumbs);
+				table.append(header);
+					for(let i=0; i<data[0].length; i++) {
+						if(data[0][i]["modelGrade"]=="STANDARD") {
+							let likeCount=$("<p class='likeCount'>").html(data[0][i]["likeCount"]);
+							let path=data[0][i]["fileName"];
+						/* let img=$("<img src=/GDJ41_boong_semi/assets/img/carInfo/"+data[i]["fileName"]+">"); */
+							<%-- $("<img src='<%=request.getContextPath()%>/assets/img/carInfo/data[i]["fileName"]+">"); --%>
+							let tr=$("<tr>");
+							let mclass=$("<td class='tdclass'>").html(data[0][i]["modelClass"]);
+							let brand=$("<td class='tdbrand'>").html(data[0][i]["modelBrand"]);
+							let grade=$("<td class='tdgrade'>").html(data[0][i]["modelGrade"]);
+							let price=$("<td class='tdprice'>").html(data[0][i]["price"]+"만원");
+							let speed=$("<td class='tdspeed'>").html(data[0][i]["speed"]);
+							let perkm=$("<td class='tdperkm'>").html(data[0][i]["perKm"]);
+							let mile=$("<td class='tdmile'>").html(data[0][i]["mile"]);
+							let output=$("<td class='tdoutput'>").html(data[0][i]["output"]);
+							let drive=$("<td class='tddrive'>").html(data[0][i]["drive"]);
+							tr.append(mclass).append(brand).append(grade).append(price).append(speed).append(perkm).append(mile).append(output).append(drive);
+							table.append(tr);
+							viewCount.append(likeCount);
+						}else{
+						let paramalert=$("<span id='otherGrade' name="+data[0][i]["modelGrade"]+" onclick='otherClass();'>").html("이 차량의 다른등급보기");
+						/* let paramgrade=$("<span class='tdotherGrade'>").html(data[i]["modelGrade"]); */
+						div2.append(paramalert);
+						}
+					}
+					const textDiv=$("<div id='textDiv'>");
+					const form=$("<form id='Idform' method='get'>");
+					const span=$("<span id='hiddenClass' style='display:none'>").html(mClass);
+					const insertComment=$("<textarea id='insertComment' placeholder='이 차량에 대한 평가를 남겨주세요'>");
+					const submit=$("<input id='comment_submit' type='button' onclick='loginchk();' value='등록'>");
+					const commentDiv=$("<div id='comment'>");
+					//댓글구현
+					for(let i=0; i<data[1].length; i++) {
+						let div4=$("<div id='comment_list'>");
+						let deleteDiv=$("<div id='deleteDiv'>");
+						let num=$("<span id='commentWriter'>").html(data[1][i]["memberId"]);
+						let date=$("<span id='date'>").html(data[1][i]["commentDate"]);
+						let content=$("<pre class='modelContent'>").html(data[1][i]["content"]);
+						let del=$("<a class='del' name='"+data[1][i]["commentNo"]+"' onclick='commentDelete(event);'>");
+						if(data[1][i]["memberId"]==$("#memberIdchk").text()){
+							del.html("삭제");
+							
+						}
+						deleteDiv.append(del);
+						div4.append(num).append(date).append(deleteDiv).append(content);
+						commentDiv.append(div4);
+					}
+					form.append(span).append(insertComment).append(submit);
+					textDiv.append(form);
+					$("#model_comment").append(textDiv).append(commentDiv);
+					let img=$("<img id='carimg' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][0]["fileName"]+">");
+					div.html(img);
+					div2.append(table).append(viewCount);
+					$("#model_list").html(div).append(div2);
+				/* $("#model_list").html(div2); */
+				/* $("#model_list").html(div2); */
+			
+			}
+		});		
+		
+	}
+	const otherClass=()=>{
+		var mClass=$(".tdclass").text();
+		$.ajax({
+			url:"<%=request.getContextPath()%>/model/modelInfo.do",
+			data:{"mClass":mClass},
+			success:data=>{
+				$("#mdl_info").remove();
+				$("#pagingul").remove();
+				$("#mdl_img").remove();
+				const div=$("<div id='mdl_img'>");
+				const div2=$("<div id='mdl_info'>");
+				const div3=$("<div id='mdl_comment'>");
+				const table=$("<table id='listTable'>");
+				const header="<tr><th>모델명</th><th>브랜드</th><th>등급</th><th>가격</th><th>최고속도</th><th>주행</th><th>연비</th><th>출력</th><th>구동</th>";
+				const viewCount=$("<div class='likeCountDiv'>");
+				const thumbs=$("<img src='https://media.istockphoto.com/vectors/thumbs-up-and-like-icon-vector-design-on-white-background-vector-id1204236090?b=1&k=20&m=1204236090&s=612x612&w=0&h=w2Pt1zTPg5OhEW1Ad6RXnq_r0z9-lcTQ-z8AxfuJPEs=' style='widht:60px; height:60px;' onclick='likeUp()'>");
+				viewCount.append(thumbs);
+				table.append(header);
+				for(let i=0; i<data[0].length; i++) {
+					if(data[0][i]["modelGrade"]!="STANDARD") {
+						let path=data[i]["fileName"];
+						let likeCount=$("<p class='likeCount'>").html(data[0][i]["likeCount"]);
+						/* let img=$("<img src=/GDJ41_boong_semi/assets/img/carInfo/"+data[i]["fileName"]+">"); */
+							<%-- $("<img src='<%=request.getContextPath()%>/assets/img/carInfo/data[i]["fileName"]+">"); --%>
+						let tr=$("<tr>");
+						let mclass=$("<td class='tdclass'>").html(data[0][i]["modelClass"]);
+						let brand=$("<td class='tdbrand'>").html(data[0][i]["modelBrand"]);
+						let grade=$("<td class='tdgrade'>").html(data[0][i]["modelGrade"]);
+						let price=$("<td class='tdprice'>").html(data[0][i]["price"]+"만원");
+						let speed=$("<td class='tdspeed'>").html(data[0][i]["speed"]);
+						let perkm=$("<td class='tdperkm'>").html(data[0][i]["perKm"]);
+						let mile=$("<td class='tdmile'>").html(data[0][i]["mile"]);
+						let output=$("<td class='tdoutput'>").html(data[0][i]["output"]);
+						let drive=$("<td class='tddrive'>").html(data[0][i]["drive"]);	
+						tr.append(mclass).append(brand).append(grade).append(price).append(speed).append(perkm).append(mile).append(output).append(drive);
+						viewCount.append(likeCount);
+						table.append(tr);
 					}else{
-						let paramgrade=$("<td class='tdotherGrade'>").html(data[i]["modelGrade"]);
-						div2.append(paramgrade);
+						let paramalert=$("<span id='otherGrade' name="+data[0][i]["modelGrade"]+" onclick='theotherClass()'>").html("이 차량의 다른등급보기");
+						/* let paramgrade=$("<span class='tdotherGrade'>").html(data[i]["modelGrade"]); */
+						div2.append(paramalert);
 					}
 				}
+				let img=$("<img id='carimg' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][0]["fileName"]+">");
+				div.html(img);
+				div2.append(table).append(viewCount);;
 				
-			<%-- 	let img=$("<img src="<%=request.getContextPath()%>/assets/img/carInfo/data[0]["fileName"]+">");
-				div.append(img); --%>
-				div2.append(table);
-				$("#model_list").html(div2);
+				$("#model_list").html(div).append(div2);
+				/* $("#model_list").html(div2); */
+				/* $("#model_list").html(div2); */
 			}
 			
 		});
 	}
+	const theotherClass=()=>{
+		var mClass=$(".tdclass").text();
+		$.ajax({
+			url:"<%=request.getContextPath()%>/model/modelInfo.do",
+			data:{"mClass":mClass},
+			success:data=>{
+				$("#mdl_info").remove();
+				$("#pagingul").remove();
+				$("#mdl_img").remove();
+				const div=$("<div id='mdl_img'>");
+				const div2=$("<div id='mdl_info'>");
+				const div3=$("<div id='mdl_comment'>");
+				const table=$("<table id='listTable'>");
+				const header="<tr><th>모델명</th><th>브랜드</th><th>등급</th><th>가격</th><th>최고속도</th><th>주행</th><th>연비</th><th>출력</th><th>구동</th>";
+				const viewCount=$("<div class='likeCountDiv'>");
+				const thumbs=$("<img src='https://media.istockphoto.com/vectors/thumbs-up-and-like-icon-vector-design-on-white-background-vector-id1204236090?b=1&k=20&m=1204236090&s=612x612&w=0&h=w2Pt1zTPg5OhEW1Ad6RXnq_r0z9-lcTQ-z8AxfuJPEs=' style='widht:60px; height:60px;' onclick='likeUp()'>");
+				viewCount.append(thumbs);
+				table.append(header);
+				for(let i=0; i<data[0].length; i++) {
+					if(data[0][i]["modelGrade"]=="STANDARD") {
+						let likeCount=$("<p class='likeCount'>").html(data[0][i]["likeCount"]);
+						let path=data[i]["fileName"];
+						/* let img=$("<img src=/GDJ41_boong_semi/assets/img/carInfo/"+data[i]["fileName"]+">"); */
+							<%-- $("<img src='<%=request.getContextPath()%>/assets/img/carInfo/data[i]["fileName"]+">"); --%>
+						let tr=$("<tr>");
+						let mclass=$("<td class='tdclass'>").html(data[0][i]["modelClass"]);
+						let brand=$("<td class='tdbrand'>").html(data[0][i]["modelBrand"]);
+						let grade=$("<td class='tdgrade'>").html(data[0][i]["modelGrade"]);
+						let price=$("<td class='tdprice'>").html(data[0][i]["price"]+"만원");
+						let speed=$("<td class='tdspeed'>").html(data[0][i]["speed"]);
+						let perkm=$("<td class='tdperkm'>").html(data[0][i]["perKm"]);
+						let mile=$("<td class='tdmile'>").html(data[0][i]["mile"]);
+						let output=$("<td class='tdoutput'>").html(data[0][i]["output"]);
+						let drive=$("<td class='tddrive'>").html(data[0][i]["drive"]);	
+						tr.append(mclass).append(brand).append(grade).append(price).append(speed).append(perkm).append(mile).append(output).append(drive);
+						table.append(tr);
+						viewCount.append(likeCount);
+					}else{
+						let paramalert=$("<span id='otherGrade' name="+data[0][i]["modelGrade"]+" onclick='otherClass()'>").html("이 차량의 다른등급보기");
+						/* let paramgrade=$("<span class='tdotherGrade'>").html(data[i]["modelGrade"]); */
+						div2.append(paramalert);
+					}
+				}
+				let img=$("<img id='carimg' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][0]["fileName"]+">");
+				div.html(img);
+				div2.append(table).append(viewCount);;
+				
+				$("#model_list").html(div).append(div2);
+				/* $("#model_list").html(div2); */
+				/* $("#model_list").html(div2); */
+			}
+			
+		});
+	}
+	
+	$("#model_comment").on('keyup',e=>{
+		if(<%=m==null%>) {
+			alert("댓글작성은 회원만 이용가능합니다.");
+			location.assign("<%=request.getContextPath()%>/member/login.do");
+		}	 
+	})
+	const loginchk=()=>{
+		if(<%=m==null%>) {
+			alert("댓글작성은 회원만 이용가능합니다.");
+			location.assign("<%=request.getContextPath()%>/member/login.do");
+		}else if($("#insertComment").val().trim().length==0){
+			alert("내용을 입력해주세요");
+			$("#insertComment").val("");
+			return false;
+		}
+		var mClass=$("#hiddenClass").text();
+		var content=$("#insertComment").val();
+		var memberId=$("#memberIdchk").text();
+		/* console.log($("#insertComment").val());
+		console.log($("#hiddenClass").text()); */
+		$.ajax({
+			url:"<%=request.getContextPath()%>/update/updateComment.do",
+			data:{"mClass":mClass,"memberId":memberId,"content":content},
+			success:data=>{
+				$("#insertComment").remove();
+				$("#textDiv").remove();
+				$("#comment").remove();
+				$("#comment_submit").remove();
+				alert("댓글 등록 성공!");
+				const textDiv=$("<div id='textDiv'>");
+				const form=$("<form id='Idform' method='get'>");
+				const span=$("<span id='hiddenClass' style='display:none'>").html(mClass);
+				const insertComment=$("<textarea id='insertComment' placeholder='이 차량에 대한 평가를 남겨주세요'>");
+				const submit=$("<input id='comment_submit' type='button' onclick='loginchk();' value='등록'>");
+				const commentDiv=$("<div id='comment'>");
+				//댓글구현
+				for(let i=0; i<data.length; i++) {
+					let div4=$("<div id='comment_list'>")
+					let deleteDiv=$("<div id='deleteDiv'>");
+					let num=$("<span id='commentWriter'>").html(data[i]["memberId"]);
+					let date=$("<span id='date'>").html(data[i]["commentDate"]);
+					let content=$("<pre class='modelContent'>").html(data[i]["content"]);
+					let del=$("<a class='del' name='"+data[i]["commentNo"]+"' onclick='commentDelete(event);'>");
+					if(data[i]["memberId"]==$("#memberIdchk").text()){
+						del.html("삭제");
+						
+					}
+					deleteDiv.append(del);
+					div4.append(num).append(date).append(deleteDiv).append(content);
+					commentDiv.append(div4);
+				}
+				form.append(span).append(insertComment).append(submit);
+				textDiv.append(form);
+				$("#model_comment").append(textDiv).append(commentDiv);
+				
+			}
+		});
+	}
+	
+	//댓글 삭제
+	const commentDelete=(e)=>{
+	 	var result=confirm("정말로 댓글을 삭제하시겠습니까?");
+		let val=$(e.target).attr("name");
+	 	let mClass=$("#hiddenClass").text();
+	 	if(result==true) {
+	 		$.ajax({
+		 		url:"<%=request.getContextPath()%>/comment/commentDel.do",
+		 		data:{"val":val,"mClass":mClass},
+		 		success:data=>{
+		 		 	alert("댓글 삭제 완료");
+		 		 	$("#insertComment").remove();
+					$("#textDiv").remove();
+					$("#comment").remove();
+					$("#comment_submit").remove();
+					const textDiv=$("<div id='textDiv'>");
+					const form=$("<form id='Idform' method='get'>");
+					const span=$("<span id='hiddenClass' style='display:none'>").html(mClass);
+					const insertComment=$("<textarea id='insertComment' placeholder='이 차량에 대한 평가를 남겨주세요'>");
+					const submit=$("<input id='comment_submit' type='button' onclick='loginchk();' value='등록'>");
+					const commentDiv=$("<div id='comment'>");
+					//댓글구현
+					for(let i=0; i<data.length; i++) {
+						let div4=$("<div id='comment_list'>")
+						let deleteDiv=$("<div id='deleteDiv'>");
+						let num=$("<span id='commentWriter'>").html(data[i]["memberId"]);
+						let date=$("<span id='date'>").html(data[i]["commentDate"]);
+						let content=$("<pre class='modelContent'>").html(data[i]["content"]);
+						let del=$("<a class='del' name='"+data[i]["commentNo"]+"' onclick='commentDelete(event);'>");
+						if(data[i]["memberId"]==$("#memberIdchk").text()){
+							del.html("삭제");
+						}
+						deleteDiv.append(del);
+						div4.append(num).append(date).append(deleteDiv).append(content);
+						commentDiv.append(div4);
+					}
+					form.append(span).append(insertComment).append(submit);
+					textDiv.append(form);
+					$("#model_comment").append(textDiv).append(commentDiv);
+					table.append(tr);
+		 		}
+		 	});
+	 	}
 
+	}
+	//가격 오름차순 조회
+	const priceAsc=()=>{
+		$.ajax({
+			url:"<%=request.getContextPath()%>/price/priceAsc.do",
+			data:{"cPage":cPage, "numPerpage":numPerpage},
+			success:data=>{
+				$("#insertComment").remove();
+				$("#comment").remove();
+				$("#pagingul").remove();
+				$("#comment_submit").remove();
+				const div=$("<div id='pagingul'>");
+				const ul=$("<ul>");
+				for(let i=0; i<data[0].length; i++) {
+					 let li=$("<li>");
+					 let a=$("<a>")
+					 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+					 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
+					 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
+					 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
+					 /* let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+					 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
+					 li.append(a);
+					 ul.append(li);	
+				}	
+			   		$("#model_list").html(ul);
+			   		div.html(data[1]);
+			   		$("#sort_list").append(div);
+			}
+		}); 	
+	}
+	
+	//오름차순 조회 페이징 처리
+	const pages=(e)=>{
+		let cPage=$(e.target).text();
+		let numPerpage;
+		console.log(cPage);
+		$.ajax({
+			url:"<%=request.getContextPath()%>/price/priceAsc.do",
+			data:{"cPage":cPage, "numPerpage":numPerpage},
+			success:data=>{
+				$("#insertComment").remove();
+				$("#comment").remove();
+				$("#comment_submit").remove();
+				const ul=$("<ul>");
+				for(let i=0; i<data[0].length; i++) {
+					 let li=$("<li>");
+					 let a=$("<a>")
+					 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+					 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
+					 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
+					 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
+					/*  let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+					 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
+					 li.append(a);
+					 ul.append(li);	
+				}	
+			   		$("#model_list").html(ul);
+			   		$("#pagingul").html(data[1]);
+			}
+		}); 	
+	}	
+	
+	//가격 내림차순 조회
+	const priceDesc=()=>{
+		$.ajax({
+			url:"<%=request.getContextPath()%>/price/priceDesc.do",
+			data:{"cPage":cPage, "numPerpage":numPerpage},
+			success:data=>{
+				$("#insertComment").remove();
+				$("#comment").remove();
+				$("#pagingul").remove();
+				$("#comment_submit").remove();
+				const div=$("<div id='pagingul'>");
+				const ul=$("<ul>");
+				for(let i=0; i<data[0].length; i++) {
+					 let li=$("<li>");
+					 let a=$("<a>")
+					 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+					 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
+					 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
+					 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
+					 /* let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+					 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
+					 li.append(a);
+					 ul.append(li);	
+				}	
+			   		$("#model_list").html(ul);
+			   		div.html(data[1]);
+			   		$("#sort_list").append(div);
+			}
+		}); 	
+	}
+	//내림차순 조회 페이징처리
+	const pagedesc=(e)=>{
+		let cPage=$(e.target).text();
+		let numPerpage;
+		console.log(cPage);
+		$.ajax({
+			url:"<%=request.getContextPath()%>/price/priceDesc.do",
+			data:{"cPage":cPage, "numPerpage":numPerpage},
+			success:data=>{
+				$("#insertComment").remove();
+				$("#comment").remove();
+				$("#comment_submit").remove();
+				const ul=$("<ul>");
+				for(let i=0; i<data[0].length; i++) {
+					 let li=$("<li>");
+					 let a=$("<a>")
+					 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+					 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
+					 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
+					 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
+					/*  let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+					 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
+					 li.append(a);
+					 ul.append(li);	
+				}	
+			   		$("#model_list").html(ul);
+			   		$("#pagingul").html(data[1]);
+			}
+		}); 	
+	}	
+	
+	const likeUp=()=>{
+		let userId=$("#memberIdchk").text();
+		let mClass=$("#hiddenClass").text();
+		console.log(mClass);
+		if(userId=="") {
+			alert("추천은 로그인한 회원만 가능합니다");
+		}else{
+			$.ajax({
+				url:"<%=request.getContextPath()%>/like/likeUp.do",
+				data:{"memberId":userId,"mClass":mClass},
+				success:data=>{	
+					$(".likeCount").remove();
+					const p=$("<p class='likeCount'>");
+					for(let i=0; i<data[0].length; i++) {
+						p.html(data[0][i]["likeCount"]);
+					}
+					$(".likeCountDiv").append(p);
+					alert(""+data[1]);
+					
+				}
+			});
+		}			
+	}
+	
+	
+	const likeDesc=()=>{
+		$.ajax({
+			url:"<%=request.getContextPath()%>/like/likeDesc.do",
+			data:{"cPage":cPage, "numPerpage":numPerpage},
+			success:data=>{
+				$("#insertComment").remove();
+				$("#comment").remove();
+				$("#pagingul").remove();
+				$("#comment_submit").remove();
+				const div=$("<div id='pagingul'>");
+				const ul=$("<ul>");
+				for(let i=0; i<data[0].length; i++) {
+					 let li=$("<li>");
+					 let a=$("<a>")
+					 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+					 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
+					 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
+					 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
+					 /* let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+					 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
+					 li.append(a);
+					 ul.append(li);	
+				}	
+			   		$("#model_list").html(ul);
+			   		div.html(data[1]);
+			   		$("#sort_list").append(div);
+			}
+		}); 	
+	}
+	
+	const pagelikedesc=(e)=>{
+		let cPage=$(e.target).text();
+		let numPerpage;
+		console.log(cPage);
+		$.ajax({
+			url:"<%=request.getContextPath()%>/like/likeDesc.do",
+			data:{"cPage":cPage, "numPerpage":numPerpage},
+			success:data=>{
+				$("#insertComment").remove();
+				$("#comment").remove();
+				$("#comment_submit").remove();
+				const ul=$("<ul>");
+				for(let i=0; i<data[0].length; i++) {
+					 let li=$("<li>");
+					 let a=$("<a>")
+					 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+					 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
+					 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
+					 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
+					/*  let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+					 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
+					 li.append(a);
+					 ul.append(li);	
+				}	
+			   		$("#model_list").html(ul);
+			   		$("#pagingul").html(data[1]);
+			}
+		}); 	
+	}	
+	
+	
+	//가격 검색 받아서 넣는 기능...
+	const parsePrice=()=>{
+		let val=Math.abs($("input[name='start_enter_price']").val());
+		let value=Math.abs($("input[name='end_enter_price']").val());
+		console.log(val);
+		if(isNaN(val)==true||isNaN(value)==true) {
+			alert("숫자만 입력하세요");
+		}else if(val.toString().length>5||value.toString().length>5){
+			alert("5자리 이하의 숫자를 입력해주세요");
+		}else if(val>=value) {
+			alert("시작보다 큰 숫자로 입력해주세요");
+		}else{
+			$.ajax({
+				url:"<%=request.getContextPath()%>/parse/parsePrice.do",
+				data:{"val":val, "value":value , "cPage":cPage, "numPerpage":numPerpage},
+				success:data=>{
+					$("#insertComment").remove();
+					$("#comment").remove();
+					$("#pagingul").remove();
+					$("#comment_submit").remove();
+					const div=$("<div id='pagingul'>");
+					const ul=$("<ul>");
+					for(let i=0; i<data[0].length; i++) {
+						 let li=$("<li>");
+						 let a=$("<a>")
+						 let img=$("<img id='imgview' src=/GDJ41_boong_semi/assets/img/carInfo/"+data[0][i]["fileName"]+">");
+						 let modelClass=$("<span onclick='searchClass(event);'>").addClass("model_name").html(data[0][i]["modelClass"]);
+						 let mile=$("<span>").addClass("model_short_info").html("Brand: "+data[0][i]["modelBrand"]);
+						 let output=$("<span>").addClass("model_short_info").html("Info: "+data[0][i]["modelInfo"]);
+						/*  let price=$("<span>").addClass("model_price").html(data[0][i]["modelName"]); */
+						 a.append(img).append(modelClass).append(mile).append(output)/* .append(price) */;
+						 li.append(a);
+						 ul.append(li);	
+					}	
+				   		$("#model_list").html(ul);
+				   		div.html(data[1]);
+				   		$("#sort_list").after(div);
+				}
+			});
+		}
+	}
+	
+	
 	
 	
 	

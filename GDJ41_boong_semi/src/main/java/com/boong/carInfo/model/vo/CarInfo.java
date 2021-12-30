@@ -11,5 +11,6 @@ public class CarInfo {
 	private String modelBrand;
 	private String modelMade;
 	private String modelInfo;
+	private String fileName;
 
 }

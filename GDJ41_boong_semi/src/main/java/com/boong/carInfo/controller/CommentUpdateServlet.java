@@ -10,19 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.boong.carInfo.model.service.CarInfoService;
-import com.boong.carInfo.model.vo.CarInfo;
+import com.boong.carInfo.model.vo.Comment;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class CarInfoMainServlet
+ * Servlet implementation class CommentUpdateServlet
  */
-@WebServlet("/carInfo/main.do")
-public class CarInfoMainServlet extends HttpServlet {
+@WebServlet("/update/updateComment.do")
+public class CommentUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CarInfoMainServlet() {
+    public CommentUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,9 +33,17 @@ public class CarInfoMainServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("application/json;charset=utf-8");
+		String mClass=request.getParameter("mClass");
+		String memberId=request.getParameter("memberId");
+		String content=request.getParameter("content");
+		System.out.println(mClass);
+		System.out.println(memberId);
+		System.out.println(content);
 		
-		
-		request.getRequestDispatcher("/views/carInfo/carInfoMain.jsp").forward(request, response);
+		int result=new CarInfoService().insertComment(mClass,memberId,content);
+		List<Comment> list = new CarInfoService().commentList(mClass);
+		new Gson().toJson(list,response.getWriter());
 	}
 
 	/**

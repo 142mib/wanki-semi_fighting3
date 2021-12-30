@@ -14,18 +14,17 @@ import com.boong.carInfo.model.service.CarInfoService;
 import com.boong.carInfo.model.vo.CarInfo;
 import com.google.gson.Gson;
 
-
 /**
- * Servlet implementation class TotalListAjaxServlet
+ * Servlet implementation class PriceDescAjaxServlet
  */
-@WebServlet("/total/totalList.do")
-public class TotalListAjaxServlet extends HttpServlet {
+@WebServlet("/price/priceDesc.do")
+public class PriceDescAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TotalListAjaxServlet() {
+    public PriceDescAjaxServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,7 +49,7 @@ public class TotalListAjaxServlet extends HttpServlet {
 			numPerpage=15;
 		}
 		
-		List<CarInfo> result=new CarInfoService().totalList(cPage,numPerpage);
+		List<CarInfo> result=new CarInfoService().priceDesc(cPage,numPerpage);
 		int totalData=new CarInfoService().totalListCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		
@@ -63,14 +62,14 @@ public class TotalListAjaxServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar="<span class='paging'><</span>";
 		}else {
-			pageBar+="<a onclick='paging(event);'"+"'><</a>";
+			pageBar+="<a onclick='pagedesc(event);'"+"'><</a>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<span id='currentPage' class='paging'>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a id='searchPaging' onclick='paging(event);'>"+pageNo+"</a>";
+				pageBar+="<a id='searchPaging' onclick='pagedesc(event);'>"+pageNo+"</a>";
 			}
 			pageNo++;                    
 		}
@@ -78,7 +77,7 @@ public class TotalListAjaxServlet extends HttpServlet {
 		if(pageNo>totalPage) {
 			pageBar+="<span class='paging'>></span>";
 		}else {
-			pageBar+="<a onclick='paging(event);'>></a>";
+			pageBar+="<a onclick='pagedesc(event);'>></a>";
 		}
 		List list = new ArrayList();
 		list.add(result);
@@ -86,7 +85,7 @@ public class TotalListAjaxServlet extends HttpServlet {
 		
 		
 		response.setContentType("application/json;charset=utf-8");
-		new Gson().toJson(list,response.getWriter());
+		new Gson().toJson(list,response.getWriter());	
 		
 	}
 

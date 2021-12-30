@@ -34,10 +34,8 @@ public class ModelScrollListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String val=request.getParameter("val");
-		System.out.println(val);
 		response.setContentType("application/json;charset=utf-8");
 		List<CarInfo> list = new CarInfoService().searchModelClass(val);
-		System.out.println(list);
 		new Gson().toJson(list,response.getWriter());
 		
 	}
