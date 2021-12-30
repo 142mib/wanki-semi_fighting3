@@ -145,6 +145,44 @@ public class BoardService {
 		}else {
 			rollback(conn);
 		}
+		close(conn);
+		return result;
+	}
+	
+	// 게시글 댓글 전체 개수를 가져오는 서비스
+	public int countBoardComment(BoardComment bc) {
+		Connection conn = getConnection();
+		int total = dao.countBoardComment(conn, bc);
+		close(conn);
+		return total;
+	}
+	
+	// 댓글 삭제하는 서비스
+	public int deleteComment(int boardCommentNo) {
+		Connection conn = getConnection();
+		int result = dao.deleteComment(conn, boardCommentNo);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	// 제목, 작성자, 내용으로 검색할 때
+	public List<Board> searchBoard(int cPage, int numPerpage, String searchType, String keyword){
+		Connection conn = getConnection();
+		List<Board> result = dao.searchBoard(conn,cPage,numPerpage, searchType, keyword);
+		close(conn);
+		return result;
+	}
+	
+	// 게시글 검색 시 개수 가져오기
+	public int searchBoardCount(String searchType, String keyword) {
+		Connection conn = getConnection();
+		int result = dao.searchBoardCount(conn,searchType, keyword);
+		close(conn);
 		return result;
 	}
 }

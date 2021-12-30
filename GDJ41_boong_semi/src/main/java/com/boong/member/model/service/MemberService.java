@@ -1,14 +1,17 @@
 package com.boong.member.model.service;
 
 import static com.boong.common.JDBCTemplate.close;
-import static com.boong.common.JDBCTemplate.getConnection;
 import static com.boong.common.JDBCTemplate.commit;
+import static com.boong.common.JDBCTemplate.getConnection;
 import static com.boong.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.List;
 
+import com.boong.board.model.vo.Board;
 import com.boong.member.model.dao.MemberDao;
 import com.boong.member.model.vo.Member;
+import com.boong.shop.model.vo.OrderProduct;
 
 public class MemberService {
 	
@@ -74,5 +77,54 @@ public class MemberService {
 		close(conn);
 		return m;
 	}
+	public Member findPw(String memberId, String memberName, String email) {
+		Connection conn=getConnection();
+		Member m=dao.findPw(conn,memberId, memberName, email);
+		close(conn);
+		return m;
+	}
+
+	public Member selectMember(String memberId) {
+		Connection conn=getConnection();
+		Member m=dao.selectMember(conn,memberId);
+		close(conn);
+		return m;		
+	}
+	
+	public List<Board> viewBoardList(String memberId, int cPage, int numPerPage){
+		Connection conn=getConnection();
+		List<Board> bList=dao.viewBoardList(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return bList;
+		
+	}
+	
+	public int selectCountAllBoard() {
+		Connection conn=getConnection();
+		int result=dao.selectCountAllBoard(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	//주문내역
+	public List<OrderProduct> viewOrderList(String memberId, int cPage, int numPerPage){
+		Connection conn=getConnection();
+		List<OrderProduct> opList=dao.viewOrderList(conn, memberId, cPage, numPerPage);
+		close(conn);
+		return opList;
+		
+	}
+	
+	public int selectCountAllOrder() {
+		Connection conn=getConnection();
+		int result=dao.selectCountAllOrder(conn);
+		close(conn);
+		return result;
+		
+	}
+	
+	
+	
 	
 }

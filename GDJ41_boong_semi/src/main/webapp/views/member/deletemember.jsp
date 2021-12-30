@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
-<div id="blank"
-	style="width: 100%; height: 70px; background-color: steelblue;"></div>
+
+<div id="blank" style="width:100%; height: 63px; background-color: #288ad8;"></div>
 <style>
 #section {
 	padding: 100px 20px 100px 220px;
@@ -33,7 +33,14 @@
 	border-shadow: 3px 3px 3px 3px gray;
 	margin-bottom: 20px;
 }
-
+.btn{
+	width:110px; height:40px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background: linear-gradient(135deg, #855edd 0%, #63afd3 100%); color:white;
+	font-size:15px;
+)
 
 </style>
 <body>
@@ -41,7 +48,7 @@
 
 		<div class="section">
 			<div class="mypage-container">
-				<h3>회원 탈퇴</h3>
+				<h2 style="color:#288ad8; margin-top:30px;">회원 탈퇴</h2>
 				<p><%=loginMember.getMemberName()%>
 					님 탈퇴하시겠습니까?
 				</p>
@@ -58,7 +65,7 @@
 						<span>비밀번호 확인</span><br> <input type="password" class="box" name="memberPw" autofocus required>
 					</div>
 					<div>
-						<input type="submit" value="회원 탈퇴">
+						<input class="btn" type="submit" value="회원 탈퇴">
 							
 					</div>
 						
@@ -69,14 +76,14 @@
 	
 	<script>
 		function delConfirm(){
-			if(confirm("정말 탈퇴하시겠습니까?")==true){
+			if(confirm("정말 탈퇴하시겠습니까? 회원 탈퇴 시 회원님의 모든 정보는 삭제되고 복구할 수 없습니다.")==true){
 				return true;
 			}else{
 				return false;
 			}
 		}
 		
-		$("#fourth-menu").addClass("active");
+		$("#fifth-menu").addClass("active");
 		
 	</script>
 

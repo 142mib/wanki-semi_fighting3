@@ -68,7 +68,7 @@
 
 <header>
 	<section>
-		<div id="blank" style="width:100%;height: 70px;background-color: brown"></div>
+		<div id="blank" style="width:100%; height: 63px;background-color: #288ad8"></div>
 	</section>
 </header>
 

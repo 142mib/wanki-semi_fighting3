@@ -8,18 +8,18 @@
 	String keyword=request.getParameter("searchKeyword");
 %>
 
-<div id="blank" style="width:100%; height: 70px; background-color: #6868ac;"></div>
+<div id="blank" style="width:100%; height: 63px; background-color: #6868ac;"></div>
 
 <style>
 /* 검색창에 대한 스타일 */
-#searchType{width:100px; height:40px; border:solid #6868ac 2px; border-radius:30px;font-size:14px;}
-div#search-container {margin:0 0 10px 0; padding:3px;}
+#searchType{width:100px; height:40px; border:solid #6868ac 2px; border-radius:10px;font-size:14px;}
+div#search-container {margin:0 0 20px 0; padding:3px; float:right;}
 div#search-memberId{display:inline-block;}
 div#search-memberName{display:none;}
 div#search-gender{display:none;}
 div#numPerpage-container{float:right;}
 form#numperPageFrm{display:inline;}
-.search-box{width:200px; height:40px; border:solid #6868ac 2px; border-radius:30px; font-size:14px; padding-left:10px;}
+.search-box{width:200px; height:40px; border:solid #6868ac 2px; border-radius:10px; font-size:14px; padding-left:10px;}
 .search-btn{width:35px; height:35px; color:white; background:#6868ac; border-radius:50px; border:none;}
 
 section{
@@ -29,7 +29,7 @@ section{
 }
 .mypage-container{
 	width: 75%;
-	height: 600px;
+	height: 100%;
 	background-color: white;
 	border: none;
 	border-radius: 10px;
@@ -86,6 +86,16 @@ h2{color:#6868ac;}
 }
 div#pageBar{ text-align:center;}
 #pageBar>a,#pageBar>span {padding-right : 20px;}
+#btn{
+	width:70px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:coral; color:white;
+	font-size:13px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
 </style>
 
 <body>
@@ -122,9 +132,9 @@ div#pageBar{ text-align:center;}
         	<div id="search-gender">
         		<form action="<%=request.getContextPath()%>/admin/searchmember.do">
         			<input type="hidden" name="searchType" value="gender">
-        			<label><input type="radio" name="searchKeyword" value="M"
+        			<label style="margin-right:15px;"><input style="margin-right:5px;"type="radio" name="searchKeyword" value="M"
         					<%=searchType!=null && searchType.equals("gender") && keyword.equals("M")?"checked":"" %>>남</label>
-        			<label><input type="radio" name="searchKeyword" value="F"
+        			<label style="margin-right:15px;"><input style="margin-right:5px;" type="radio" name="searchKeyword" value="F"
         					<%=searchType!=null && searchType.equals("gender") && keyword.equals("F")?"checked":"" %>>여</label>
         			<button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
         		</form>
@@ -135,7 +145,7 @@ div#pageBar{ text-align:center;}
 			<table class="styled-table">
 				
 				<thead>
-					<tr>
+					<tr style="text-aglin:center;">
 					<th>아이디</th>
 					<th>이름</th>
 					<th>성별</th>
@@ -155,7 +165,7 @@ div#pageBar{ text-align:center;}
 	            <%}else{ %>
 		       	    <%for(Member m: mList) {%>
 		       	    	<tr>
-			       	    	<td><%=m.getMemberId() %></td>
+			       	    	<td><strong><%=m.getMemberId() %></strong></td>
 			       	    	<td><%=m.getMemberName() %></td>
 			       	    	<td><%=m.getGender() %></td>
 			       	    	<td><%=m.getEmail()%></td>
@@ -163,7 +173,8 @@ div#pageBar{ text-align:center;}
 			       	    	<td><%=m.getAddress() %></td>
 			       	    	<td><%=m.getCar() %></td>
 			       	    	<td><%=m.getEnrollDate() %></td>
-			       	    	<td><input type="button" value="회원 관리" onclick=""></td>
+			       	    	<td><input id="btn" type="button" value="회원 관리" 
+			       	    		onclick="window.open('<%=request.getContextPath()%>/admin/managemember.do?memberId=<%=m.getMemberId()%>','BOONG 회원관리','width=600, height=530');"></td>
 		       	    	</tr>
 		       	    <%}
 		       	   } %>
@@ -181,12 +192,7 @@ div#pageBar{ text-align:center;}
 	$(()=>{
 		$("#searchType").change(e=>{
 			const value=$(e.target).val();
-			//console.log(value);
-			//console.log($("#seach-container>div[id^=seach]"));
-			
-			//$("#search-container>div[id^=search]").css("display","none");
-			
-			//아니면 하나하나 가져와도 됨
+
 			const memberId=$("#search-memberId");
 			const memberName=$("#search-memberName");
 			const gender=$("#search-gender");

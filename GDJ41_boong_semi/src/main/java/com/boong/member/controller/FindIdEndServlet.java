@@ -37,7 +37,7 @@ public class FindIdEndServlet extends HttpServlet {
 		Member m=new MemberService().findId(memberName,email);
 	
 		request.setAttribute("member", m);
-		request.getRequestDispatcher("/views/member/idresult.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/member/findidresult.jsp").forward(request, response);
 		
 		
 	}

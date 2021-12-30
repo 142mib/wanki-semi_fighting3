@@ -9,11 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.boong.board.model.vo.Board;
 import com.boong.member.model.vo.Member;
 
 
 public class AdminDao {
-	
+	public AdminDao() {}
+
 	public List<Member> viewMemberList(Connection conn, int cPage, int numPerPage){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -125,6 +127,55 @@ public class AdminDao {
 		
 	}
 	
+	public Member selectMember(Connection conn, String memberId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Member m=null;
+		String sql="SELECT * FROM MEMBER WHERE MEMBER_ID=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m=Member.builder()
+						.memberId(rs.getString("MEMBER_ID"))
+						.memberName(rs.getString("MEMBER_NAME"))
+						.gender(rs.getString("GENDER"))
+						.email(rs.getString("EMAIL"))
+						.phone(rs.getString("PHONE"))
+						.address(rs.getString("ADDRESS"))
+						.car(rs.getString("CAR"))
+						.enrollDate(rs.getDate("ENROLLDATE"))
+						.build();
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	
+
+	
+	
+	public int deleteMember(Connection conn, String memberId) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String sql="DELETE FROM MEMBER WHERE MEMBER_ID=?";
+		try {
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 	
 }

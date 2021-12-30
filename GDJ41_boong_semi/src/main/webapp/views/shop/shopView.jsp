@@ -12,7 +12,7 @@
 <style>
 	section>div{width:80%; text-align: center;margin: 0 10% 0 10%;}
 	#sv-container{width:80%;  height:500px; text-align: center; margin: 0 10% 20px 10%; display: flex; }	
-	#sv-container .img-container{width:50%;   text-align: center; border-right: 2px solid #ddd;; padding-top:0px; display:flex; flex-direction: column; align-items: center;}
+	#sv-container .img-container{width:50%;   text-align: center; border-right: 2px solid #ddd; padding-top:0px; display:flex; flex-direction: column; align-items: center;}
 	#sv-container .img-container .img-magnifier-container{width:90%; height:auto; position: relative;  }
 	#sv-container .img-container #myimage{ width:100%; height:auto;}
 	#sv-container .content-container{width:50%; padding-left :4%;  align-items: flex-start; padding-top:30px; display:flex; flex-direction: column }
@@ -39,6 +39,20 @@
     /*답글관련*/
     table#tbl-comment textarea{margin: 4px 0 0 0;}
     table#tbl-comment button.btn-insert2{width:60px; height:26px;  position:relative; top:-5px; left:10px;}
+	.btn{
+	width:70px; height:35px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background:rgba(1,138,216,1); color:white;
+	font-size:13px;
+	
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	}
+	.btn:hover{
+	color:lightgrey;
+	}
+	
 	
 	#comment-container{ width:80%; text-align: center;justify-content: center; display: flex;margin: 10px 10% 0 10%;}
 	.sv-table-tdleft{text-align: left;}
@@ -70,6 +84,7 @@
 	  /* border-bottom: 1px solid #ddd; */
 	 
 	}
+	#reply-container{margin-bottom:50px;}
 	
 </style>
 
@@ -79,7 +94,7 @@
 	<div id="sv-container">
 	<div class="img-container">
 		<p style="font-weight: bold; color: grey;">이미지에 마우스를 가져가 보세요:</p>
-		<div class="img-magnifier-container">
+		<div class="img-magnifier-container" >
 		<img id="myimage" src="<%= request.getContextPath() %>/upload/shop/<%= p.getShopProductImageRename() %>">
 		</div>
 	
@@ -87,7 +102,7 @@
 	<div class="content-container">
 		
 		<div class="content-table-container">
-			
+			<form action="<%=request.getContextPath()%>/shop/basketEnroll.do" method="post">
 			<table class="shop-table">
 			  <tr>
 			    <th class="sv-table-tdleft" rowspan="1" colspan="2"><h3 style="font-weight: bold;"><%=p.getShopProductName() %></h3></th>  			  	
@@ -105,7 +120,13 @@
 			  
 			  <tr style="border-bottom: 1px solid #ddd;">
 			    <td class="sv-table-tdleft" style="padding:5px 0 10px 0;">수량</td>
-			    <td class="sv-table-tdright" style="padding:5px 0 10px 0;"><input onchange="incre();" name="orderNumber" type="number" value="1" min="1" style="width: 45px" ></td>			    
+			    <td class="sv-table-tdright" style="padding:5px 0 10px 0;">
+			    <input onchange="incre();" name="orderNumber" type="number" value="1" min="1" style="width: 45px" >
+			    <input type="hidden" name="productId" value="<%=p.getShopProductId() %>" >
+			    <%if(loginMember!=null){ %>
+			    <input type="hidden" name="memberId" value="<%=loginMember.getMemberId() %>" >
+			    <%} %>
+			    </td>			    
 			  </tr>
 			  <tr style="font-weight: bold; border-bottom: 1px solid #ddd; ">
 			    <td class="sv-table-tdleft" style="padding:15px 0 5px 0;">총상품금액</td>
@@ -113,14 +134,18 @@
 			    <td class="sv-table-tdright" style="padding:15px 0 5px 0;"><span class="totalMoney"></span>원</td>			   
 			  </tr>
 			  <tr>
-			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;" ><button>장바구니추가</button> </td>			   			    
+			  	<%if(loginMember!=null){ %>
+			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:20px; "><input type="submit" style="width: 90px;" class="btn" value="주문하기"> </td>			   			    
+			    <%} %>			   			    
 			  </tr>
-			  <tr>
-			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;"><button>구매하기</button></td>			   		    
-			  </tr>
+			  <!-- <tr>
+			    <td class="sv-table-tdcenter" colspan="2" style="padding-top:10px;"><button>바로 구매하기</button></td>			   		    
+			  </tr> -->
 			</table>
-			
-		
+			</form>
+				<%if(loginMember==null){ %>
+				<span ><button style="margin-top: 20px;" onclick="alert('로그인후 사용 가능합니다.');">주문하기</button></span>
+				<%} %>
 		</div>
 		</div>
 		
@@ -152,7 +177,7 @@
 					<input type="hidden" name="writer" value="<%=loginMember!=null?loginMember.getMemberId():""%>">
 					<input type="hidden" name="productRef" value="<%=p.getShopProductId()%>">
 					<input type="hidden" name="productCommentRef" value="0">
-					<button  type="submit" id="btn-insert">등록</button>
+					<button  type="submit" id="btn-insert" class="btn">등록</button>
 			</form>
 		</div>
 		<%}else{ %>	
@@ -178,10 +203,10 @@
 					</td>
 					<td>
 						<%if(loginMember!=null){ %>
-							<button class="btn-reply" value="<%=pc.getShopCommentId()%>">답글</button>
+							<button class="btn-reply btn" value="<%=pc.getShopCommentId()%>">답글</button>
 							<%if(loginMember.getMemberId().equals("admin")
 									||loginMember.getMemberId().equals(pc.getMemberId()) ) {%>
-							<button class="btn-delete">삭제</button>
+							<button class="btn-delete btn">삭제</button>
 							<%} %>
 						<%} %>					
 					</td>

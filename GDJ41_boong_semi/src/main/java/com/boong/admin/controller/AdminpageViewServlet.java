@@ -54,21 +54,21 @@ public class AdminpageViewServlet extends HttpServlet {
 		if(pageNo==1) {
 			pageBar="<span>[이전]</span>";
 		}else {
-			pageBar="<a href='"+request.getContextPath()+"/admin/memberList.do?cPage="+(pageNo-1)+"'>[이전]</a>";
+			pageBar="<a href='"+request.getContextPath()+"/admin/adminpageview.do?cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
-				pageBar+="<a href='"+request.getContextPath()+"/admin/memberList.do?cPage="+pageNo+"'>"+pageNo+"</a>";
+				pageBar+="<a href='"+request.getContextPath()+"/admin/adminpageview.do?cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
 		if(pageNo>totalPage) {
 			pageBar+="<span>[다음]</span>";
 		}else {
-			pageBar+="<a href='"+request.getContextPath()+"/admin/memberList.do?cPage="+pageNo+"'>[다음]</a>";
+			pageBar+="<a href='"+request.getContextPath()+"/admin/adminpageview.do?cPage="+pageNo+"'>[다음]</a>";
 		}
 		
 		request.setAttribute("pageBar", pageBar);

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp"%>
 <div id="blank"
-	style="width: 100%; height: 70px; background-color: steelblue;"></div>
+	style="width: 100%; height: 63px; background-color: #288ad8;"></div>
 
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
@@ -32,10 +32,6 @@
 	width: 100%
 }
 
-h2 {
-	padding: 0 60px;
-	margin-left: 45px;
-}
 
 ul {
 	list-style: none;
@@ -67,43 +63,14 @@ table {
 	max-width: 100%;
 }
 
-#edit-icon {
-	width: 30px;
-	height: 30px;
-	margin-right: 10px;
-	/* float:right; */
-}
-
-#edit-btn {
-	width: 150px;
-	height: 50px;
-	border: none;
-	background-color: navy;
-	color: white;
-	margin-left: 20px;
-}
-
-#save-btn {
-	width: 150px;
-	height: 50px;
-	border: none;
-	background-color: red;
-	color: white;
-	margin-left: 20px;
-}
-
-#back {
-	width: 150px;
-	height: 50px;
-	border: none;
-	background-color: black;
-	color: white;
-	margin-left: 20px;
-}
-
-#save {
-	display: none;
-}
+.btn{
+	width:110px; height:40px;
+	border:none;
+	border-radius: 10px;
+	cursor:pointer; 
+	background: linear-gradient(135deg, #855edd 0%, #63afd3 100%); color:white;
+	font-size:15px;
+)
 
 </style>
 <body>
@@ -111,7 +78,7 @@ table {
 
 		<div class="section">
 			<div class="mypage-container">
-				<h3>비밀번호 변경</h3>
+				<h2 style="color:#288ad8; margin-top:30px;">비밀번호 변경</h2>
 				<p><strong><%=loginMember.getMemberName() %></strong>
 					님의 비밀번호를 변경합니다.
 				</p>
@@ -132,7 +99,7 @@ table {
 						<span id="pwresult"></span>
 					</div>
 					<div>
-						<input type="submit" value="변경">
+						<input class="btn" type="submit" value="변경">
 					</div>
 					<input type="hidden" name="memberId" value="<%=loginMember.getMemberId()%>">
 				</form>

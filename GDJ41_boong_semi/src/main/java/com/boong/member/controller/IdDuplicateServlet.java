@@ -41,7 +41,6 @@ public class IdDuplicateServlet extends HttpServlet {
 		
 		
 		//request.setAttribute("member",m);
-		
 		//request.getRequestDispatcher("/views/member/idDuplicate.jsp").forward(request, response);
 	}
 
