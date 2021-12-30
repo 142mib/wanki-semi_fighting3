@@ -48,6 +48,7 @@ text-align:center;
 			<div id="resetPwResult"></div>
 		<div>
 			<input class="btn" type="submit" value="변경" id="reset-btn">
+			<input class="btn" type="button" value="닫기" onclick="window.close();">
 		</div>
 		<input type="hidden" name="memberId" value="<%=memberId%>"> 
 	</form>

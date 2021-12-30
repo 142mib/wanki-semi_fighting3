@@ -89,21 +89,21 @@ table{
 	</table>
 		<div style="text-align:center; margin-top:30px;">
 	    	<input class="btn" type="submit" value="변경 완료">
-	    	<input class="btn" type="button" value="삭제" id="del-btn">
+	    	<input class="btn" type="button" value="삭제" id="del-btn" onclick="location.replace('<%=request.getContextPath()%>/admin/deletemember.do?memberId=<%=m.getMemberId()%>');">
 				    
 	    </div>
 </body>
 
 <script>
-	/* $("#del-btn").on("click",e=>{
+		/* $("#del-btn").on("click",e=>{
 			if(confirm("정말 회원을 삭제하시겠습니까? 삭제 시 모든 정보는 삭제되고 복구할 수 없습니다.")==true){
 				return true;
 			}else{
 				return false;
 			}
-		}
-	}) */
-	$("#del-btn").click(e=>{
+		}); */
+
+<%-- 	$("#del-btn").click(e=>{
 		let memberId=<%=m.getMemberId()%>;
 			$.ajax({
 	    		url:"<%=request.getContextPath()%>/admin/deletemember.do",
@@ -122,6 +122,6 @@ table{
 	    			alert("서버요청 실패");
 	    		}
 			})
-	});
+	}); --%>
 </script>
 </html>

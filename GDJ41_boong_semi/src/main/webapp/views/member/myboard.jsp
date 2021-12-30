@@ -193,7 +193,10 @@ div#pageBar{ text-align:center;}
         	<%=request.getAttribute("pageBar") %>
         </div>
 	</div> --%>
+	<script>
+	$("#third-menu").addClass("active");
 	
+	</script>
 	
 </section>
 

@@ -45,7 +45,7 @@ public class EditMemberServlet extends HttpServlet {
 		String loc="";
 		if(result>0) {
 			msg="회원정보 수정 완료!";
-			loc="/";		
+			loc="/member/mypageview.do";		
 		}else {
 			msg="회원정보 수정 실패";
 			loc="/member/mypageview.do";

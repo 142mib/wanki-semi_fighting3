@@ -139,5 +139,8 @@ div#pageBar{ text-align:center;}
 </div>	
 	
 </section>
-
+<script>
+	$("#fourth-menu").addClass("active");
+	
+	</script>
 	<%@ include file="/views/common/footer.jsp"%>
